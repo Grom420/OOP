@@ -16,12 +16,12 @@ public class Task3 {
         return numer*numer;
     }
 
-    static StringBuffer ParseString(String x){
+    static String ParseString(String x){
         StringBuffer newStringX2 = new StringBuffer();
         for (int i = 0; i < x.length(); i++) {
            newStringX2.append(x.charAt(i));
            newStringX2.append(x.charAt(i));
         }
-        return newStringX2;
+        return newStringX2.toString();
     }
 }
