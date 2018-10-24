@@ -6,7 +6,7 @@ public class Task10 {
 
         Random randNum = new Random(); //создаем переменную класса случайных чисел
         int[] arrNum = new int[1000000];
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < arrNum.length; i++)
         {
             arrNum[i] = ((int)(Math.random() * 101) - 50);
         }
@@ -25,7 +25,7 @@ public class Task10 {
     static int CountDivThree(int[] b)
     {
         int CountDivThree = 0;
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < b.length; i++)
         {
             if (b[i] % 3 == 0 && b[i] != 0)
                 CountDivThree++;
@@ -35,7 +35,7 @@ public class Task10 {
     static int SumPositives(int[] b)
     {
         int SumPositives = 0;
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < b.length; i++)
         {
             if (b[i]>0)
                 SumPositives += b[i];
@@ -46,7 +46,7 @@ public class Task10 {
     {
         int maxNum = b[0];
         int IndexOfMaxPositive = 0;
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < b.length; i++)
         {
             if (maxNum < b[i] && b[i]>0)
             {
@@ -58,7 +58,7 @@ public class Task10 {
     }
     static boolean ContainsZero(int[] b)
     {
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < b.length; i++)
         {
             if (b[i] == 0)
             {
@@ -70,7 +70,7 @@ public class Task10 {
 
     static void EvenElement(int[] b)
     {
-        for (int i = 0; i < 1000000; i++)
+        for (int i = 0; i < b.length; i++)
         {
             if (i % 2 == 0)
                 System.out.printf("a[%d] = %d\n", i, b[i]);

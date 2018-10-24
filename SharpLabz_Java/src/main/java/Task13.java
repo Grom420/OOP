@@ -27,6 +27,11 @@ public class Task13 {
             }
             System.out.printf("Минимальное число %d столбца: %d\n", j+1, jmin);
         }
+        System.out.println(average(N));
+    }
+
+    public static double average(int[][] N){
+
         double sumNegativeNum = 0;
         int count = 0;
         for (int[] items : N) {
@@ -38,7 +43,6 @@ public class Task13 {
                 }
             }
         }
-        double average = sumNegativeNum / count;
-        System.out.println(average);
+        return sumNegativeNum / count;
     }
 }
