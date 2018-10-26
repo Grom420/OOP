@@ -1,4 +1,11 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 public class Task13 {
 
@@ -33,16 +40,13 @@ public class Task13 {
     public static double average(int[][] N){
 
         double sumNegativeNum = 0;
-        int count = 0;
+        long count = 0;
         for (int[] items : N) {
-            for (int item : items){
-                if (item < 0)
-                {
-                    sumNegativeNum += item;
-                    count++;
-                }
-            }
+
+            sumNegativeNum += Arrays.stream(items).filter((s) -> s < 0).sum();
+            count += Arrays.stream(items).filter(s-> s<0).count();
         }
+        System.out.println(count);
         return sumNegativeNum / count;
     }
 }
