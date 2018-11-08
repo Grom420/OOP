@@ -13,6 +13,7 @@
         <module>taskWithoutIf</module>
         <module>Walls2D</module>
         <module>IntroJava</module>
+        <module>EasyTasks</module>
     </modules>
 
     <build>
