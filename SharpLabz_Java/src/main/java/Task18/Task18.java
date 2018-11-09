@@ -64,7 +64,7 @@ class Group{
             for (int j = 0; j < groupID; j++) {//цикл распределения челов по группам (сколько человек на одну группу)
                 if (i == n-1){//если последний чел
                     for (int k = countStud; k < studs.length; k++) {//кидаем оставшихся в последнюю группу
-                        sb.append(studs[countStud].toString());
+                        sb.append(studs[countStud].toString()).append(", ");
                         countStud++;
                     }
                     continue;
