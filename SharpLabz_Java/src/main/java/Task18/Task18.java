@@ -1,13 +1,15 @@
 package Task18;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Task18 {
 
     public static void main(String[] args){
 
         Student[] studs = new Student[7];
-        int n = 3; //группы студентов
+        int n = 4; //группы студентов
         studs[0] = new Student("Жока", "Боков", Spec.ПО);
         studs[1] = new Student("Пидор", "Соколов", Spec.РПИС);
         studs[2] = new Student("Кидор1", "Соколо1", Spec.ПО);
@@ -16,30 +18,8 @@ public class Task18 {
         studs[5] = new Student("Цикало", "Соколов3", Spec.ПО);
         studs[6] = new Student("Зорин", "Соколов3", Spec.УИТС);
         Arrays.sort(studs, Student::compareTo);
-        long groupID = Math.round((double)studs.length/(double)n);
-        System.out.println(groupID);
-        //countStud++;
-        //System.out.println(sb);
-        //sb.delete(0,sb.length());
-        int countStud = 0;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            sb.append("Группа ").append(i+1).append(" ");
-            for (int j = 0; j < groupID; j++) {
-                if (i == n-1){
-                    for (int k = countStud; k < studs.length; k++) {
-                        sb.append(studs[countStud].toString()).append(", ");
-                    }
-                    System.out.println(sb);
-                    continue;
-                }
-                if (i < n-1){
-                    sb.append(studs[countStud].toString()).append(", ");
-                    System.out.println(sb);
-                    sb.delete(0,sb.length());
-                }
-            }
-        }
+        Group group = new Group();
+        System.out.println(group.getGroup(studs, n));
     }
 }
 
@@ -68,11 +48,36 @@ class Student implements Comparable<Student>
         this.sName = sName;
         this.special = special;
     }
+}
 
-    public Student(){
-        this.name = null;
-        this.sName = null;
-        this.special = null;
+class Group{
+
+    public String getGroup(Student[] studs, int n){
+
+        StringBuilder sb = new StringBuilder();
+
+        long groupID = Math.round((double)studs.length/(double)n);
+        int countStud = 0;
+
+        for (int i = 0; i < n; i++) {//цикл количества групп
+            sb.append("Группа ").append(i+1).append(": ");
+            for (int j = 0; j < groupID; j++) {//цикл распределения челов по группам (сколько человек на одну группу)
+                if (i == n-1){//если последний чел
+                    for (int k = countStud; k < studs.length; k++) {//кидаем оставшихся в последнюю группу
+                        sb.append(studs[countStud].toString());
+                        countStud++;
+                    }
+                    continue;
+                }
+                if (i < n-1){//если не последний чел
+                    sb.append(studs[countStud].toString()).append(", ");
+                    countStud++;
+                }
+            }
+            if (i != n-1)
+                sb.append("\n");
+        }
+        return sb.toString();
     }
 }
 
