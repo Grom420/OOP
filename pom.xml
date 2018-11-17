@@ -15,6 +15,7 @@
         <module>IntroJava</module>
         <module>EasyTasks</module>
         <module>StringTasks</module>
+        <module>ScoreTable</module>
     </modules>
 
     <build>
