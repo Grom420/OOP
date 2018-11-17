@@ -33,11 +33,12 @@ public class Main {
             return arr;
         int middle = arr.length / 2;
         return merge(sort(Arrays.copyOfRange(arr, 0, middle)),
-                sort(Arrays.copyOfRange(arr, middle, arr.length)));
+                sort(Arrays.copyOfRange(arr, middle, arr.length)), arr.length);
     }
 
-    public static int[][] merge(int[][] arrOne, int[][] arrTwo) {
-        int indexOne = 0, indexTwo = 0, len = arrOne.length + arrTwo.length;
+    public static int[][] merge(int[][] arrOne, int[][] arrTwo, int len) {
+        int indexOne = 0;
+        int indexTwo = 0;
         int[][] result = new int[len][2];
         for (int i = 0; i < len; i++) {
             if (indexTwo < arrTwo.length && indexOne < arrOne.length) {
