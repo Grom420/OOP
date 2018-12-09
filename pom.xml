@@ -16,6 +16,7 @@
         <module>EasyTasks</module>
         <module>StringTasks</module>
         <module>ScoreTable</module>
+        <module>Addresses</module>
     </modules>
 
     <build>
