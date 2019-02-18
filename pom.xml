@@ -19,6 +19,7 @@
         <module>Addresses</module>
         <module>tanks</module>
         <module>Graphs</module>
+        <module>Calc</module>
     </modules>
 
     <build>
