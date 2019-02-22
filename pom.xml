@@ -9,18 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>SharpLabz_Java</module>
-        <module>taskWithoutIf</module>
-        <module>Walls2D</module>
-        <module>IntroJava</module>
-        <module>EasyTasks</module>
-        <module>StringTasks</module>
-        <module>ScoreTable</module>
-        <module>Addresses</module>
-        <module>tanks</module>
-        <module>Graphs</module>
-        <module>Calc</module>
         <module>JavaOOP</module>
+        <module>TaskPP</module>
     </modules>
 
     <build>
