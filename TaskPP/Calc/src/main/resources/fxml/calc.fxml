@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="641.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+    <center>
+        <GridPane prefHeight="270.0" prefWidth="564.0" style="-fx-background-color: #20B2AA;" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="239.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="153.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button fx:id="one" mnemonicParsing="false" onAction="#oneClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="1">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="two" mnemonicParsing="false" onAction="#twoClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="2" GridPane.columnIndex="1">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="three" mnemonicParsing="false" onAction="#threeClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="3" GridPane.columnIndex="2">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="four" mnemonicParsing="false" onAction="#fourClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="4" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="five" mnemonicParsing="false" onAction="#fiveClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="six" mnemonicParsing="false" onAction="#sixClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="seven" mnemonicParsing="false" onAction="#sevenClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="7" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="eight" mnemonicParsing="false" onAction="#eightClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="8" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="nine" mnemonicParsing="false" onAction="#nineClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="9" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="zero" mnemonicParsing="false" onAction="#zeroClick" prefHeight="53.0" prefWidth="81.0" style="-fx-background-color: #20B2AA;" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="29.0" />
+                    </font>
+                </Button>
+                <Button fx:id="bracketOut" mnemonicParsing="false" onAction="#bracketOutClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text=")" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="4">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="bracketIn" mnemonicParsing="false" onAction="#bracketInClick" prefHeight="76.0" prefWidth="96.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="(" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="3">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="plus" mnemonicParsing="false" onAction="#plusClick" prefHeight="75.0" prefWidth="99.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="+" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="div" mnemonicParsing="false" onAction="#divClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="/" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="mul" mnemonicParsing="false" onAction="#mulClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="*" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="cos" mnemonicParsing="false" onAction="#cosClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="Cos" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="sin" mnemonicParsing="false" onAction="#sinClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="Sin" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="tg" mnemonicParsing="false" onAction="#tgClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="TgX" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="5">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="minus" mnemonicParsing="false" onAction="#minusClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="-" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="ctg" mnemonicParsing="false" onAction="#ctgClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="CtgX" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="sqr" mnemonicParsing="false" onAction="#sqrClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="X^2" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="cube" mnemonicParsing="false" onAction="#cubeClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="X^3" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="point" mnemonicParsing="false" onAction="#pointClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #20B2AA; -fx-background-radius: 0;" text="." textOverrun="CLIP" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="clear" mnemonicParsing="false" onAction="#clearClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #20B2AA; -fx-background-radius: 0;" text="C" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="toBinare" mnemonicParsing="false" onAction="#toBinaryClick" prefHeight="82.0" prefWidth="87.0" style="-fx-background-color: #696969; -fx-background-radius: 0;" text="BIN" textFill="WHITE" GridPane.columnIndex="7">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="toOct" mnemonicParsing="false" onAction="#toOctClick" prefHeight="82.0" prefWidth="87.0" style="-fx-background-color: #696969; -fx-background-radius: 0;" text="OCT" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="toDec" mnemonicParsing="false" onAction="#toDecClick" prefHeight="82.0" prefWidth="87.0" style="-fx-background-color: #696969; -fx-background-radius: 0;" text="DEC" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="toHex" mnemonicParsing="false" onAction="#toHexClick" prefHeight="82.0" prefWidth="87.0" style="-fx-background-color: #696969; -fx-background-radius: 0;" text="HEX" textFill="WHITE" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="sqrt" mnemonicParsing="false" onAction="#sqrtClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="SqrtX" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="6">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="ln" mnemonicParsing="false" onAction="#lnClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="LnX" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="lg" mnemonicParsing="false" onAction="#lgClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="LgX" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button fx:id="clearAll" mnemonicParsing="false" onAction="#clearAllClick" prefHeight="87.0" prefWidth="86.0" style="-fx-background-color: #4B0082; -fx-background-radius: 0;" text="AC" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+            </children>
+        </GridPane>
+    </center>
+    <top>
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <SplitPane cacheShape="false" centerShape="false" dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="100.0" prefWidth="646.0" scaleShape="false">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <Label fx:id="input" layoutX="14.0" layoutY="5.0" prefHeight="36.0" prefWidth="534.0">
+                                    <font>
+                                        <Font size="22.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="46.0" prefWidth="587.0">
+                            <children>
+                                <Label fx:id="output" layoutX="14.0" layoutY="5.0" prefHeight="19.0" prefWidth="611.0">
+                                    <font>
+                                        <Font name="System Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox fx:id="comboBox" layoutX="445.0" layoutY="12.0" prefHeight="25.0" prefWidth="187.0" promptText="select numbering system" />
+                                <Label fx:id="polishLabel" layoutX="14.0" layoutY="24.0" prefHeight="17.0" prefWidth="381.0" />
+                            </children>
+                        </AnchorPane>
+                    </items>
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                </SplitPane>
+            </children></HBox>
+    </top>
+    <bottom>
+        <HBox prefHeight="38.0" prefWidth="564.0" style="-fx-background-color: #C71585;" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="result" mnemonicParsing="false" onAction="#resultClick" prefHeight="38.0" prefWidth="643.0" style="-fx-background-color: #C71585; -fx-background-radius: 0;" text="=" textFill="#001340" />
+            </children></HBox>
+    </bottom>
+</BorderPane>
