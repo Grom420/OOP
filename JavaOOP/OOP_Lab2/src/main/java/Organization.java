@@ -61,9 +61,9 @@ public class Organization {
 
         int count = 0;
 
-        for (int i = 0; i < departaments.length; i++) {
+        for (Departament departament : departaments) {
 
-            count += departaments[i].size();
+            count += departament.size();
         }
         return count;
     }
@@ -73,10 +73,10 @@ public class Organization {
         Employee[] employees;
         int count = 0;
 
-        for (int i = 0; i < departaments.length; i++) {
-            employees = departaments[i].getEmployees();
-            for (int j = 0; j < employees.length; j++) {
-                if(employees[j].getJobTitle().equals(jobTitle))
+        for (Departament departament : departaments) {
+            employees = departament.getEmployees();
+            for (Employee employee : employees) {
+                if (employee.getJobTitle().equals(jobTitle))
                     count++;
             }
         }
@@ -91,9 +91,9 @@ public class Organization {
         for (int i = 0; i < departaments.length; i++) {
 
             employees = departaments[i].getEmployees();
-            for (int j = 0; j < employees.length; j++) {
+            for (Employee employee : employees) {
 
-                if (employees[j].getSalary() > total) {
+                if (employee.getSalary() > total) {
 
                     total = employees[i].getSalary();
                     bestEmp = employees[i];
@@ -107,13 +107,13 @@ public class Organization {
 
         Employee[] employees;
 
-        for (int i = 0; i < departaments.length; i++) {
+        for (Departament departament : departaments) {
 
-            employees = departaments[i].getEmployees();
-            for (int j = 0; j < employees.length; j++) {
+            employees = departament.getEmployees();
+            for (Employee employee : employees) {
 
-                if(employees[j].getFirstName().equals(firstName) && employees[j].getSecondName().equals(lastName)){
-                    return departaments[i];
+                if (employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName)) {
+                    return departament;
                 }
             }
         }
