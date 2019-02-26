@@ -21,6 +21,14 @@ public class Departament {
         this.employees = employees;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void add(Employee employee){
 
         Employee[] newEmployees = new Employee[this.employees.length*2];
