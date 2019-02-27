@@ -21,6 +21,7 @@
         <module>tanks</module>
         <module>Graphs</module>
         <module>Calc</module>
+        <module>cityX</module>
     </modules>
 
     <build>
