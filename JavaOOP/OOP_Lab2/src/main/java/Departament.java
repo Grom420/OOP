@@ -5,20 +5,24 @@ public class Departament {
     private Employee[] employees;
     private int size;
 
+    //todo конструкторы должны вызывать друг друга
     public Departament(String name) {
-        this.name = name;
+        this.name = name; //todo эта строчка дублируется во всех конструкторах - юзай метод setName()
         this.employees = new Employee[DEFAULT_SIZE];
     }
-
+    //todo capacity
     public Departament(String name, int size) {
+        //todo check capacity
         this.name = name;
         employees = new Employee[size];
         this.size = 0;
     }
 
+    //todo создавай свой массив и копируй элементы в него
     public Departament(String name, Employee[] employees) {
+        //todo check length
         this.name = name;
-        this.employees = employees;
+        this.employees = employees; //todo copy elements
     }
 
     public String getName() {
@@ -30,7 +34,7 @@ public class Departament {
     }
 
     public void add(Employee employee){
-
+        //todo if(size == length)
         Employee[] newEmployees = new Employee[this.employees.length*2];
         System.arraycopy(this.employees, 0, newEmployees, 0, this.employees.length);
         newEmployees[this.size] = employee;
@@ -50,16 +54,11 @@ public class Departament {
     }
 
     public int size(){
-
-        int count = 0;
-        for (int i = 0; i < this.size; i++) {
-            count++;
-        }
-        return count;
+return size;
     }
 
+    //todo имя метода не соответсвует
     private void shift(int i){
-
         System.arraycopy(this.employees, i+1, this.employees, i, size-i);
         this.employees[size] = null;
         this.size--;
@@ -82,6 +81,7 @@ public class Departament {
                 count++;
             }
         }
+        //todo new array [count]
         System.arraycopy(newEmployee, 0, newEmployee, 0, count);
         return newEmployee;
     }

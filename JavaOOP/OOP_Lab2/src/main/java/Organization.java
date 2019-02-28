@@ -6,16 +6,17 @@ public class Organization {
 
     public Organization(String name) {
         this.name = name;
+        //todo init departments
     }
 
     public Organization(String name, Departament[] departaments) {
         this.name = name;
-        this.departaments = departaments;
+        this.departaments = departaments; //todo copy elements
     }
 
     public void add(Departament departament){
-
-        Departament[] newDepartaments = new Departament[this.departaments.length + 1];
+        //todo if(size == length)
+        Departament[] newDepartaments = new Departament[this.departaments.length * 2];
         System.arraycopy(this.departaments, 0, newDepartaments, 0, this.departaments.length+1);
         newDepartaments[newDepartaments.length] = departament;
         this.departaments = newDepartaments;
@@ -45,6 +46,7 @@ public class Organization {
 
     public Departament[] getDepartaments(){
 
+        //todo озвращай копию массива
         return this.departaments;
     }
 
@@ -61,6 +63,7 @@ public class Organization {
 
         int count = 0;
 
+        //todo for до size
         for (Departament departament : departaments) {
 
             count += departament.size();
@@ -73,6 +76,7 @@ public class Organization {
         Employee[] employees;
         int count = 0;
 
+        //todo department.employeesQuantity(jobtitle)
         for (Departament departament : departaments) {
             employees = departament.getEmployees();
             for (Employee employee : employees) {
@@ -84,7 +88,7 @@ public class Organization {
     }
 
     public Employee bestEmployee() {
-
+        //todo department.bestmployee()
         Employee[] employees = departaments[0].getEmployees();
         Employee bestEmp = employees[0];
         int total = 0;
@@ -105,6 +109,7 @@ public class Organization {
 
     public Departament getEmployeesDepartament(String firstName, String lastName){
 
+        //todo department.hasEmployee()
         Employee[] employees;
 
         for (Departament departament : departaments) {
@@ -120,6 +125,7 @@ public class Organization {
         return null;
     }
 
+    //todo аналогично департаментам
     private void shift(int i){
 
         System.arraycopy(this.departaments, i+1, this.departaments, i, size-i);

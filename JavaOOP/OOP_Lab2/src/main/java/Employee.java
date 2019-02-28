@@ -5,6 +5,8 @@ public class Employee {
     private String jobTitle;
     private int salary;
 
+    //todo литералы - это зло!
+    //todo конструкторы должны вызывать друг друга
     public Employee(String firstName, String secondName) {
         this.firstName = firstName;
         this.secondName = secondName;
