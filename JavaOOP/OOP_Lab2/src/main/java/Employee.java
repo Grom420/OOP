@@ -3,22 +3,26 @@ public class Employee {
     private String firstName;
     private String secondName;
     private String jobTitle;
+    private final int DEFAULT_SALARY = 0;
     private int salary;
 
-    //todo литералы - это зло!
-    //todo конструкторы должны вызывать друг друга
+    //todo литералы - это зло!(DONE)
+    //todo конструкторы должны вызывать друг друга(DONE)
+
+    public Employee(){}
+
     public Employee(String firstName, String secondName) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.jobTitle = "";
-        this.salary = 0;
+        setFirstName(firstName);
+        setSecondName(secondName);
+        setJobTitle("");
+        setSalary(DEFAULT_SALARY);
     }
 
     public Employee(String firstName, String secondName, String jobTitle, int salary) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.jobTitle = jobTitle;
-        this.salary = salary;
+
+        this(firstName, secondName);
+        setJobTitle(jobTitle);
+        setSalary(salary);
     }
 
     public String getFirstName() {
