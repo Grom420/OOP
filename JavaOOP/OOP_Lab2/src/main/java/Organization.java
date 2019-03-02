@@ -106,39 +106,26 @@ public class Organization {
     }
 
     public Employee bestEmployee() {
-        //todo department.bestmployee()
-        Employee[] employees = departaments[0].getEmployees();
-        Employee bestEmp = employees[0];
+        //todo department.bestmployee()(DONE)
+        Employee employeeBuf = departaments[0].bestEmployee();
         int total = 0;
-        for (int i = 0; i < departaments.length; i++) {
+        for (int i = 1; i < size; i++) {
 
-            employees = departaments[i].getEmployees();
-            for (Employee employee : employees) {
-
-                if (employee.getSalary() > total) {
-
-                    total = employees[i].getSalary();
-                    bestEmp = employees[i];
-                }
-            }
+            if(employeeBuf.getSalary() < departaments[i].bestEmployee().getSalary())
+                employeeBuf = departaments[i].bestEmployee();
         }
-        return bestEmp;
+        return employeeBuf;
     }
 
     public Departament getEmployeesDepartament(String firstName, String lastName) {
 
-        //todo department.hasEmployee()
-        Employee[] employees;
+        //todo department.hasEmployee()(DONE)
 
-        for (Departament departament : departaments) {
+        for (int i = 0; i < size; i++) {
 
-            employees = departament.getEmployees();
-            for (Employee employee : employees) {
+            if(departaments[i].hasEmployee(firstName, lastName))
+                return departaments[i];
 
-                if (employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName)) {
-                    return departament;
-                }
-            }
         }
         return null;
     }

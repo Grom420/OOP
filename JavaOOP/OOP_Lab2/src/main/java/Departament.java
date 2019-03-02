@@ -54,6 +54,37 @@ public class Departament {
         return count;
     }
 
+    public Employee bestEmployee(){
+
+        Employee bestEmp = employees[0];
+        int total = 0;
+
+        for (int i = 0; i < employees.length; i++) {
+            Employee employee = employees[i];
+
+            if (employee.getSalary() > total) {
+
+                total = employees[i].getSalary();
+                bestEmp = employees[i];
+            }
+        }
+
+        return bestEmp;
+    }
+
+    public boolean hasEmployee(String firstName, String lastName){
+
+
+        for (int i = 0; i < employees.length; i++) {
+
+            Employee employee = employees[i];
+            if (employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void add(Employee employee) {
         //todo if(size == length)(DONE)
         Employee[] newEmployees;
