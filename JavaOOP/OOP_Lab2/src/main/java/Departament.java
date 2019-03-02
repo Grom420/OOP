@@ -59,7 +59,7 @@ public class Departament {
         Employee bestEmp = employees[0];
         int total = 0;
 
-        for (int i = 0; i < employees.length; i++) {
+        for (int i = 0; i < size; i++) {
             Employee employee = employees[i];
 
             if (employee.getSalary() > total) {
@@ -75,7 +75,7 @@ public class Departament {
     public boolean hasEmployee(String firstName, String lastName){
 
 
-        for (int i = 0; i < employees.length; i++) {
+        for (int i = 0; i < size; i++) {
 
             Employee employee = employees[i];
             if (employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName)) {
