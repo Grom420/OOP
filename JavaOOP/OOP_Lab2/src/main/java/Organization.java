@@ -8,7 +8,6 @@ public class Organization {
 
     public Organization(String name) {
         setName(name);
-        //todo init departments(DONE)
         this.departaments = new Departament[DEFAULT_CAPACITY];
     }
 
@@ -16,9 +15,9 @@ public class Organization {
 
         this(name);
         if (departaments.length != 0) {
-            Departament[] bufDep = new Departament[departaments.length];
+            Departament[] bufDep = new Departament[departaments.length]; //todo имя гавно
             System.arraycopy(departaments, 0, bufDep, 0, departaments.length);
-            this.departaments = bufDep; //todo copy elements(DONE)
+            this.departaments = bufDep;
         }
     }
 
@@ -27,18 +26,15 @@ public class Organization {
     }
 
     public void add(Departament departament) {
-        //todo if(size == length)(DONE)
-        Departament[] newDepartaments;
-        if(size == departaments.length){
 
+        if(size == departaments.length) {
+            Departament[] newDepartaments;
             newDepartaments = new Departament[this.departaments.length * 2];
+            System.arraycopy(this.departaments, 0, newDepartaments, 0, this.departaments.length + 1);
+            this.departaments = newDepartaments;
         }
-        else{
-            newDepartaments = new Departament[this.departaments.length];
-        }
-        System.arraycopy(this.departaments, 0, newDepartaments, 0, this.departaments.length + 1);
-        newDepartaments[newDepartaments.length] = departament;
-        this.departaments = newDepartaments;
+        departaments[size] = departament;
+
         this.size++;
     }
 
@@ -66,39 +62,28 @@ public class Organization {
     }
 
     public Departament[] getDepartaments() {
-
-        //todo озвращай копию массива(DONE)
-        Departament[] newDep = new Departament[this.departaments.length];
+        Departament[] newDep = new Departament[this.departaments.length];  //todo имя гавно
         System.arraycopy(departaments, 0, newDep, 0, departaments.length);
         return newDep;
     }
 
     public int size() {
-
         return size;
     }
 
     public int employeesQuantity() {
-
-        int count = 0;
-
-
-        //todo for до size(DONE)
+        int count = 0; //todo имя гавно
         for (int i = 0; i < size; i++) {
-
-            Departament departament = departaments[i];
-            count += departament.size();
+            count += departaments[i].size();
         }
         return count;
     }
 
     public int employeesQuantity(String jobTitle) {
 
-        //todo department.employeesQuantity(jobtitle)(DONE)
-        int count = 0;
+        int count = 0;//todo имя гавно
         Departament departament = new Departament();
         for (int i = 0; i < size; i++) {
-
             count += departament.employeesQuantity(jobTitle);
         }
 
@@ -106,11 +91,9 @@ public class Organization {
     }
 
     public Employee bestEmployee() {
-        //todo department.bestmployee()(DONE)
-        Employee employeeBuf = departaments[0].bestEmployee();
-        int total = 0;
+        Employee employeeBuf = departaments[0].bestEmployee(); //todo имя гавно
+        int total = 0; //todo имя гавно
         for (int i = 1; i < size; i++) {
-
             if(employeeBuf.getSalary() < departaments[i].bestEmployee().getSalary())
                 employeeBuf = departaments[i].bestEmployee();
         }
@@ -118,22 +101,15 @@ public class Organization {
     }
 
     public Departament getEmployeesDepartament(String firstName, String lastName) {
-
-        //todo department.hasEmployee()(DONE)
-
         for (int i = 0; i < size; i++) {
-
             if(departaments[i].hasEmployee(firstName, lastName))
                 return departaments[i];
-
         }
         return null;
     }
 
     //todo аналогично департаментам(DONE)
     private void shift(int i) {
-
         System.arraycopy(this.departaments, i + 1, this.departaments, i, size - i);
-
     }
 }

@@ -3,24 +3,19 @@ public class Employee {
     private String firstName;
     private String secondName;
     private String jobTitle;
-    private final int DEFAULT_SALARY = 0;
+    private static final int DEFAULT_SALARY = 0;
     private int salary;
-
-    //todo литералы - это зло!(DONE)
-    //todo конструкторы должны вызывать друг друга(DONE)
 
     public Employee(){}
 
     public Employee(String firstName, String secondName) {
-        setFirstName(firstName);
-        setSecondName(secondName);
-        setJobTitle("");
-        setSalary(DEFAULT_SALARY);
+        this(firstName, secondName, "", DEFAULT_SALARY);
+
     }
 
     public Employee(String firstName, String secondName, String jobTitle, int salary) {
-
-        this(firstName, secondName);
+        setFirstName(firstName);
+        setSecondName(secondName);
         setJobTitle(jobTitle);
         setSalary(salary);
     }

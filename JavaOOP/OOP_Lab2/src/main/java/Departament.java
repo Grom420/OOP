@@ -5,32 +5,35 @@ public class Departament {
     private Employee[] employees;
     private int size;
 
-    //todo конструкторы должны вызывать друг друга(DONE)
+    //todo конструкторы должны вызывать друг друга
     public Departament(){}
 
+    //todo логично инициировать массив в методе
     public Departament(String name) {
-        setName(name); //todo эта строчка дублируется во всех конструкторах - юзай метод setName()(DONE)
+        setName(name);
         this.employees = new Employee[DEFAULT_CAPACITY];
     }
 
     //todo capacity(DONE)
     public Departament(String name, int capacity) {
-        //todo check capacity(DONE)
         this(name);
-        if (capacity != 0) {
+        if (capacity > 0) {
             employees = new Employee[capacity];
             this.size = 0;
+        } else {
+            this.employees = new Employee[DEFAULT_CAPACITY];
         }
     }
 
     //todo создавай свой массив и копируй элементы в него(DONE)
     public Departament(String name, Employee[] employees) {
-        //todo check length(DONE)
         this(name);
-        if(employees.length != 0) {
-            Employee[] bufEmp = new Employee[employees.length];
+        if(employees.length > 0) {
+            Employee[] bufEmp = new Employee[employees.length];//todo имя - отстой
             System.arraycopy(employees, 0, bufEmp, 0, employees.length);
-            this.employees = bufEmp; //todo copy elements(DONE)
+            this.employees = bufEmp;
+        } else {
+            this.employees = new Employee[DEFAULT_CAPACITY];
         }
     }
 
@@ -45,7 +48,7 @@ public class Departament {
     public int employeesQuantity(String jobTitle){
 
         Employee employee = new Employee();
-        int count = 0;
+        int count = 0; //todo employeesQuantity
         for (int i = 0; i < size; i++) {
             assert false;
             if (employee.getJobTitle().equals(jobTitle))
@@ -56,7 +59,7 @@ public class Departament {
 
     public Employee bestEmployee(){
 
-        Employee bestEmp = employees[0];
+        Employee bestEmp = employees[0]; //todo bestEmployee
         int total = 0;
 
         for (int i = 0; i < size; i++) {
@@ -86,18 +89,13 @@ public class Departament {
     }
 
     public void add(Employee employee) {
-        //todo if(size == length)(DONE)
-        Employee[] newEmployees;
         if (size == employees.length) {
-
+            Employee[] newEmployees;
             newEmployees = new Employee[this.employees.length * 2];
-        } else {
-
-            newEmployees = new Employee[this.employees.length];
+            System.arraycopy(this.employees, 0, newEmployees, 0, this.employees.length);
+            this.employees = newEmployees;
         }
-        System.arraycopy(this.employees, 0, newEmployees, 0, this.employees.length);
-        newEmployees[this.size] = employee;
-        this.employees = newEmployees;
+        this.employees[this.size] = employee;
         this.size++;
     }
 
@@ -119,7 +117,6 @@ public class Departament {
         return size;
     }
 
-    //todo имя метода не соответсвует(DONE)
     private void shift(int i) {
 
         System.arraycopy(this.employees, i + 1, this.employees, i, size - i);
@@ -142,14 +139,13 @@ public class Departament {
                 count++;
             }
         }
-        //todo new array [count](DONE)
-        Employee[] newEmployee2 = new Employee[count];
+        Employee[] newEmployee2 = new Employee[count]; //todo никаких цифр для дифференциации имен
         System.arraycopy(newEmployee, 0, newEmployee2, 0, count);
         return newEmployee2;
     }
 
     public Employee[] employeesSortedBySalary() {
-
+        //todo ГИДЕ СОРТИРОВКААААА.....
         return null;
     }
 }
