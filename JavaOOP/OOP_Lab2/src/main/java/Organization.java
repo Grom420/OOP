@@ -2,22 +2,20 @@ public class Organization {
 
     private String name;
     private Departament[] departaments;
-    private final int DEFAULT_CAPACITY = 16;
+    private static final int DEFAULT_CAPACITY = 16;
     private int size;
 
 
     public Organization(String name) {
-        setName(name);
-        this.departaments = new Departament[DEFAULT_CAPACITY];
+        this(name, new Departament[DEFAULT_CAPACITY]);
     }
 
     public Organization(String name, Departament[] departaments) {
 
-        this(name);
         if (departaments.length != 0) {
-            Departament[] bufDep = new Departament[departaments.length]; //todo имя гавно
-            System.arraycopy(departaments, 0, bufDep, 0, departaments.length);
-            this.departaments = bufDep;
+            Departament[] newDepartamets = new Departament[departaments.length]; //todo имя гавно(DONE)
+            System.arraycopy(departaments, 0, newDepartamets, 0, departaments.length);
+            this.departaments = newDepartamets;
         }
     }
 
@@ -62,9 +60,9 @@ public class Organization {
     }
 
     public Departament[] getDepartaments() {
-        Departament[] newDep = new Departament[this.departaments.length];  //todo имя гавно
-        System.arraycopy(departaments, 0, newDep, 0, departaments.length);
-        return newDep;
+        Departament[] newDepartaments = new Departament[this.departaments.length];  //todo имя гавно(DONE)
+        System.arraycopy(departaments, 0, newDepartaments, 0, departaments.length);
+        return newDepartaments;
     }
 
     public int size() {
@@ -72,32 +70,31 @@ public class Organization {
     }
 
     public int employeesQuantity() {
-        int count = 0; //todo имя гавно
+        int employeesQuantity = 0; //todo имя гавно(DONE)
         for (int i = 0; i < size; i++) {
-            count += departaments[i].size();
+            employeesQuantity += departaments[i].size();
         }
-        return count;
+        return employeesQuantity;
     }
 
     public int employeesQuantity(String jobTitle) {
 
-        int count = 0;//todo имя гавно
+        int employeesQuantity = 0;//todo имя гавно(DONE)
         Departament departament = new Departament();
         for (int i = 0; i < size; i++) {
-            count += departament.employeesQuantity(jobTitle);
+            employeesQuantity += departament.employeesQuantity(jobTitle);
         }
 
-        return count;
+        return employeesQuantity;
     }
 
     public Employee bestEmployee() {
-        Employee employeeBuf = departaments[0].bestEmployee(); //todo имя гавно
-        int total = 0; //todo имя гавно
+        Employee bestEmployee = departaments[0].bestEmployee(); //todo имя гавно(DONE)
         for (int i = 1; i < size; i++) {
-            if(employeeBuf.getSalary() < departaments[i].bestEmployee().getSalary())
-                employeeBuf = departaments[i].bestEmployee();
+            if(bestEmployee.getSalary() < departaments[i].bestEmployee().getSalary())
+                bestEmployee = departaments[i].bestEmployee();
         }
-        return employeeBuf;
+        return bestEmployee;
     }
 
     public Departament getEmployeesDepartament(String firstName, String lastName) {

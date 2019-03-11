@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Departament {
 
     private final int DEFAULT_CAPACITY = 8;
@@ -6,11 +8,12 @@ public class Departament {
     private int size;
 
     //todo конструкторы должны вызывать друг друга
-    public Departament(){}
-
+    public Departament(){
+        this("");
+    }
     //todo логично инициировать массив в методе
     public Departament(String name) {
-        setName(name);
+
         this.employees = new Employee[DEFAULT_CAPACITY];
     }
 
@@ -29,9 +32,9 @@ public class Departament {
     public Departament(String name, Employee[] employees) {
         this(name);
         if(employees.length > 0) {
-            Employee[] bufEmp = new Employee[employees.length];//todo имя - отстой
-            System.arraycopy(employees, 0, bufEmp, 0, employees.length);
-            this.employees = bufEmp;
+            Employee[] newEmployees = new Employee[employees.length];//todo имя - отстой(DONE)
+            System.arraycopy(employees, 0, newEmployees, 0, employees.length);
+            this.employees = newEmployees;
         } else {
             this.employees = new Employee[DEFAULT_CAPACITY];
         }
@@ -48,18 +51,18 @@ public class Departament {
     public int employeesQuantity(String jobTitle){
 
         Employee employee = new Employee();
-        int count = 0; //todo employeesQuantity
+        int employeeQuantity = 0; //todo employeesQuantity(DONE)
         for (int i = 0; i < size; i++) {
             assert false;
             if (employee.getJobTitle().equals(jobTitle))
-                count++;
+                employeeQuantity++;
         }
-        return count;
+        return employeeQuantity;
     }
 
     public Employee bestEmployee(){
 
-        Employee bestEmp = employees[0]; //todo bestEmployee
+        Employee bestEmployee = employees[0]; //todo bestEmployee(DONE)
         int total = 0;
 
         for (int i = 0; i < size; i++) {
@@ -68,11 +71,11 @@ public class Departament {
             if (employee.getSalary() > total) {
 
                 total = employees[i].getSalary();
-                bestEmp = employees[i];
+                bestEmployee = employees[i];
             }
         }
 
-        return bestEmp;
+        return bestEmployee;
     }
 
     public boolean hasEmployee(String firstName, String lastName){
@@ -139,13 +142,56 @@ public class Departament {
                 count++;
             }
         }
-        Employee[] newEmployee2 = new Employee[count]; //todo никаких цифр для дифференциации имен
-        System.arraycopy(newEmployee, 0, newEmployee2, 0, count);
-        return newEmployee2;
+        Employee[] newJobTitleEmployees = new Employee[count]; //todo никаких цифр для дифференциации имен(DONE)
+        System.arraycopy(newEmployee, 0, newJobTitleEmployees, 0, count);
+        return newJobTitleEmployees;
     }
 
-    public Employee[] employeesSortedBySalary() {
-        //todo ГИДЕ СОРТИРОВКААААА.....
-        return null;
+    public Employee[] empoyessSortedBySalary(){
+
+        return sortMerge(this.employees);
+    }
+
+    private static Employee[] sortMerge(Employee[] arrEmployees) {
+        if (arrEmployees.length < 2) return arrEmployees;
+        int middle = arrEmployees.length / 2;
+        return merge(sortMerge(Arrays.copyOfRange(arrEmployees, 0, middle)),
+                sortMerge(Arrays.copyOfRange(arrEmployees, middle, arrEmployees.length)));
+    }
+
+    private static Employee[] merge(Employee[] arrEmployeesOne, Employee[] arrEmployeesTwo) {
+        int len_1 = arrEmployeesOne.length, len_2 = arrEmployeesTwo.length;
+        int countArrOne = 0, countArrTwo = 0, len = len_1 + len_2; // a, b - счетчики в массивах
+        Employee[] result = new Employee[len];
+        for (int i = 0; i < len; i++) {
+            if (countArrTwo < len_2 && countArrOne < len_1) {
+                if (arrEmployeesOne[countArrOne].getSalary() > arrEmployeesTwo[countArrTwo].getSalary()) {
+                    countArrTwo++;
+                    result[i].setSalary(arrEmployeesTwo[countArrTwo].getSalary());
+                    result[i].setJobTitle(arrEmployeesTwo[countArrTwo].getJobTitle());
+                    result[i].setFirstName(arrEmployeesTwo[countArrTwo].getFirstName());
+                    result[i].setSecondName(arrEmployeesTwo[countArrTwo].getSecondName());
+                } else {
+                    countArrOne++;
+                    result[i].setSalary(arrEmployeesOne[countArrOne].getSalary());
+                    result[i].setJobTitle(arrEmployeesOne[countArrOne].getJobTitle());
+                    result[i].setFirstName(arrEmployeesOne[countArrOne].getFirstName());
+                    result[i].setSecondName(arrEmployeesOne[countArrOne].getSecondName());
+                }
+            } else if (countArrTwo < len_2) {
+                countArrTwo++;
+                result[i].setSalary(arrEmployeesTwo[countArrTwo].getSalary());
+                result[i].setJobTitle(arrEmployeesTwo[countArrTwo].getJobTitle());
+                result[i].setFirstName(arrEmployeesTwo[countArrTwo].getFirstName());
+                result[i].setSecondName(arrEmployeesTwo[countArrTwo].getSecondName());
+            } else {
+                countArrOne++;
+                result[i].setSalary(arrEmployeesOne[countArrOne].getSalary());
+                result[i].setJobTitle(arrEmployeesOne[countArrOne].getJobTitle());
+                result[i].setFirstName(arrEmployeesOne[countArrOne].getFirstName());
+                result[i].setSecondName(arrEmployeesOne[countArrOne].getSecondName());
+            }
+        }
+        return result;
     }
 }
