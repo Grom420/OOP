@@ -1,4 +1,4 @@
-import humanresources.JobTitilesEnum;
+package humanresources;
 
 import java.util.Objects;
 
@@ -58,7 +58,7 @@ abstract public class Employee {
 
     abstract int getBonus();
 
-    abstract int setBonus();
+    abstract void setBonus(int bonus);
 
     @Override
     public boolean equals(Object obj) {
@@ -76,18 +76,12 @@ abstract public class Employee {
         return Objects.hash(firstName, secondName, jobTitle, salary);
     }
 
-    private boolean isDone(Object obj){
-
-        if (!obj.equals(null) && !obj.equals("") && !obj.equals(0) && !obj.equals("null"))
-            return true;
-        else
-            return false;
-    }
-
     @Override
     public String toString() {
-        if(isDone(secondName) && isDone(firstName) && isDone(jobTitle) && isDone(salary))
-            return secondName + " " + firstName + "," + jobTitle + "," + salary;
+        if(!secondName.equals("") && !firstName.equals("")
+                && !jobTitle.equals(JobTitilesEnum.NONE)
+                && salary != 0)
+            return secondName + " " + firstName + "," + jobTitle + "," + salary + "р.";
         else return null;
     }
 }

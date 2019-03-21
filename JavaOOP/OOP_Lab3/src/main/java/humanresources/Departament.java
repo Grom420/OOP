@@ -1,3 +1,5 @@
+package humanresources;
+
 import java.util.Arrays;
 
 public class Departament {
@@ -50,7 +52,17 @@ public class Departament {
 
     public int employeesQuantity(String jobTitle){
 
-        Employee employee = new Employee();
+        Employee employee = new Employee() {
+            @Override
+            int getBonus() {
+                return 0;
+            }
+
+            @Override
+            void setBonus(int bonus) {
+
+            }
+        };
         int employeeQuantity = 0; //todo employeesQuantity(DONE)
         for (int i = 0; i < size; i++) {
             assert false;
@@ -194,4 +206,73 @@ public class Departament {
         }
         return result;
     }
+
+    public boolean removeEmployee(Employee employee){
+
+        for (int i = 0; i < size(); i++) {
+            if(employees[i].equals(employee)){
+                shift(i);
+            }
+        }
+        return false;
+    }
+
+    public int removeAll(JobTitilesEnum jobTitle){
+
+        int countRemovedJobTitilleEmplopyee = 0;
+
+        for (int i = 0; i < size(); i++) {
+            if(employees[i].getJobTitle().equals(jobTitle)){
+                shift(i);
+                this.employees[size] = null;
+                this.size--;
+                countRemovedJobTitilleEmplopyee++;
+            }
+        }
+        return countRemovedJobTitilleEmplopyee;
+    }
+
+    public Employee getEmployee(String firstName, String lastName){
+
+        for (int i = 0; i < size(); i++) {
+            if (employees[i].getFirstName().equals(firstName) && employees[i].getSecondName().equals(lastName))
+                return employees[i];
+        }
+        return null;
+    }
+
+    public JobTitilesEnum[] jobTitles(){
+
+        JobTitilesEnum[] jobTitles = new JobTitilesEnum[size()];
+
+        for (int i = 0; i < size(); i++) {
+            if(!isCheck(employees[i].getJobTitle(), jobTitles))
+                jobTitles[i] = employees[i].getJobTitle();
+        }
+        return jobTitles;
+    }
+
+    public boolean isCheck(JobTitilesEnum job, JobTitilesEnum[] jobTitles){
+
+        for (int i = 0; i < jobTitles.length; i++) {
+            if(jobTitles[i].equals(job))
+                return true;
+        }
+        return false;
+    }
+
+    public Employee getEmployeeWithBestSalary(){
+
+        int maxSalary = employees[0].getSalary();
+        Employee employeeWithBestSalary = employees[0];
+        for (int i = 1; i < size(); i++) {
+            if(employees[i].getSalary() > maxSalary){
+                maxSalary = employees[i].getSalary();
+                employeeWithBestSalary = employees[i];
+            }
+        }
+        return employeeWithBestSalary;
+    }
+
+
 }

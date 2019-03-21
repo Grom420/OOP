@@ -1,3 +1,8 @@
+package humanresources;
+
+import humanresources.Departament;
+import humanresources.Employee;
+
 public class Organization {
 
     private String name;
