@@ -4,20 +4,25 @@ public class DepartamentsManager implements EmployeeGroup {
 
     private String name;
     private Departament[] departaments;
+    private Employee[] groups;
     private static final int DEFAULT_CAPACITY = 16;
     private int size;
+    private int groupsSize;
 
 
-    public DepartamentsManager(String name) {
-        this(name, new Departament[DEFAULT_CAPACITY]);
+    public DepartamentsManager(String name, String groupsName) {
+        this(name, groupsName,  new Departament[DEFAULT_CAPACITY], new Employee[DEFAULT_CAPACITY]);
     }
 
-    public DepartamentsManager(String name, Departament[] departaments) {
+    public DepartamentsManager(String name, String groupsName, Departament[] departaments, Employee[] groups) {
 
-        if (departaments.length != 0) {
-            Departament[] newDepartamets = new Departament[departaments.length]; //todo имя гавно(DONE)
+        if (departaments.length != 0 && groups.length != 0) {
+            Departament[] newDepartamets = new Departament[departaments.length];
             System.arraycopy(departaments, 0, newDepartamets, 0, departaments.length);
             this.departaments = newDepartamets;
+            Employee[] newEmployees = new Employee[groups.length];
+            System.arraycopy(groups, 0, newEmployees, 0, groups.length);
+            this.groups = newEmployees;
         }
     }
 
@@ -25,13 +30,23 @@ public class DepartamentsManager implements EmployeeGroup {
         this.name = name;
     }
 
-    @Override
     public void add(Employee employee) {
-        
+        if (groupsSize == groups.length) {
+            Employee[] newEmployees;
+            newEmployees = new Employee[this.groups.length * 2];
+            System.arraycopy(this.groups, 0, newEmployees, 0, this.groups.length);
+            this.groups = newEmployees;
+        }
+        this.groups[this.groupsSize] = employee;
+        this.groupsSize++;
     }
 
     @Override
     public Employee getEmployee(String firstName, String lastName) {
+        for (int i = 0; i < employeeQuantity(); i++) {
+            if (groups[i].getFirstName().equals(firstName) && groups[i].getSecondName().equals(lastName))
+                return groups[i];
+        }
         return null;
     }
 
