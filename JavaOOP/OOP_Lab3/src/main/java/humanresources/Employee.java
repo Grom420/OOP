@@ -58,6 +58,8 @@ abstract public class Employee {
 
     abstract int getBonus();
 
+    public abstract boolean isTraveller();
+
     abstract void setBonus(int bonus);
 
     @Override

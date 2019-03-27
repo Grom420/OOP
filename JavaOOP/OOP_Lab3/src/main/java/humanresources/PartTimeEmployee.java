@@ -23,6 +23,11 @@ public class PartTimeEmployee extends Employee {
     }
 
     @Override
+    public boolean isTraveller() {
+        return false;
+    }
+
+    @Override
     void setBonus(int bonus) { }
 
 

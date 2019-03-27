@@ -1,9 +1,6 @@
 package humanresources;
 
-import humanresources.Departament;
-import humanresources.Employee;
-
-public class Organization {
+public class DepartamentsManager implements EmployeeGroup {
 
     private String name;
     private Departament[] departaments;
@@ -11,11 +8,11 @@ public class Organization {
     private int size;
 
 
-    public Organization(String name) {
+    public DepartamentsManager(String name) {
         this(name, new Departament[DEFAULT_CAPACITY]);
     }
 
-    public Organization(String name, Departament[] departaments) {
+    public DepartamentsManager(String name, Departament[] departaments) {
 
         if (departaments.length != 0) {
             Departament[] newDepartamets = new Departament[departaments.length]; //todo имя гавно(DONE)
@@ -26,6 +23,26 @@ public class Organization {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void add(Employee employee) {
+        
+    }
+
+    @Override
+    public Employee getEmployee(String firstName, String lastName) {
+        return null;
+    }
+
+    @Override
+    public void removeEmployee(String firstName, String lastName) {
+
+    }
+
+    @Override
+    public void remove(Employee employee) {
+
     }
 
     public void add(Departament departament) {
@@ -77,7 +94,7 @@ public class Organization {
     public int employeesQuantity() {
         int employeesQuantity = 0; //todo имя гавно(DONE)
         for (int i = 0; i < size; i++) {
-            employeesQuantity += departaments[i].size();
+            employeesQuantity += departaments[i].employeeQuantity();
         }
         return employeesQuantity;
     }
@@ -102,6 +119,21 @@ public class Organization {
         return bestEmployee;
     }
 
+    @Override
+    public int employeeQuantity() {
+        return 0;
+    }
+
+    @Override
+    public Employee[] getEmployees() {
+        return new Employee[0];
+    }
+
+    @Override
+    public Employee[] employeesSortedBySalary() {
+        return new Employee[0];
+    }
+
     public Departament getEmployeesDepartament(String firstName, String lastName) {
         for (int i = 0; i < size; i++) {
             if(departaments[i].hasEmployee(firstName, lastName))
@@ -114,4 +146,11 @@ public class Organization {
     private void shift(int i) {
         System.arraycopy(this.departaments, i + 1, this.departaments, i, size - i);
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+
 }

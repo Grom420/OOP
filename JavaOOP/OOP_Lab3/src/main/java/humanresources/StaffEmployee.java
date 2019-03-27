@@ -30,13 +30,15 @@ public class StaffEmployee extends Employee implements BusinessTraveller {
         this.bonus = DEFAULT_BONUS;
     }
 
-    public boolean isTravel(Employee employee){
-        return false;
-    }
 
     @Override
     public int getBonus() {
         return bonus;
+    }
+
+    @Override
+    public boolean isTraveller() {
+        return travelsQuantity > 0;
     }
 
     @Override

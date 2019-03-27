@@ -1,8 +1,9 @@
 package humanresources;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-public class Departament {
+public class Departament implements EmployeeGroup {
 
     private final int DEFAULT_CAPACITY = 8;
     private String name;
@@ -61,6 +62,11 @@ public class Departament {
             @Override
             void setBonus(int bonus) {
 
+            }
+
+            @Override
+            public boolean isTraveller(){
+                return false;
             }
         };
         int employeeQuantity = 0; //todo employeesQuantity(DONE)
@@ -127,7 +133,7 @@ public class Departament {
         return false;
     }
 
-    public int size() {
+    public int employeeQuantity() {
 
         return size;
     }
@@ -159,7 +165,7 @@ public class Departament {
         return newJobTitleEmployees;
     }
 
-    public Employee[] empoyessSortedBySalary(){
+    public Employee[] employeesSortedBySalary(){
 
         return sortMerge(this.employees);
     }
@@ -207,21 +213,29 @@ public class Departament {
         return result;
     }
 
-    public boolean removeEmployee(Employee employee){
+    public void remove(Employee employee){
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < employeeQuantity(); i++) {
             if(employees[i].equals(employee)){
                 shift(i);
             }
         }
-        return false;
+    }
+
+    public void removeEmployee(String firstName, String lastName){
+
+        for (int i = 0; i < employeeQuantity(); i++) {
+            if(employees[i].getFirstName().equals(firstName) && employees[i].getSecondName().equals(lastName)){
+                shift(i);
+            }
+        }
     }
 
     public int removeAll(JobTitilesEnum jobTitle){
 
         int countRemovedJobTitilleEmplopyee = 0;
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < employeeQuantity(); i++) {
             if(employees[i].getJobTitle().equals(jobTitle)){
                 shift(i);
                 this.employees[size] = null;
@@ -234,7 +248,7 @@ public class Departament {
 
     public Employee getEmployee(String firstName, String lastName){
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < employeeQuantity(); i++) {
             if (employees[i].getFirstName().equals(firstName) && employees[i].getSecondName().equals(lastName))
                 return employees[i];
         }
@@ -243,9 +257,9 @@ public class Departament {
 
     public JobTitilesEnum[] jobTitles(){
 
-        JobTitilesEnum[] jobTitles = new JobTitilesEnum[size()];
+        JobTitilesEnum[] jobTitles = new JobTitilesEnum[employeeQuantity()];
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < employeeQuantity(); i++) {
             if(!isCheck(employees[i].getJobTitle(), jobTitles))
                 jobTitles[i] = employees[i].getJobTitle();
         }
@@ -265,7 +279,7 @@ public class Departament {
 
         int maxSalary = employees[0].getSalary();
         Employee employeeWithBestSalary = employees[0];
-        for (int i = 1; i < size(); i++) {
+        for (int i = 1; i < employeeQuantity(); i++) {
             if(employees[i].getSalary() > maxSalary){
                 maxSalary = employees[i].getSalary();
                 employeeWithBestSalary = employees[i];
@@ -274,5 +288,53 @@ public class Departament {
         return employeeWithBestSalary;
     }
 
+    public Employee[] businessTravellers(){
 
+        Employee[] newEmployee = new Employee[employeeQuantity()];
+        int count = 0;
+        for (int i = 0; i < employeeQuantity(); i++) {
+            if(employees[i].isTraveller()){
+                newEmployee[count] = employees[i];
+                count++;
+
+            }
+        }
+        Employee[] businessTravellers = new Employee[count];
+        System.arraycopy(newEmployee, 0, businessTravellers, 0, count);
+        return businessTravellers;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Departament");
+        sb.append(" ").append(name).append(":").append(size).append("\n");
+        if (employees == null) {
+            sb.append("Employee=").append(" null\n");
+        } else for (int i = 0; i < size; i++) {
+            sb.append('<').append(employees[i]).append(">\n");
+        }
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Departament that = (Departament) o;
+        return size == that.size &&
+                getName().equals(that.getName()) &&
+                Arrays.equals(getEmployees(), that.getEmployees());
+    }
+
+    @Override
+    public int hashCode() {
+        int hcObj = Objects.hashCode(employees[0]);
+        int hcPos = Objects.hashCode(0);
+        for (int i = 1; i < employees.length; i++) {
+            hcObj ^= Objects.hashCode(employees[i]);
+            hcPos ^= i;
+        }
+        return hcObj ^ hcPos;
+    }
 }
