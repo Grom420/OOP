@@ -83,7 +83,7 @@ abstract public class Employee {
         if(!secondName.equals("") && !firstName.equals("")
                 && !jobTitle.equals(JobTitilesEnum.NONE)
                 && salary != 0)
-            return secondName + " " + firstName + "," + jobTitle + "," + salary + "р.";
-        else return null;
+            return secondName + " " + firstName + "," + jobTitle + "," + salary + "р."; //todo String.format
+        else return "";
     }
 }

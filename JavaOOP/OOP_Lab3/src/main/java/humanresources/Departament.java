@@ -5,37 +5,31 @@ import java.util.Objects;
 
 public class Departament implements EmployeeGroup {
 
-    private final int DEFAULT_CAPACITY = 8;
+    private static final int DEFAULT_CAPACITY = 8;
     private String name;
     private Employee[] employees;
     private int size;
 
-    //todo конструкторы должны вызывать друг друга
     public Departament(){
         this("");
     }
-    //todo логично инициировать массив в методе
     public Departament(String name) {
-
-        this.employees = new Employee[DEFAULT_CAPACITY];
+        this(name, DEFAULT_CAPACITY);
     }
 
-    //todo capacity(DONE)
     public Departament(String name, int capacity) {
-        this(name);
+        this.name = name;
         if (capacity > 0) {
             employees = new Employee[capacity];
-            this.size = 0;
         } else {
             this.employees = new Employee[DEFAULT_CAPACITY];
         }
     }
 
-    //todo создавай свой массив и копируй элементы в него(DONE)
     public Departament(String name, Employee[] employees) {
         this(name);
         if(employees.length > 0) {
-            Employee[] newEmployees = new Employee[employees.length];//todo имя - отстой(DONE)
+            Employee[] newEmployees = new Employee[employees.length];
             System.arraycopy(employees, 0, newEmployees, 0, employees.length);
             this.employees = newEmployees;
         } else {
@@ -52,55 +46,30 @@ public class Departament implements EmployeeGroup {
     }
 
     public int employeesQuantity(JobTitilesEnum jobTitle){
-
-        Employee employee = new Employee() {
-            @Override
-            int getBonus() {
-                return 0;
-            }
-
-            @Override
-            void setBonus(int bonus) {
-
-            }
-
-            @Override
-            public boolean isTraveller(){
-                return false;
-            }
-        };
-        int employeeQuantity = 0; //todo employeesQuantity(DONE)
+        int employeeQuantity = 0;
         for (int i = 0; i < size; i++) {
             assert false;
-            if (employee.getJobTitle().equals(jobTitle))
+            if (employees[i].getJobTitle().equals(jobTitle))
                 employeeQuantity++;
         }
         return employeeQuantity;
     }
 
     public Employee bestEmployee(){
-
-        Employee bestEmployee = employees[0]; //todo bestEmployee(DONE)
-        int total = 0;
-
+        Employee bestEmployee = employees[0];
         for (int i = 0; i < size; i++) {
             Employee employee = employees[i];
-
-            if (employee.getSalary() > total) {
-
-                total = employees[i].getSalary();
+            if (employee.getSalary() > bestEmployee.getSalary()) {
                 bestEmployee = employees[i];
             }
         }
-
         return bestEmployee;
     }
 
+    //todo делай метод indexOf(String String): -1 если нет сотрудника
+    //todo убираем дублирование
     public boolean hasEmployee(String firstName, String lastName){
-
-
         for (int i = 0; i < size; i++) {
-
             Employee employee = employees[i];
             if (employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName)) {
                 return true;
@@ -120,6 +89,7 @@ public class Departament implements EmployeeGroup {
         this.size++;
     }
 
+    //todo убираем дублирование
     public boolean remove(String firstName, String secondName) {
 
         for (int i = 0; i < employees.length; i++) {
@@ -160,7 +130,7 @@ public class Departament implements EmployeeGroup {
                 count++;
             }
         }
-        Employee[] newJobTitleEmployees = new Employee[count]; //todo никаких цифр для дифференциации имен(DONE)
+        Employee[] newJobTitleEmployees = new Employee[count];
         System.arraycopy(newEmployee, 0, newJobTitleEmployees, 0, count);
         return newJobTitleEmployees;
     }
@@ -210,6 +180,7 @@ public class Departament implements EmployeeGroup {
         }
     }
 
+    //todo этот метод нахер
     public void removeEmployee(String firstName, String lastName){
 
         for (int i = 0; i < employeeQuantity(); i++) {
@@ -234,6 +205,7 @@ public class Departament implements EmployeeGroup {
         return countRemovedJobTitleEmployee;
     }
 
+    //todo убираем дублирование
     public Employee getEmployee(String firstName, String lastName){
 
         for (int i = 0; i < employeeQuantity(); i++) {
@@ -244,32 +216,23 @@ public class Departament implements EmployeeGroup {
     }
 
     public JobTitilesEnum[] jobTitles(){
-
-        JobTitilesEnum[] jobTitles = new JobTitilesEnum[employeeQuantity()];
-
-        for (int i = 0; i < employeeQuantity(); i++) {
-            if(!isCheck(employees[i].getJobTitle(), jobTitles))
-                jobTitles[i] = employees[i].getJobTitle();
+        JobTitilesEnum[] jobTitles = JobTitilesEnum.values();
+        for (JobTitilesEnum title : jobTitles) {
+            title = null;
         }
+        for (int i = 0; i < employeeQuantity(); i++) {
+            JobTitilesEnum jobTitle = employees[i].getJobTitle();
+            jobTitles[jobTitle.ordinal()] =jobTitle;
+        }
+
+        //todo вернуть массив без null
         return jobTitles;
     }
 
-    public boolean isCheck(JobTitilesEnum job, JobTitilesEnum[] jobTitles){
-
-        for (int i = 0; i < jobTitles.length; i++) {
-            if(jobTitles[i].equals(job))
-                return true;
-        }
-        return false;
-    }
-
     public Employee getEmployeeWithBestSalary(){
-
-        int maxSalary = employees[0].getSalary();
         Employee employeeWithBestSalary = employees[0];
         for (int i = 1; i < employeeQuantity(); i++) {
-            if(employees[i].getSalary() > maxSalary){
-                maxSalary = employees[i].getSalary();
+            if(employees[i].getSalary() > employeeWithBestSalary.getSalary()){
                 employeeWithBestSalary = employees[i];
             }
         }
@@ -294,12 +257,16 @@ public class Departament implements EmployeeGroup {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Departament");
-        sb.append(" ").append(name).append(":").append(size).append("\n");
-        if (employees == null) {
-            sb.append("Employee=").append(" null\n");
-        } else for (int i = 0; i < size; i++) {
-            sb.append('<').append(employees[i]).append(">\n");
+        final StringBuilder sb = new StringBuilder("Departament");
+        sb.append(" ").
+                append(name).
+                append(":").
+                append(size).
+                append("\n");
+        if (size >= 0) {
+            for (int i = 0; i < size; i++) {
+                sb.append('<').append(employees[i]).append(">\n");
+            }
         }
         sb.append('}');
         return sb.toString();
@@ -312,14 +279,14 @@ public class Departament implements EmployeeGroup {
         Departament that = (Departament) o;
         return size == that.size &&
                 getName().equals(that.getName()) &&
-                Arrays.equals(getEmployees(), that.getEmployees());
+                Arrays.deepEquals(getEmployees(), that.getEmployees());
     }
 
     @Override
     public int hashCode() {
         int hcObj = Objects.hashCode(employees[0]);
         int hcPos = Objects.hashCode(0);
-        for (int i = 1; i < employees.length; i++) {
+        for (int i = 1; i < size; i++) {
             hcObj ^= Objects.hashCode(employees[i]);
             hcPos ^= i;
         }

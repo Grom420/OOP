@@ -1,7 +1,7 @@
 package humanresources;
 
-public class Node {
+class Node<T> {
 
-    Node next;
-    Employee value;
+    Node<T> next;
+    T value;
 }

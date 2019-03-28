@@ -1,7 +1,7 @@
 package humanresources;
 
 public class DepartamentsManager implements GroupsManager {
-
+    //todo если раньше работали с типом Departament, то теперь везде тип EmployeeGroup - и тип массива, и параметры методов, и возвращаемые типы, и типы переменных
     private String name;
     private Departament[] departaments;
     private EmployeeGroup[] groups;
@@ -9,7 +9,6 @@ public class DepartamentsManager implements GroupsManager {
     private int size;
     private int groupsSize;
     private int countDeletedGroup;
-
 
     public DepartamentsManager(String name, String groupsName) {
         this(name, groupsName,  new Departament[DEFAULT_CAPACITY], new Employee[DEFAULT_CAPACITY]);
@@ -59,21 +58,6 @@ public class DepartamentsManager implements GroupsManager {
         EmployeeGroup[] newGroups = new EmployeeGroup[this.groups.length];
         System.arraycopy(groups, 0, newGroups, 0, groups.length);
         return newGroups;
-    }
-
-
-
-    public void add(Departament departament) {
-
-        if(size == departaments.length) {
-            Departament[] newDepartaments;
-            newDepartaments = new Departament[this.departaments.length * 2];
-            System.arraycopy(this.departaments, 0, newDepartaments, 0, this.departaments.length + 1);
-            this.departaments = newDepartaments;
-        }
-        departaments[size] = departament;
-
-        this.size++;
     }
 
 

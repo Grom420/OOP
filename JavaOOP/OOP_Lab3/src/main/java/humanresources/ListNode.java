@@ -1,6 +1,6 @@
 package humanresources;
 
-public class ListNode {
+class ListNode {
 
     ListNode next;
     ListNode prev;

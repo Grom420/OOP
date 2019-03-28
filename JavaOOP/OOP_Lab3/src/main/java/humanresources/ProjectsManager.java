@@ -1,9 +1,9 @@
 package humanresources;
 
-public class ProjectsManager implements GroupsManager {
+public class ProjectsManager extends List<EmployeeGroup> implements GroupsManager {
 
-    private ProjectsNode head;
-    private ProjectsNode tail;
+    private Node<Project> head;
+    private Node<Project> tail;
     private int size;
 
     public ProjectsManager(){}

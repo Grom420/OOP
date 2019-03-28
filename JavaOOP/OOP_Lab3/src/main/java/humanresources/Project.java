@@ -2,12 +2,12 @@ package humanresources;
 
 import java.util.Objects;
 
-public class Project implements EmployeeGroup {
+public class Project extends List<Employee> implements EmployeeGroup {
 
     private String name;
     private int size;
-    private Node head;
-    private Node tail;
+    private Node<Employee> head;
+    private Node<Employee> tail;
 
     public Project(String name) {
         this.name = name;
@@ -30,18 +30,6 @@ public class Project implements EmployeeGroup {
         this.name = name;
     }
 
-    public void add(Employee employee) {
-        Node a = new Node();
-        a.value = employee;
-        if (tail == null)
-        {
-            head = a;
-            tail = a;
-        } else {
-            tail.next = a;
-            tail = a;
-        }
-    }
 
     public Employee getEmployee(String firstName, String lastName){
 
@@ -53,7 +41,13 @@ public class Project implements EmployeeGroup {
             return head.value;
         }
 
-        Node t = head;
+        Node<Employee> t = head;
+
+        //todo благодаря итератору можно делать так
+        for(Employee employee : this) {
+            employee.getFirstName().equals(firstName)
+        }
+
         while (t.next != null) {
             if (t.next.value.getFirstName().equals(firstName) && t.next.value.getSecondName().equals(lastName)) {
                 if (tail.value.getFirstName().equals(t.next.value.getFirstName())
@@ -79,14 +73,15 @@ public class Project implements EmployeeGroup {
             this.size--;
         }
 
-        Node t = head;
+        Node<Employee> t = head;
+        //todo че за t емае!?
         while (t.next != null) {
             if (t.next.value.getFirstName().equals(firstName) && t.next.value.getSecondName().equals(lastName)) {
-                if (tail.value.getFirstName().equals(t.next.value.getFirstName())
-                        && tail.value.getSecondName().equals(t.next.value.getSecondName())) {
+                if (t.next == tail) {
                     tail = t;
-                }
-                t.next = t.next.next;
+                    t.next = null;
+                } else
+                    t.next = t.next.next;
                 this.size--;
             }
             t = t.next;
@@ -199,6 +194,7 @@ public class Project implements EmployeeGroup {
 
     @Override
     public String toString() {
+        //todo StringBuilder
         Employee[] employees = getEmployees();
         final StringBuffer sb = new StringBuffer("Project ");
         sb.append(name).append(":").append(size).append("\n");

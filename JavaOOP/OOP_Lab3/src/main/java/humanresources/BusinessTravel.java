@@ -14,9 +14,8 @@ public final class BusinessTravel {
     private final static String DEFAULT_DESCRIPTION = "";
     private final static String DEFAULT_DESTINATION = "";
 
-
+    //todo вызывай конструктор другой
     public BusinessTravel(){
-
         this.compensation = DEFAULT_COMPENSATION;
         this.daysCount = DEFAULT_DAYS_COUNT;
         this.description = DEFAULT_DESCRIPTION;
@@ -65,5 +64,5 @@ public final class BusinessTravel {
     @Override
     public String toString() {
         return destination + " " + daysCount + " (" + compensation + "). " + description;
-    }
+    } //todo String.format()
 }

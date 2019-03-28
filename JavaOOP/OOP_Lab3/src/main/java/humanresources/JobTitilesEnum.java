@@ -1,7 +1,6 @@
 package humanresources;
 
 public enum JobTitilesEnum {
-
     ACCOUNTANT,
     ADMINISTRATOR,
     AGENT,
