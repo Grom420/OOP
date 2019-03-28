@@ -221,17 +221,17 @@ public class Departament implements EmployeeGroup {
 
     public int removeAll(JobTitilesEnum jobTitle){
 
-        int countRemovedJobTitilleEmplopyee = 0;
+        int countRemovedJobTitleEmployee = 0;
 
         for (int i = 0; i < employeeQuantity(); i++) {
             if(employees[i].getJobTitle().equals(jobTitle)){
                 shift(i);
                 this.employees[size] = null;
                 this.size--;
-                countRemovedJobTitilleEmplopyee++;
+                countRemovedJobTitleEmployee++;
             }
         }
-        return countRemovedJobTitilleEmplopyee;
+        return countRemovedJobTitleEmployee;
     }
 
     public Employee getEmployee(String firstName, String lastName){
