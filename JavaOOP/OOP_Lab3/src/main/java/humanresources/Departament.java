@@ -178,36 +178,24 @@ public class Departament implements EmployeeGroup {
     }
 
     private static Employee[] merge(Employee[] arrEmployeesOne, Employee[] arrEmployeesTwo) {
-        int len_1 = arrEmployeesOne.length, len_2 = arrEmployeesTwo.length;
-        int countArrOne = 0, countArrTwo = 0, len = len_1 + len_2; // a, b - счетчики в массивах
-        Employee[] result = new Employee[len];
-        for (int i = 0; i < len; i++) {
-            if (countArrTwo < len_2 && countArrOne < len_1) {
+        int lenArrOne = arrEmployeesOne.length, lenArrTwo = arrEmployeesTwo.length;
+        int countArrOne = 0, countArrTwo = 0, lenAll = lenArrOne + lenArrTwo;
+        Employee[] result = new Employee[lenAll];
+        for (int i = 0; i < lenAll; i++) {
+            if (countArrTwo < lenArrTwo && countArrOne < lenArrOne) {
                 if (arrEmployeesOne[countArrOne].getSalary() > arrEmployeesTwo[countArrTwo].getSalary()) {
                     countArrTwo++;
-                    result[i].setSalary(arrEmployeesTwo[countArrTwo].getSalary());
-                    result[i].setJobTitle(arrEmployeesTwo[countArrTwo].getJobTitle());
-                    result[i].setFirstName(arrEmployeesTwo[countArrTwo].getFirstName());
-                    result[i].setSecondName(arrEmployeesTwo[countArrTwo].getSecondName());
+                    result[i] = arrEmployeesTwo[countArrTwo];
                 } else {
                     countArrOne++;
-                    result[i].setSalary(arrEmployeesOne[countArrOne].getSalary());
-                    result[i].setJobTitle(arrEmployeesOne[countArrOne].getJobTitle());
-                    result[i].setFirstName(arrEmployeesOne[countArrOne].getFirstName());
-                    result[i].setSecondName(arrEmployeesOne[countArrOne].getSecondName());
+                    result[i] = arrEmployeesOne[countArrOne];
                 }
-            } else if (countArrTwo < len_2) {
+            } else if (countArrTwo < lenArrTwo) {
                 countArrTwo++;
-                result[i].setSalary(arrEmployeesTwo[countArrTwo].getSalary());
-                result[i].setJobTitle(arrEmployeesTwo[countArrTwo].getJobTitle());
-                result[i].setFirstName(arrEmployeesTwo[countArrTwo].getFirstName());
-                result[i].setSecondName(arrEmployeesTwo[countArrTwo].getSecondName());
+                result[i] = arrEmployeesTwo[countArrTwo];
             } else {
                 countArrOne++;
-                result[i].setSalary(arrEmployeesOne[countArrOne].getSalary());
-                result[i].setJobTitle(arrEmployeesOne[countArrOne].getJobTitle());
-                result[i].setFirstName(arrEmployeesOne[countArrOne].getFirstName());
-                result[i].setSecondName(arrEmployeesOne[countArrOne].getSecondName());
+                result[i] = arrEmployeesOne[countArrOne];
             }
         }
         return result;
