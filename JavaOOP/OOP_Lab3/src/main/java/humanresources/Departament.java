@@ -51,7 +51,7 @@ public class Departament implements EmployeeGroup {
         this.name = name;
     }
 
-    public int employeesQuantity(String jobTitle){
+    public int employeesQuantity(JobTitilesEnum jobTitle){
 
         Employee employee = new Employee() {
             @Override

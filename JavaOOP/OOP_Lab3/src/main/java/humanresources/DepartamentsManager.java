@@ -1,13 +1,14 @@
 package humanresources;
 
-public class DepartamentsManager implements EmployeeGroup {
+public class DepartamentsManager implements GroupsManager {
 
     private String name;
     private Departament[] departaments;
-    private Employee[] groups;
+    private EmployeeGroup[] groups;
     private static final int DEFAULT_CAPACITY = 16;
     private int size;
     private int groupsSize;
+    private int countDeletedGroup;
 
 
     public DepartamentsManager(String name, String groupsName) {
@@ -20,7 +21,7 @@ public class DepartamentsManager implements EmployeeGroup {
             Departament[] newDepartamets = new Departament[departaments.length];
             System.arraycopy(departaments, 0, newDepartamets, 0, departaments.length);
             this.departaments = newDepartamets;
-            Employee[] newEmployees = new Employee[groups.length];
+            EmployeeGroup[] newEmployees = new EmployeeGroup[groups.length];
             System.arraycopy(groups, 0, newEmployees, 0, groups.length);
             this.groups = newEmployees;
         }
@@ -30,35 +31,37 @@ public class DepartamentsManager implements EmployeeGroup {
         this.name = name;
     }
 
-    public void add(Employee employee) {
+    public void add(EmployeeGroup employeeGroup) {
         if (groupsSize == groups.length) {
-            Employee[] newEmployees;
-            newEmployees = new Employee[this.groups.length * 2];
+            EmployeeGroup[] newEmployees;
+            newEmployees = new EmployeeGroup[this.groups.length * 2];
             System.arraycopy(this.groups, 0, newEmployees, 0, this.groups.length);
             this.groups = newEmployees;
         }
-        this.groups[this.groupsSize] = employee;
+        this.groups[this.groupsSize] = employeeGroup;
         this.groupsSize++;
     }
 
-    @Override
-    public Employee getEmployee(String firstName, String lastName) {
-        for (int i = 0; i < employeeQuantity(); i++) {
-            if (groups[i].getFirstName().equals(firstName) && groups[i].getSecondName().equals(lastName))
+    public int groupsQuantity() {
+        return groupsSize;
+    }
+
+    public EmployeeGroup getEmployeeGroup(String name){
+        for (int i = 0; i < groupsQuantity(); i++) {
+            if(groups[i].getName().equals(name))
                 return groups[i];
         }
         return null;
     }
 
-    @Override
-    public void removeEmployee(String firstName, String lastName) {
+    public EmployeeGroup[] getEmployeesGroups(){
 
+        EmployeeGroup[] newGroups = new EmployeeGroup[this.groups.length];
+        System.arraycopy(groups, 0, newGroups, 0, groups.length);
+        return newGroups;
     }
 
-    @Override
-    public void remove(Employee employee) {
 
-    }
 
     public void add(Departament departament) {
 
@@ -74,12 +77,23 @@ public class DepartamentsManager implements EmployeeGroup {
     }
 
 
-    public void remove(String name) {
+    public void removeDepartament(String name) {
 
         for (int i = 0; i < departaments.length; i++) {
             if (departaments[i].getName().equals(name)) {
-                shift(i);
+                shiftDepartment(i);
                 this.departaments[size] = null;
+                this.size--;
+            }
+        }
+    }
+
+    public void remove(String groupName){
+
+        for (int i = 0; i < groups.length; i++) {
+            if (groups[i].getName().equals(groupName)) {
+                shiftGroups(i);
+                this.groups[groupsQuantity()] = null;
                 this.size--;
             }
         }
@@ -97,7 +111,7 @@ public class DepartamentsManager implements EmployeeGroup {
     }
 
     public Departament[] getDepartaments() {
-        Departament[] newDepartaments = new Departament[this.departaments.length];  //todo имя гавно(DONE)
+        Departament[] newDepartaments = new Departament[this.departaments.length];
         System.arraycopy(departaments, 0, newDepartaments, 0, departaments.length);
         return newDepartaments;
     }
@@ -107,16 +121,16 @@ public class DepartamentsManager implements EmployeeGroup {
     }
 
     public int employeesQuantity() {
-        int employeesQuantity = 0; //todo имя гавно(DONE)
+        int employeesQuantity = 0;
         for (int i = 0; i < size; i++) {
             employeesQuantity += departaments[i].employeeQuantity();
         }
         return employeesQuantity;
     }
 
-    public int employeesQuantity(String jobTitle) {
+    public int employeesQuantity(JobTitilesEnum jobTitle) {
 
-        int employeesQuantity = 0;//todo имя гавно(DONE)
+        int employeesQuantity = 0;
         Departament departament = new Departament();
         for (int i = 0; i < size; i++) {
             employeesQuantity += departament.employeesQuantity(jobTitle);
@@ -125,8 +139,17 @@ public class DepartamentsManager implements EmployeeGroup {
         return employeesQuantity;
     }
 
-    public Employee bestEmployee() {
-        Employee bestEmployee = departaments[0].bestEmployee(); //todo имя гавно(DONE)
+    public EmployeeGroup getEmployeeGroup(String firstName, String secondName){
+        for (int i = 0; i < groupsQuantity(); i++) {
+            if(groups[i].getEmployee(firstName, secondName) != null){
+                return groups[i];
+            }
+        }
+        return null;
+    }
+
+    public Employee mostValuableEmployee() {
+        Employee bestEmployee = departaments[0].bestEmployee();
         for (int i = 1; i < size; i++) {
             if(bestEmployee.getSalary() < departaments[i].bestEmployee().getSalary())
                 bestEmployee = departaments[i].bestEmployee();
@@ -134,38 +157,23 @@ public class DepartamentsManager implements EmployeeGroup {
         return bestEmployee;
     }
 
-    @Override
-    public int employeeQuantity() {
-        return 0;
-    }
-
-    @Override
-    public Employee[] getEmployees() {
-        return new Employee[0];
-    }
-
-    @Override
-    public Employee[] employeesSortedBySalary() {
-        return new Employee[0];
-    }
-
-    public Departament getEmployeesDepartament(String firstName, String lastName) {
-        for (int i = 0; i < size; i++) {
-            if(departaments[i].hasEmployee(firstName, lastName))
-                return departaments[i];
+    public int remove(EmployeeGroup employeeGroup){
+        for (int i = 0; i < groupsQuantity(); i++) {
+            if(groups[i].equals(employeeGroup)) {
+                shiftGroups(i);
+                countDeletedGroup++;
+            }
         }
-        return null;
+        return countDeletedGroup;
     }
 
-    //todo аналогично департаментам(DONE)
-    private void shift(int i) {
+
+    private void shiftDepartment(int i) {
         System.arraycopy(this.departaments, i + 1, this.departaments, i, size - i);
     }
 
-    @Override
-    public String getName() {
-        return name;
+    private void shiftGroups(int i){
+        System.arraycopy(this.groups, i + 1, this.groups, i, groupsSize - i);
     }
-
 
 }
