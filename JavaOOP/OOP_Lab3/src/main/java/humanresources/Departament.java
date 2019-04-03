@@ -66,16 +66,20 @@ public class Departament implements EmployeeGroup {
         return bestEmployee;
     }
 
-    //todo делай метод indexOf(String String): -1 если нет сотрудника
-    //todo убираем дублирование
+    //todo делай метод indexOf(String String): -1 если нет сотрудника(DONE)
+    //todo убираем дублирование(DONE)
     public boolean hasEmployee(String firstName, String lastName){
+        return indexOf(firstName, lastName) != -1;
+    }
+
+    private int indexOf(String firstName, String lastName){
         for (int i = 0; i < size; i++) {
             Employee employee = employees[i];
-            if (employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName)) {
-                return true;
+            if(employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName)) {
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
     public void add(Employee employee) {
@@ -89,16 +93,13 @@ public class Departament implements EmployeeGroup {
         this.size++;
     }
 
-    //todo убираем дублирование
+    //todo убираем дублирование(DONE)
     public boolean remove(String firstName, String secondName) {
-
-        for (int i = 0; i < employees.length; i++) {
-            if (employees[i].getFirstName().equals(firstName) && employees[i].getSecondName().equals(secondName)) {
-                shift(i);
-                this.employees[size] = null;
-                this.size--;
-                return true;
-            }
+        if(indexOf(firstName, secondName) != -1){
+            shift(indexOf(firstName, secondName));
+            this.employees[size] = null;
+            this.size--;
+            return true;
         }
         return false;
     }
@@ -171,24 +172,17 @@ public class Departament implements EmployeeGroup {
         return result;
     }
 
-    public void remove(Employee employee){
+    public boolean remove(Employee employee){
 
         for (int i = 0; i < employeeQuantity(); i++) {
             if(employees[i].equals(employee)){
                 shift(i);
+                return true;
             }
         }
+        return false;
     }
 
-    //todo этот метод нахер
-    public void removeEmployee(String firstName, String lastName){
-
-        for (int i = 0; i < employeeQuantity(); i++) {
-            if(employees[i].getFirstName().equals(firstName) && employees[i].getSecondName().equals(lastName)){
-                shift(i);
-            }
-        }
-    }
 
     public int removeAll(JobTitilesEnum jobTitle){
 
@@ -205,28 +199,38 @@ public class Departament implements EmployeeGroup {
         return countRemovedJobTitleEmployee;
     }
 
-    //todo убираем дублирование
+    //todo убираем дублирование(DONE)
     public Employee getEmployee(String firstName, String lastName){
-
-        for (int i = 0; i < employeeQuantity(); i++) {
-            if (employees[i].getFirstName().equals(firstName) && employees[i].getSecondName().equals(lastName))
-                return employees[i];
-        }
-        return null;
+        if(indexOf(firstName, lastName) != -1)
+            return employees[indexOf(firstName, lastName)];
+        else
+            return null;
     }
 
     public JobTitilesEnum[] jobTitles(){
         JobTitilesEnum[] jobTitles = JobTitilesEnum.values();
+        int countJobTitle = 0;
         for (JobTitilesEnum title : jobTitles) {
             title = null;
         }
         for (int i = 0; i < employeeQuantity(); i++) {
             JobTitilesEnum jobTitle = employees[i].getJobTitle();
             jobTitles[jobTitle.ordinal()] =jobTitle;
+            countJobTitle++;
         }
 
-        //todo вернуть массив без null
-        return jobTitles;
+        JobTitilesEnum[] newJobTitles = new JobTitilesEnum[jobTitles.length];
+        for (int i = 0; i < jobTitles.length; i++) {
+            if(jobTitles[i] != null){
+                newJobTitles[countJobTitle] = jobTitles[i];
+                countJobTitle++;
+            }
+        }
+
+        System.arraycopy(newJobTitles, 0 , newJobTitles, 0, countJobTitle);
+
+        //todo вернуть массив без null(DONE)
+        return newJobTitles;
     }
 
     public Employee getEmployeeWithBestSalary(){

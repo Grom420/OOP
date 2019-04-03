@@ -41,30 +41,18 @@ public class Project extends List<Employee> implements EmployeeGroup {
             return head.value;
         }
 
-        Node<Employee> t = head;
-
-        //todo благодаря итератору можно делать так
+        //todo благодаря итератору можно делать так(DONE)
         for(Employee employee : this) {
-            employee.getFirstName().equals(firstName)
+            if(employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName))
+                return employee;
         }
 
-        while (t.next != null) {
-            if (t.next.value.getFirstName().equals(firstName) && t.next.value.getSecondName().equals(lastName)) {
-                if (tail.value.getFirstName().equals(t.next.value.getFirstName())
-                        && tail.value.getSecondName().equals(t.next.value.getSecondName())) {
-                    tail = t;
-                }
-                return t.next.value;
-            }
-            t = t.next;
-        }
         return null;
     }
 
-    public void removeEmployee(String firstName, String lastName){
-
+    public boolean remove(String firstName, String lastName){
         if (head == null) {
-            return;
+            return false;
         }
 
 
@@ -73,25 +61,28 @@ public class Project extends List<Employee> implements EmployeeGroup {
             this.size--;
         }
 
-        Node<Employee> t = head;
-        //todo че за t емае!?
-        while (t.next != null) {
-            if (t.next.value.getFirstName().equals(firstName) && t.next.value.getSecondName().equals(lastName)) {
-                if (t.next == tail) {
-                    tail = t;
-                    t.next = null;
+        Node<Employee> currentT = head;
+        //todo че за t емае!?(DONE)
+
+        while (currentT.next != null) {
+            if (currentT.next.value.getFirstName().equals(firstName) && currentT.next.value.getSecondName().equals(lastName)) {
+                if (currentT.next == tail) {
+                    tail = currentT;
+                    currentT.next = null;
                 } else
-                    t.next = t.next.next;
+                    currentT.next = currentT.next.next;
                 this.size--;
             }
-            t = t.next;
+            currentT = currentT.next;
         }
+        return false;
+
     }
 
-    public void remove(Employee employee){
+    public boolean remove(Employee employee){
 
         if (head == null) {
-            return;
+            return false;
         }
 
 
@@ -100,22 +91,23 @@ public class Project extends List<Employee> implements EmployeeGroup {
             this.size--;
         }
 
-        Node t = head;
-        while (t.next != null) {
-            if (t.next.value.equals(employee)) {
-                if (tail.value.equals(t.next.value)) {
-                    tail = t;
+        Node<Employee> currentT = head;
+        while (currentT.next != null) {
+            if (currentT.next.value.equals(employee)) {
+                if (tail.value.equals(currentT.next.value)) {
+                    tail = currentT;
                 }
-                t.next = t.next.next;
+                currentT.next = currentT.next.next;
                 this.size--;
             }
-            t = t.next;
+            currentT = currentT.next;
         }
+        return false;
     }
 
     public Employee bestEmployee(){
 
-        Node t = head;
+        Node<Employee> t = head;
         Employee bestEmployee = t.value;
         for (int i = 0; i < size; i++) {
             if(t.next.value.getSalary() > bestEmployee.getSalary()){
@@ -131,13 +123,7 @@ public class Project extends List<Employee> implements EmployeeGroup {
     }
 
     public Employee[] getEmployees(){
-        Employee[] employees = new Employee[size];
-        Node t = head;
-        for (int i = 0; i < size; i++) {
-            employees[i] = t.value;
-            t = t.next;
-        }
-        return employees;
+        return toArray();
     }
 
     public Employee[] employeesSortedBySalary() {
@@ -194,14 +180,13 @@ public class Project extends List<Employee> implements EmployeeGroup {
 
     @Override
     public String toString() {
-        //todo StringBuilder
+        //todo StringBuilder(DONE)
         Employee[] employees = getEmployees();
-        final StringBuffer sb = new StringBuffer("Project ");
+        final StringBuilder sb = new StringBuilder("Project ");
         sb.append(name).append(":").append(size).append("\n");
-        if (employees == null) {
-            sb.append("employee=").append(" null\n");
-        } else for (int i = 0; i < size; i++) {
-            sb.append('<').append(employees[i]).append(">\n");
+        if (employees != null)
+            for (int i = 0; i < size; i++) {
+                sb.append('<').append(employees[i]).append(">\n");
         }
         sb.append('}');
         return sb.toString();

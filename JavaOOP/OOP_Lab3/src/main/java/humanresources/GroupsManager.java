@@ -10,6 +10,6 @@ public interface GroupsManager {
     public int employeesQuantity(JobTitilesEnum jobTitle);
     public EmployeeGroup getEmployeeGroup(String firstName, String secondName);
     public Employee mostValuableEmployee();
-    public void remove(String groupName);
+    public boolean remove(String groupName);
     public int remove(EmployeeGroup group);
 }

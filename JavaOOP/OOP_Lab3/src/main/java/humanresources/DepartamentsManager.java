@@ -1,9 +1,8 @@
 package humanresources;
 
-public class DepartamentsManager implements GroupsManager {
-    //todo если раньше работали с типом Departament, то теперь везде тип EmployeeGroup - и тип массива, и параметры методов, и возвращаемые типы, и типы переменных
+public class DepartamentsManager extends List implements GroupsManager {
+    //todo если раньше работали с типом Departament, то теперь везде тип EmployeeGroup - и тип массива, и параметры методов, и возвращаемые типы, и типы переменных(DONE)
     private String name;
-    private Departament[] departaments;
     private EmployeeGroup[] groups;
     private static final int DEFAULT_CAPACITY = 16;
     private int size;
@@ -11,15 +10,12 @@ public class DepartamentsManager implements GroupsManager {
     private int countDeletedGroup;
 
     public DepartamentsManager(String name, String groupsName) {
-        this(name, groupsName,  new Departament[DEFAULT_CAPACITY], new Employee[DEFAULT_CAPACITY]);
+        this(name, groupsName, new Employee[DEFAULT_CAPACITY]);
     }
 
-    public DepartamentsManager(String name, String groupsName, Departament[] departaments, Employee[] groups) {
+    public DepartamentsManager(String name, String groupsName, Employee[] groups) {
 
-        if (departaments.length != 0 && groups.length != 0) {
-            Departament[] newDepartamets = new Departament[departaments.length];
-            System.arraycopy(departaments, 0, newDepartamets, 0, departaments.length);
-            this.departaments = newDepartamets;
+        if (groups.length != 0) {
             EmployeeGroup[] newEmployees = new EmployeeGroup[groups.length];
             System.arraycopy(groups, 0, newEmployees, 0, groups.length);
             this.groups = newEmployees;
@@ -61,43 +57,24 @@ public class DepartamentsManager implements GroupsManager {
     }
 
 
-    public void removeDepartament(String name) {
 
-        for (int i = 0; i < departaments.length; i++) {
-            if (departaments[i].getName().equals(name)) {
-                shiftDepartment(i);
-                this.departaments[size] = null;
-                this.size--;
-            }
-        }
-    }
-
-    public void remove(String groupName){
+    public boolean remove(String groupName){
 
         for (int i = 0; i < groups.length; i++) {
             if (groups[i].getName().equals(groupName)) {
                 shiftGroups(i);
                 this.groups[groupsQuantity()] = null;
                 this.size--;
+                return true;
             }
         }
+        return false;
     }
 
-    public Departament getDepartament(String name) {
-
-        for (int i = 0; i < this.size; i++) {
-
-            if (departaments[i].getName().equals(name)) {
-                return departaments[i];
-            }
-        }
-        return null;
-    }
-
-    public Departament[] getDepartaments() {
-        Departament[] newDepartaments = new Departament[this.departaments.length];
-        System.arraycopy(departaments, 0, newDepartaments, 0, departaments.length);
-        return newDepartaments;
+    public EmployeeGroup[] getEmployeeGroups() {
+        EmployeeGroup[] newGroups = new EmployeeGroup[this.groups.length];
+        System.arraycopy(groups, 0, newGroups, 0, groups.length);
+        return newGroups;
     }
 
     public int size() {
@@ -107,19 +84,8 @@ public class DepartamentsManager implements GroupsManager {
     public int employeesQuantity() {
         int employeesQuantity = 0;
         for (int i = 0; i < size; i++) {
-            employeesQuantity += departaments[i].employeeQuantity();
+            employeesQuantity += groups[i].employeeQuantity();
         }
-        return employeesQuantity;
-    }
-
-    public int employeesQuantity(JobTitilesEnum jobTitle) {
-
-        int employeesQuantity = 0;
-        Departament departament = new Departament();
-        for (int i = 0; i < size; i++) {
-            employeesQuantity += departament.employeesQuantity(jobTitle);
-        }
-
         return employeesQuantity;
     }
 
@@ -133,10 +99,10 @@ public class DepartamentsManager implements GroupsManager {
     }
 
     public Employee mostValuableEmployee() {
-        Employee bestEmployee = departaments[0].bestEmployee();
+        Employee bestEmployee = groups[0].bestEmployee();
         for (int i = 1; i < size; i++) {
-            if(bestEmployee.getSalary() < departaments[i].bestEmployee().getSalary())
-                bestEmployee = departaments[i].bestEmployee();
+            if(bestEmployee.getSalary() < groups[i].bestEmployee().getSalary())
+                bestEmployee = groups[i].bestEmployee();
         }
         return bestEmployee;
     }
@@ -151,10 +117,6 @@ public class DepartamentsManager implements GroupsManager {
         return countDeletedGroup;
     }
 
-
-    private void shiftDepartment(int i) {
-        System.arraycopy(this.departaments, i + 1, this.departaments, i, size - i);
-    }
 
     private void shiftGroups(int i){
         System.arraycopy(this.groups, i + 1, this.groups, i, groupsSize - i);
