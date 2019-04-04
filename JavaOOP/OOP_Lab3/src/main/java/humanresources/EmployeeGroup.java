@@ -1,6 +1,6 @@
 package humanresources;
 
-public interface EmployeeGroup {
+public interface EmployeeGroup extends Iterable<Employee> {
 
     public String getName();
     public void setName(String name);
@@ -10,6 +10,7 @@ public interface EmployeeGroup {
     public boolean remove(Employee employee);
     public Employee bestEmployee();
     public int employeeQuantity();
+    int employeesQuantity(JobTitilesEnum jobTitile);
     public Employee[] getEmployees();
     public Employee[] employeesSortedBySalary();
     public int countPartTimeEmployee();

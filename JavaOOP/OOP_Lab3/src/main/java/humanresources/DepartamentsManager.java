@@ -1,7 +1,8 @@
 package humanresources;
 
-public class DepartamentsManager extends List implements GroupsManager {
-    //todo если раньше работали с типом Departament, то теперь везде тип EmployeeGroup - и тип массива, и параметры методов, и возвращаемые типы, и типы переменных(DONE)
+import java.util.Iterator;
+
+public class DepartamentsManager implements GroupsManager {
     private String name;
     private EmployeeGroup[] groups;
     private static final int DEFAULT_CAPACITY = 16;
@@ -161,4 +162,9 @@ public class DepartamentsManager extends List implements GroupsManager {
         System.arraycopy(this.groups, i + 1, this.groups, i, groupsSize - i);
     }
 
+    @Override
+    public Iterator<EmployeeGroup> iterator() {
+        //todo реализацию итератора в студию
+        return null;
+    }
 }

@@ -2,7 +2,7 @@ package humanresources;
 
 import java.util.Iterator;
 
-public class ProjectsManager extends List<EmployeeGroup> implements GroupsManager {
+public class ProjectsManager implements GroupsManager {
 
     private Node<EmployeeGroup> head;
     private Node<EmployeeGroup> tail;
@@ -27,21 +27,22 @@ public class ProjectsManager extends List<EmployeeGroup> implements GroupsManage
 
     @Override
     public int groupsQuantity() {
-        return getSize();
+        return size;
+    }
+
+    @Override
+    public void add(EmployeeGroup group) throws AlreadyAddedException {
+        //todo сделай
     }
 
     @Override
     public EmployeeGroup getEmployeeGroup(String name) {
-
         if (head == null) {
             return null;
         }
-
         if (head.value.getName().equals(name))  {
             return head.value;
         }
-
-        //todo благодаря итератору можно делать так(DONE)
         for (EmployeeGroup employeeGroup : this) {
             if (employeeGroup.getName().equals(name))
                 return employeeGroup;
@@ -164,5 +165,11 @@ public class ProjectsManager extends List<EmployeeGroup> implements GroupsManage
     @Override
     public Employee[] getEmployeeTraveller() {
         return new Employee[0];
+    }
+
+    @Override
+    public Iterator<EmployeeGroup> iterator() {
+        return null;
+        //todo итератор в студию
     }
 }

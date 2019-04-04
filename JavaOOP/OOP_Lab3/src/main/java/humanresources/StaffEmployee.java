@@ -14,12 +14,10 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
     private int travelsQuantity;
 
     private static final int DEFAULT_BONUS = 0;
-    private static final ListNode DEFAULT_HEAD = null;
-
+=
     public StaffEmployee(String secondName, String firstName){
         super(firstName, secondName, 0);
         this.bonus = DEFAULT_BONUS;
-        this.head = DEFAULT_HEAD;
         setJobTitle(JobTitilesEnum.NONE);
     }
 
@@ -31,7 +29,6 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
         super(firstName, secondName);
         setJobTitle(jobTitle);
         setSalary(salary);
-        this.head = DEFAULT_HEAD;
         this.bonus = DEFAULT_BONUS;
     }
 
@@ -68,13 +65,12 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
     public void addTravel(BusinessTravel travel) {
         ListNode a = new ListNode();
         a.value = travel;
-        if(head.value.getEndBusinessTravel().getDayOfYear() < travel.getStartBusinessTravel().getDayOfYear())
-            throw new IllegalArgumentException("illegal date");
         if (tail == null)
         {
             head = a;
             tail = a;
         } else {
+            //todo travel.getStartBusinessTravel().isBefore(end) && travel.getStartBusinessTravel().isAfter(start)
             if(tail.prev.value.getEndBusinessTravel().getDayOfYear() < a.value.getStartBusinessTravel().getDayOfYear())
                 throw new IllegalArgumentException("illegal date");
             tail.next = a;

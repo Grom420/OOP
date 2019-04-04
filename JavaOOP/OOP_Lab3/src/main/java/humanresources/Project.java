@@ -2,7 +2,7 @@ package humanresources;
 
 import java.util.Objects;
 
-public class Project extends List<Employee> implements EmployeeGroup {
+public class Project implements EmployeeGroup {
 
     private String name;
     private int size;
@@ -35,12 +35,9 @@ public class Project extends List<Employee> implements EmployeeGroup {
         if (head == null) {
             return null;
         }
-
         if (head.value.getFirstName().equals(firstName) && head.value.getSecondName().equals(lastName))  {
             return head.value;
         }
-
-        //todo благодаря итератору можно делать так(DONE)
         for(Employee employee : this) {
             if(employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName))
                 return employee;
@@ -60,19 +57,18 @@ public class Project extends List<Employee> implements EmployeeGroup {
             this.size--;
         }
 
-        Node<Employee> currentT = head;
-        //todo че за t емае!?(DONE)
+        Node<Employee> currentNode = head;
 
-        while (currentT.next != null) {
-            if (currentT.next.value.getFirstName().equals(firstName) && currentT.next.value.getSecondName().equals(lastName)) {
-                if (currentT.next == tail) {
-                    tail = currentT;
-                    currentT.next = null;
+        while (currentNode.next != null) {
+            if (currentNode.next.value.getFirstName().equals(firstName) && currentNode.next.value.getSecondName().equals(lastName)) {
+                if (currentNode.next == tail) {
+                    tail = currentNode;
+                    currentNode.next = null;
                 } else
-                    currentT.next = currentT.next.next;
+                    currentNode.next = currentNode.next.next;
                 this.size--;
             }
-            currentT = currentT.next;
+            currentNode = currentNode.next;
         }
         return false;
 

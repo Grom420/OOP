@@ -19,6 +19,7 @@ public class Departament implements EmployeeGroup {
 
     public Departament(String name, int capacity) {
         this.name = name;
+        //todo сначала чек потом код, но уже без else
         if (capacity > 0) {
             employees = new Employee[capacity];
         } else {
@@ -28,7 +29,7 @@ public class Departament implements EmployeeGroup {
     }
 
     public Departament(String name, Employee[] employees) {
-        this(name);
+        this.name = name;
         if(employees.length > 0) {
             Employee[] newEmployees = new Employee[employees.length];
             System.arraycopy(employees, 0, newEmployees, 0, employees.length);
@@ -67,8 +68,6 @@ public class Departament implements EmployeeGroup {
         return bestEmployee;
     }
 
-    //todo делай метод indexOf(String String): -1 если нет сотрудника(DONE)
-    //todo убираем дублирование(DONE)
     public boolean hasEmployee(String firstName, String lastName){
         return indexOf(firstName, lastName) != -1;
     }
@@ -94,7 +93,6 @@ public class Departament implements EmployeeGroup {
         this.size++;
     }
 
-    //todo убираем дублирование(DONE)
     public boolean remove(String firstName, String secondName) {
         if(indexOf(firstName, secondName) != -1){
             shift(indexOf(firstName, secondName));
@@ -243,7 +241,6 @@ public class Departament implements EmployeeGroup {
         return countRemovedJobTitleEmployee;
     }
 
-    //todo убираем дублирование(DONE)
     public Employee getEmployee(String firstName, String lastName){
         if(indexOf(firstName, lastName) != -1)
             return employees[indexOf(firstName, lastName)];
@@ -252,18 +249,18 @@ public class Departament implements EmployeeGroup {
     }
 
     public JobTitilesEnum[] jobTitles(){
+        //todo куча логических ошибок
         JobTitilesEnum[] jobTitles = JobTitilesEnum.values();
         int countJobTitle = 0;
-        for (JobTitilesEnum title : jobTitles) {
-            title = null;
+        for (int i = 0; i < jobTitles.length; i++) {
+            jobTitles[i] = null;
         }
         for (int i = 0; i < employeeQuantity(); i++) {
             JobTitilesEnum jobTitle = employees[i].getJobTitle();
             jobTitles[jobTitle.ordinal()] =jobTitle;
             countJobTitle++;
         }
-
-        JobTitilesEnum[] newJobTitles = new JobTitilesEnum[jobTitles.length];
+        JobTitilesEnum[] newJobTitles = new JobTitilesEnum[countJobTitle];
         for (int i = 0; i < jobTitles.length; i++) {
             if(jobTitles[i] != null){
                 newJobTitles[countJobTitle] = jobTitles[i];
@@ -273,7 +270,6 @@ public class Departament implements EmployeeGroup {
 
         System.arraycopy(newJobTitles, 0 , newJobTitles, 0, countJobTitle);
 
-        //todo вернуть массив без null(DONE)
         return newJobTitles;
     }
 
@@ -332,6 +328,7 @@ public class Departament implements EmployeeGroup {
 
     @Override
     public int hashCode() {
+        //todo WTF names
         int hcObj = Objects.hashCode(employees[0]);
         int hcPos = Objects.hashCode(0);
         for (int i = 1; i < size; i++) {

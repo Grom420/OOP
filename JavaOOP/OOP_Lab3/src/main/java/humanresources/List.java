@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+//todo нахер этот класс
 class List<T> implements Iterable<T> {
     protected Node<T> head;
     protected Node<T> tail;
@@ -35,16 +36,6 @@ class List<T> implements Iterable<T> {
         }
 
 
-    }
-
-    public int employeesQuantity(JobTitilesEnum jobTitle) {
-        int employeesQuantity = 0;
-        Departament departament = new Departament();
-        for (int i = 0; i < size; i++) {
-            employeesQuantity += departament.employeesQuantity(jobTitle);
-        }
-
-        return employeesQuantity;
     }
 
     @SuppressWarnings("unchecked")

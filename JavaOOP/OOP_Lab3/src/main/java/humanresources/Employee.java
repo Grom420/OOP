@@ -88,7 +88,6 @@ abstract public class Employee {
         if(!secondName.equals("") && !firstName.equals("")
                 && !jobTitle.equals(JobTitilesEnum.NONE)
                 && salary != 0)
-            //todo String.format(DONE)
             return String.format("%s %s, %s, %d", secondName, firstName, jobTitle.toString(), salary);
         else return "";
     }

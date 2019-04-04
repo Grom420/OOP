@@ -18,7 +18,6 @@ public final class BusinessTravel {
     private final static String DEFAULT_DESCRIPTION = "";
     private final static String DEFAULT_DESTINATION = "";
 
-    //todo вызывай конструктор другой(DONE)
     public BusinessTravel(){
         this(DEFAULT_COMPENSATION, DEFAULT_DESCRIPTION, DEFAULT_DESTINATION, DEFAULT_START_BUSINESS_TRAVEL, DEFAULT_END_BUSINESS_TRAVEL);
     }
@@ -36,6 +35,7 @@ public final class BusinessTravel {
         this.destination = destination;
         if(startBusinessTravel.getDayOfYear() > endBusinessTravel.getDayOfYear() && compensation < 0){
             throw new java.lang.IllegalArgumentException("Illegal argument");
+            //todo по каждому случаю свой эксепшен со своим сообщением
         }
         else {
             this.compensation = compensation;
@@ -82,5 +82,5 @@ public final class BusinessTravel {
     @Override
     public String toString() {
         return String.format("%s %d (%d). %s", destination, daysCount, compensation, description);
-    } //todo String.format()(DONE)
+    }
 }
