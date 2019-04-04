@@ -16,8 +16,8 @@ public class Project extends List<Employee> implements EmployeeGroup {
     public Project(String name, Employee[] employees) throws AlreadyAddedException {
         this.name = name;
         Node node = new Node();
-        for (int i = 0; i < employees.length; i++) {
-            add(employees[i]);
+        for (Employee employee : employees) {
+            add(employee);
         }
     }
 
@@ -29,7 +29,6 @@ public class Project extends List<Employee> implements EmployeeGroup {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public Employee getEmployee(String firstName, String lastName){
 
