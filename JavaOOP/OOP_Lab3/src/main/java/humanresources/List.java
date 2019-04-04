@@ -62,9 +62,9 @@ class List<T> implements Iterable<T> {
             @Override
             public T next() {
                 if(hasNext()) {
-                    return head.next.value;
+                    t = t.next;
+                    return head.value;
                 }
-                t = t.next;
                 throw new NoSuchElementException("No element");
             }
         };

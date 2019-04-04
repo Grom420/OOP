@@ -60,6 +60,8 @@ abstract public class Employee {
 
     public abstract boolean isTraveller();
 
+    public abstract boolean isPartTimer();
+
     abstract void setBonus(int bonus);
 
     @Override

@@ -1,29 +1,43 @@
 package humanresources;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public final class BusinessTravel {
 
     private int compensation;
+    private LocalDateTime startBusinessTravel;
+    private LocalDateTime endBusinessTravel;
     private int daysCount;
     private String description;
     private String destination;
 
     private final static int DEFAULT_COMPENSATION = 0;
-    private final static int DEFAULT_DAYS_COUNT = 0;
+    private final static LocalDateTime DEFAULT_START_BUSINESS_TRAVEL = LocalDateTime.now();
+    private final static LocalDateTime DEFAULT_END_BUSINESS_TRAVEL = LocalDateTime.now().plusDays(1);
     private final static String DEFAULT_DESCRIPTION = "";
     private final static String DEFAULT_DESTINATION = "";
 
     //todo вызывай конструктор другой(DONE)
     public BusinessTravel(){
-        this(DEFAULT_COMPENSATION, DEFAULT_DAYS_COUNT, DEFAULT_DESCRIPTION, DEFAULT_DESTINATION);
+        this(DEFAULT_COMPENSATION, 1, DEFAULT_DESCRIPTION, DEFAULT_DESTINATION, DEFAULT_START_BUSINESS_TRAVEL, DEFAULT_END_BUSINESS_TRAVEL);
     }
 
-    public BusinessTravel(int compensation, int daysCount, String description, String destination) {
+    public LocalDateTime getStartBusinessTravel() {
+        return startBusinessTravel;
+    }
+
+    public LocalDateTime getEndBusinessTravel() {
+        return endBusinessTravel;
+    }
+
+    public BusinessTravel(int compensation, int daysCount, String description, String destination, LocalDateTime startBusinessTravel, LocalDateTime endBusinessTravel) {
         this.compensation = compensation;
         this.daysCount = daysCount;
         this.description = description;
         this.destination = destination;
+        this.startBusinessTravel = startBusinessTravel;
+        this.endBusinessTravel = endBusinessTravel;
     }
 
     public int getCompensation() {
@@ -31,7 +45,7 @@ public final class BusinessTravel {
     }
 
     public int getDaysCount() {
-        return daysCount;
+        return startBusinessTravel.getDayOfMonth() + endBusinessTravel.getDayOfMonth();
     }
 
     public String getDescription() {
@@ -49,13 +63,15 @@ public final class BusinessTravel {
         BusinessTravel that = (BusinessTravel) o;
         return getCompensation() == that.getCompensation() &&
                 getDaysCount() == that.getDaysCount() &&
+                startBusinessTravel.equals(that.startBusinessTravel) &&
+                endBusinessTravel.equals(that.endBusinessTravel) &&
                 getDescription().equals(that.getDescription()) &&
                 getDestination().equals(that.getDestination());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(compensation) ^ Objects.hash(daysCount) ^ Objects.hash(description) ^ Objects.hash(destination);
+        return Objects.hash(getCompensation(), startBusinessTravel, endBusinessTravel, getDaysCount(), getDescription(), getDestination());
     }
 
     @Override

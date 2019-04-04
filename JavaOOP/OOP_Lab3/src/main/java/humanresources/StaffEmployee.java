@@ -1,8 +1,12 @@
 package humanresources;
 
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class StaffEmployee extends Employee implements BusinessTraveller {
+public class StaffEmployee extends Employee implements BusinessTraveller, Iterable<BusinessTravel> {
 
     private int bonus;
     private ListNode head;
@@ -30,7 +34,6 @@ public class StaffEmployee extends Employee implements BusinessTraveller {
         this.bonus = DEFAULT_BONUS;
     }
 
-
     @Override
     public int getBonus() {
         return bonus;
@@ -42,19 +45,36 @@ public class StaffEmployee extends Employee implements BusinessTraveller {
     }
 
     @Override
+    public boolean isPartTimer() {
+        return true;
+    }
+
+    @Override
+    public boolean isTraveller(LocalDateTime startTravel, LocalDateTime endTravel) {
+        for(BusinessTravel businessTravel : this){
+            return businessTravel.getStartBusinessTravel().getDayOfMonth() >= startTravel.getDayOfMonth()
+                    && businessTravel.getEndBusinessTravel().getDayOfMonth() <= endTravel.getDayOfMonth();
+        }
+        return false;
+    }
+
+    @Override
     public void setBonus(int bonus) {
         this.bonus = bonus;
     }
 
     @Override
     public void addTravel(BusinessTravel travel) {
-
-
     }
 
     @Override
     public BusinessTravel[] getTravels() {
-        return new BusinessTravel[0];
+        BusinessTravel[] getTravels = new BusinessTravel[travelsQuantity];
+        int countTravels = 0;
+        for(BusinessTravel businessTravel : this){
+            getTravels[countTravels++] = businessTravel;
+        }
+        return getTravels;
     }
 
     @Override
@@ -77,5 +97,25 @@ public class StaffEmployee extends Employee implements BusinessTraveller {
     public String toString() {
         return getSecondName() + " " + getFirstName() + " " + getJobTitle() + " " + getSalary() + "р. " + getBonus() + "р. " + "Командировки \n" +
                 head.value.toString();
+    }
+
+    @Override
+    public Iterator<BusinessTravel> iterator() {
+        return new Iterator<BusinessTravel>() {
+            ListNode currentT = head;
+            @Override
+            public boolean hasNext() {
+                return currentT.next != null;
+            }
+
+            @Override
+            public BusinessTravel next() {
+                if(hasNext()) {
+                    currentT = currentT.next;
+                    return currentT.value;
+                }
+                throw new NoSuchElementException("No element");
+            }
+        };
     }
 }

@@ -3,6 +3,7 @@ import java.util.Objects;
 
 public class PartTimeEmployee extends Employee {
 
+    private int bonus;
 
     PartTimeEmployee(){
         super();
@@ -19,12 +20,17 @@ public class PartTimeEmployee extends Employee {
 
     @Override
     int getBonus() {
-        return 0;
+        return this.bonus;
     }
 
     @Override
     public boolean isTraveller() {
         return false;
+    }
+
+    @Override
+    public boolean isPartTimer(){
+        return bonus != 0;
     }
 
     @Override

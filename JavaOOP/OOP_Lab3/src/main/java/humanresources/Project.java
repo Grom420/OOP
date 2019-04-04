@@ -140,6 +140,32 @@ public class Project extends List<Employee> implements EmployeeGroup {
         return sortedEmployeesArray;
     }
 
+    public int countPartTimeEmployee(){
+        int countPartTimeEmployee = 0;
+        for(Employee employee : this){
+            if(employee.isPartTimer())
+                countPartTimeEmployee++;
+        }
+        return countPartTimeEmployee;
+    }
+
+    public int countFullTimeEmployee(){
+        int countFullTimeEmployee = 0;
+        for(Employee employee : this){
+            if(!employee.isPartTimer())
+                countFullTimeEmployee++;
+        }
+        return countFullTimeEmployee;
+    }
+
+    public int countEmployeeTraveller(){
+        int countEmployeeTraveller = 0;
+        for(Employee employee : this){
+            if(employee.isTraveller())
+                countEmployeeTraveller++;
+        }
+        return countEmployeeTraveller;
+    }
 
     private static void mergeSortSalaryEmployee(Employee[] employees) {
         if (employees.length > 1) {

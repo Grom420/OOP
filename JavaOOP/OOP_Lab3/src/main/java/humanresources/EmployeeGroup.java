@@ -12,5 +12,9 @@ public interface EmployeeGroup {
     public int employeeQuantity();
     public Employee[] getEmployees();
     public Employee[] employeesSortedBySalary();
+    public int countPartTimeEmployee();
+    public int countFullTimeEmployee();
+    public int countEmployeeTraveller();
+    public Employee[] getEmployeeTraveller();
 
 }
