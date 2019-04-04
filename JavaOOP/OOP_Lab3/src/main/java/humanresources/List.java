@@ -15,17 +15,26 @@ class List<T> implements Iterable<T> {
     }
 
 
-    public void add(T t) {
+    public void add(T t) throws AlreadyAddedException {
         Node<T> a = new Node<>();
         a.value = t;
+
+
+
         if (tail == null)
         {
             head = a;
             tail = a;
         } else {
+            for (T t1 : this){
+                if(t1.equals(t))
+                    throw new AlreadyAddedException("Already added");
+            }
             tail.next = a;
             tail = a;
         }
+
+
     }
 
     public int employeesQuantity(JobTitilesEnum jobTitle) {

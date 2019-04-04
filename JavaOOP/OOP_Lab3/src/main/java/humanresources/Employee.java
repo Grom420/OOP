@@ -21,7 +21,10 @@ abstract public class Employee {
         setFirstName(firstName);
         setSecondName(secondName);
         setJobTitle(JobTitilesEnum.NONE);
-        setSalary(salary);
+        if(salary < 0)
+            throw new java.lang.IllegalArgumentException("Illegal argument");
+        else
+            setSalary(salary);
     }
 
     public String getFirstName() {

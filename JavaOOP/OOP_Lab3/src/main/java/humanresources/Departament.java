@@ -23,6 +23,7 @@ public class Departament implements EmployeeGroup {
             employees = new Employee[capacity];
         } else {
             this.employees = new Employee[DEFAULT_CAPACITY];
+            throw new NegativeSizeException("Negative capacity");
         }
     }
 
@@ -139,6 +140,49 @@ public class Departament implements EmployeeGroup {
     public Employee[] employeesSortedBySalary(){
 
         return sortMerge(this.employees);
+    }
+
+    @Override
+    public int countPartTimeEmployee() {
+        int countPartTimeEmployee = 0;
+        for (int i = 0; i < size; i++) {
+            if (employees[i].isPartTimer())
+                countPartTimeEmployee++;
+        }
+        return countPartTimeEmployee;
+    }
+
+    @Override
+    public int countFullTimeEmployee() {
+        int countFullTimeEmployee = 0;
+        for (int i = 0; i < size; i++) {
+            if (!employees[i].isPartTimer())
+                countFullTimeEmployee++;
+        }
+        return countFullTimeEmployee;
+    }
+
+    @Override
+    public int countEmployeeTraveller() {
+        int countEmployeeTraveller = 0;
+        for (int i = 0; i < size; i++) {
+            if (employees[i].isTraveller())
+                countEmployeeTraveller++;
+        }
+        return countEmployeeTraveller;
+    }
+
+    @Override
+    public Employee[] getEmployeeTraveller() {
+        Employee[] newEmployees = new Employee[size];
+        int countEmployee = 0;
+        for (int i = 0; i < size; i++) {
+            if(employees[i].isTraveller())
+                newEmployees[countEmployee++] = employees[i];
+        }
+        Employee[] getEmployeeTraveller = new Employee[countEmployee];
+        System.arraycopy(getEmployeeTraveller, 0, newEmployees, 0, countEmployee);
+        return getEmployeeTraveller;
     }
 
     private static Employee[] sortMerge(Employee[] arrEmployees) {

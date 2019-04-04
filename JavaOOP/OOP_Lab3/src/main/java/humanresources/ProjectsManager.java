@@ -10,7 +10,7 @@ public class ProjectsManager extends List<EmployeeGroup> implements GroupsManage
 
     public ProjectsManager(){}
 
-    public ProjectsManager(EmployeeGroup[] employeeGroups){
+    public ProjectsManager(EmployeeGroup[] employeeGroups) throws AlreadyAddedException {
         for (int i = 0; i < employeeGroups.length; i++) {
             add(employeeGroups[i]);
         }
@@ -114,5 +114,55 @@ public class ProjectsManager extends List<EmployeeGroup> implements GroupsManage
     @Override
     public int remove(EmployeeGroup group) {
         return 0;
+    }
+
+    @Override
+    public int countPartTimeEmployee() {
+        if (head == null) {
+            return 0;
+        }
+
+        int countPartTimeEmployee = 0;
+
+        for(EmployeeGroup employeeGroup : this) {
+                countPartTimeEmployee+=employeeGroup.countPartTimeEmployee();
+        }
+
+        return countPartTimeEmployee;
+    }
+
+    @Override
+    public int countFullTimeEmployee() {
+        if (head == null) {
+            return 0;
+        }
+
+        int countFullTimeEmployee = 0;
+
+        for(EmployeeGroup employeeGroup : this) {
+            countFullTimeEmployee+=employeeGroup.countFullTimeEmployee();
+        }
+
+        return countFullTimeEmployee;
+    }
+
+    @Override
+    public int countEmployeeTraveller() {
+        if (head == null) {
+            return 0;
+        }
+
+        int countEmployeeTraveller = 0;
+
+        for(EmployeeGroup employeeGroup : this) {
+            countEmployeeTraveller+=employeeGroup.countEmployeeTraveller();
+        }
+
+        return countEmployeeTraveller;
+    }
+
+    @Override
+    public Employee[] getEmployeeTraveller() {
+        return new Employee[0];
     }
 }

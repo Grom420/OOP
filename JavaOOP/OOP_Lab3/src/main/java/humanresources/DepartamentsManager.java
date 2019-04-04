@@ -20,18 +20,25 @@ public class DepartamentsManager extends List implements GroupsManager {
             System.arraycopy(groups, 0, newEmployees, 0, groups.length);
             this.groups = newEmployees;
         }
+        else{
+            throw new NegativeSizeException("Negative capacity");
+        }
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void add(EmployeeGroup employeeGroup) {
+    public void add(EmployeeGroup employeeGroup) throws AlreadyAddedException {
         if (groupsSize == groups.length) {
             EmployeeGroup[] newEmployees;
             newEmployees = new EmployeeGroup[this.groups.length * 2];
             System.arraycopy(this.groups, 0, newEmployees, 0, this.groups.length);
             this.groups = newEmployees;
+        }
+        for (int i = 0; i < size; i++) {
+            if(employeeGroup.equals(groups[i]))
+                throw new AlreadyAddedException("Already added");
         }
         this.groups[this.groupsSize] = employeeGroup;
         this.groupsSize++;
@@ -115,6 +122,38 @@ public class DepartamentsManager extends List implements GroupsManager {
             }
         }
         return countDeletedGroup;
+    }
+
+    @Override
+    public int countPartTimeEmployee() {
+        int countPartTimeEmployee = 0;
+        for (int i = 0; i < size; i++) {
+            countPartTimeEmployee+=groups[i].countPartTimeEmployee();
+        }
+        return countPartTimeEmployee;
+    }
+
+    @Override
+    public int countFullTimeEmployee() {
+        int countFullTimeEmployee = 0;
+        for (int i = 0; i < size; i++) {
+            countFullTimeEmployee+=groups[i].countFullTimeEmployee();
+        }
+        return countFullTimeEmployee;
+    }
+
+    @Override
+    public int countEmployeeTraveller() {
+        int countEmployeeTraveller = 0;
+        for (int i = 0; i < size; i++) {
+            countEmployeeTraveller+=groups[i].countEmployeeTraveller();
+        }
+        return countEmployeeTraveller;
+    }
+
+    @Override
+    public Employee[] getEmployeeTraveller() {
+        return new Employee[0];
     }
 
 

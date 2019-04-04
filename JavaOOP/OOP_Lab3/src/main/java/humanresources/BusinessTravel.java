@@ -20,7 +20,7 @@ public final class BusinessTravel {
 
     //todo вызывай конструктор другой(DONE)
     public BusinessTravel(){
-        this(DEFAULT_COMPENSATION, 1, DEFAULT_DESCRIPTION, DEFAULT_DESTINATION, DEFAULT_START_BUSINESS_TRAVEL, DEFAULT_END_BUSINESS_TRAVEL);
+        this(DEFAULT_COMPENSATION, DEFAULT_DESCRIPTION, DEFAULT_DESTINATION, DEFAULT_START_BUSINESS_TRAVEL, DEFAULT_END_BUSINESS_TRAVEL);
     }
 
     public LocalDateTime getStartBusinessTravel() {
@@ -31,13 +31,18 @@ public final class BusinessTravel {
         return endBusinessTravel;
     }
 
-    public BusinessTravel(int compensation, int daysCount, String description, String destination, LocalDateTime startBusinessTravel, LocalDateTime endBusinessTravel) {
-        this.compensation = compensation;
-        this.daysCount = daysCount;
+    public BusinessTravel(int compensation, String description, String destination, LocalDateTime startBusinessTravel, LocalDateTime endBusinessTravel) {
         this.description = description;
         this.destination = destination;
-        this.startBusinessTravel = startBusinessTravel;
-        this.endBusinessTravel = endBusinessTravel;
+        if(startBusinessTravel.getDayOfYear() > endBusinessTravel.getDayOfYear() && compensation < 0){
+            throw new java.lang.IllegalArgumentException("Illegal argument");
+        }
+        else {
+            this.compensation = compensation;
+            this.startBusinessTravel = startBusinessTravel;
+            this.daysCount = getDaysCount();
+            this.endBusinessTravel = endBusinessTravel;
+        }
     }
 
     public int getCompensation() {

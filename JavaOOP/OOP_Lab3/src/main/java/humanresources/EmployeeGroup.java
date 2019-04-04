@@ -4,7 +4,7 @@ public interface EmployeeGroup {
 
     public String getName();
     public void setName(String name);
-    public void add(Employee employee);
+    public void add(Employee employee) throws AlreadyAddedException;
     public Employee getEmployee(String firstName, String lastName);
     public boolean remove(String firstName, String lastName);
     public boolean remove(Employee employee);

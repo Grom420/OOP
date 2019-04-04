@@ -13,7 +13,7 @@ public class Project extends List<Employee> implements EmployeeGroup {
         this.name = name;
     }
 
-    public Project(String name, Employee[] employees){
+    public Project(String name, Employee[] employees) throws AlreadyAddedException {
         this.name = name;
         Node node = new Node();
         for (int i = 0; i < employees.length; i++) {
@@ -165,6 +165,19 @@ public class Project extends List<Employee> implements EmployeeGroup {
                 countEmployeeTraveller++;
         }
         return countEmployeeTraveller;
+    }
+
+    @Override
+    public Employee[] getEmployeeTraveller() {
+        Employee[] newEmployee = new Employee[size];
+        int countEmployee = 0;
+        for(Employee employee : this){
+            if(employee.isTraveller())
+                newEmployee[countEmployee++] = employee;
+        }
+        Employee[] getEmployeeTraveller = new Employee[countEmployee];
+        System.arraycopy(getEmployeeTraveller, 0, newEmployee, 0, countEmployee);
+        return getEmployeeTraveller;
     }
 
     private static void mergeSortSalaryEmployee(Employee[] employees) {

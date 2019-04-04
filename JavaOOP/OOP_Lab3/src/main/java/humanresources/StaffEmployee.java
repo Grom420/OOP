@@ -10,6 +10,7 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
 
     private int bonus;
     private ListNode head;
+    private ListNode tail;
     private int travelsQuantity;
 
     private static final int DEFAULT_BONUS = 0;
@@ -65,6 +66,20 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
 
     @Override
     public void addTravel(BusinessTravel travel) {
+        ListNode a = new ListNode();
+        a.value = travel;
+        if(head.value.getEndBusinessTravel().getDayOfYear() < travel.getStartBusinessTravel().getDayOfYear())
+            throw new IllegalArgumentException("illegal date");
+        if (tail == null)
+        {
+            head = a;
+            tail = a;
+        } else {
+            if(tail.prev.value.getEndBusinessTravel().getDayOfYear() < a.value.getStartBusinessTravel().getDayOfYear())
+                throw new IllegalArgumentException("illegal date");
+            tail.next = a;
+            tail = a;
+        }
     }
 
     @Override
