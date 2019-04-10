@@ -17,14 +17,11 @@ public class DepartamentsManager implements GroupsManager {
 
     public DepartamentsManager(String name, String groupsName, Employee[] groups) {
 
-        if (groups.length != 0) {
-            EmployeeGroup[] newEmployees = new EmployeeGroup[groups.length];
-            System.arraycopy(groups, 0, newEmployees, 0, groups.length);
-            this.groups = newEmployees;
-        }
-        else{
+        if (groups.length == 0)
             throw new NegativeSizeException("Negative capacity");
-        }
+        EmployeeGroup[] newEmployees = new EmployeeGroup[groups.length];
+        System.arraycopy(groups, 0, newEmployees, 0, groups.length);
+        this.groups = newEmployees;
     }
 
     public void setName(String name) {
