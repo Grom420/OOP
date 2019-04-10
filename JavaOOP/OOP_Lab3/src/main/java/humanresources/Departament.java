@@ -1,6 +1,8 @@
 package humanresources;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class Departament implements EmployeeGroup {
@@ -19,13 +21,10 @@ public class Departament implements EmployeeGroup {
 
     public Departament(String name, int capacity) {
         this.name = name;
-        //todo сначала чек потом код, но уже без else
-        if (capacity > 0) {
-            employees = new Employee[capacity];
-        } else {
-            this.employees = new Employee[DEFAULT_CAPACITY];
+        //todo сначала чек потом код, но уже без else(DONE)
+        if (capacity <= 0)
             throw new NegativeSizeException("Negative capacity");
-        }
+        employees = new Employee[capacity];
     }
 
     public Departament(String name, Employee[] employees) {
@@ -47,26 +46,16 @@ public class Departament implements EmployeeGroup {
         this.name = name;
     }
 
-    public int employeesQuantity(JobTitilesEnum jobTitle){
-        int employeeQuantity = 0;
-        for (int i = 0; i < size; i++) {
-            assert false;
-            if (employees[i].getJobTitle().equals(jobTitle))
-                employeeQuantity++;
-        }
-        return employeeQuantity;
-    }
-
-    public Employee bestEmployee(){
-        Employee bestEmployee = employees[0];
-        for (int i = 0; i < size; i++) {
-            Employee employee = employees[i];
-            if (employee.getSalary() > bestEmployee.getSalary()) {
-                bestEmployee = employees[i];
-            }
-        }
-        return bestEmployee;
-    }
+//    public int employeesQuantity(JobTitilesEnum jobTitle){
+//        int employeeQuantity = 0;
+//        for (int i = 0; i < size; i++) {
+//            assert false;
+//            if (employees[i].getJobTitle().equals(jobTitle))
+//                employeeQuantity++;
+//        }
+//        return employeeQuantity;
+//    }
+//
 
     public boolean hasEmployee(String firstName, String lastName){
         return indexOf(firstName, lastName) != -1;
@@ -140,35 +129,35 @@ public class Departament implements EmployeeGroup {
         return sortMerge(this.employees);
     }
 
-    @Override
-    public int countPartTimeEmployee() {
-        int countPartTimeEmployee = 0;
-        for (int i = 0; i < size; i++) {
-            if (employees[i].isPartTimer())
-                countPartTimeEmployee++;
-        }
-        return countPartTimeEmployee;
-    }
-
-    @Override
-    public int countFullTimeEmployee() {
-        int countFullTimeEmployee = 0;
-        for (int i = 0; i < size; i++) {
-            if (!employees[i].isPartTimer())
-                countFullTimeEmployee++;
-        }
-        return countFullTimeEmployee;
-    }
-
-    @Override
-    public int countEmployeeTraveller() {
-        int countEmployeeTraveller = 0;
-        for (int i = 0; i < size; i++) {
-            if (employees[i].isTraveller())
-                countEmployeeTraveller++;
-        }
-        return countEmployeeTraveller;
-    }
+//    @Override
+//    public int countPartTimeEmployee() {
+//        int countPartTimeEmployee = 0;
+//        for (int i = 0; i < size; i++) {
+//            if (employees[i].isPartTimer())
+//                countPartTimeEmployee++;
+//        }
+//        return countPartTimeEmployee;
+//    }
+//
+//    @Override
+//    public int countFullTimeEmployee() {
+//        int countFullTimeEmployee = 0;
+//        for (int i = 0; i < size; i++) {
+//            if (!employees[i].isPartTimer())
+//                countFullTimeEmployee++;
+//        }
+//        return countFullTimeEmployee;
+//    }
+//
+//    @Override
+//    public int countEmployeeTraveller() {
+//        int countEmployeeTraveller = 0;
+//        for (int i = 0; i < size; i++) {
+//            if (employees[i].isTraveller())
+//                countEmployeeTraveller++;
+//        }
+//        return countEmployeeTraveller;
+//    }
 
     @Override
     public Employee[] getEmployeeTraveller() {
@@ -249,18 +238,17 @@ public class Departament implements EmployeeGroup {
     }
 
     public JobTitilesEnum[] jobTitles(){
-        //todo куча логических ошибок
+        //todo куча логических ошибок(DONE)
         JobTitilesEnum[] jobTitles = JobTitilesEnum.values();
-        int countJobTitle = 0;
         for (int i = 0; i < jobTitles.length; i++) {
             jobTitles[i] = null;
         }
         for (int i = 0; i < employeeQuantity(); i++) {
             JobTitilesEnum jobTitle = employees[i].getJobTitle();
             jobTitles[jobTitle.ordinal()] =jobTitle;
-            countJobTitle++;
         }
-        JobTitilesEnum[] newJobTitles = new JobTitilesEnum[countJobTitle];
+        JobTitilesEnum[] newJobTitles = new JobTitilesEnum[jobTitles.length];
+        int countJobTitle = 0;
         for (int i = 0; i < jobTitles.length; i++) {
             if(jobTitles[i] != null){
                 newJobTitles[countJobTitle] = jobTitles[i];
@@ -273,7 +261,7 @@ public class Departament implements EmployeeGroup {
         return newJobTitles;
     }
 
-    public Employee getEmployeeWithBestSalary(){
+    public Employee bestEmployee(){
         Employee employeeWithBestSalary = employees[0];
         for (int i = 1; i < employeeQuantity(); i++) {
             if(employees[i].getSalary() > employeeWithBestSalary.getSalary()){
@@ -328,13 +316,33 @@ public class Departament implements EmployeeGroup {
 
     @Override
     public int hashCode() {
-        //todo WTF names
-        int hcObj = Objects.hashCode(employees[0]);
-        int hcPos = Objects.hashCode(0);
+        //todo WTF names(DONE)
+        int objectHashCode = Objects.hashCode(employees[0]);
+        int positionHashCode = Objects.hashCode(0);
         for (int i = 1; i < size; i++) {
-            hcObj ^= Objects.hashCode(employees[i]);
-            hcPos ^= i;
+            objectHashCode ^= Objects.hashCode(employees[i]);
+            positionHashCode ^= i;
         }
-        return hcObj ^ hcPos;
+        return objectHashCode ^ positionHashCode;
+    }
+
+    @Override
+    public Iterator<Employee> iterator() {
+        return new Iterator<Employee>() {
+            int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size;
+            }
+
+            @Override
+            public Employee next() {
+                if(hasNext()) {
+                    return employees[currentIndex++];
+                }
+                throw new NoSuchElementException("No element");
+            }
+        };
     }
 }

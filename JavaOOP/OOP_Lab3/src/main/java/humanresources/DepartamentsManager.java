@@ -1,6 +1,7 @@
 package humanresources;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class DepartamentsManager implements GroupsManager {
     private String name;
@@ -31,15 +32,15 @@ public class DepartamentsManager implements GroupsManager {
     }
 
     public void add(EmployeeGroup employeeGroup) throws AlreadyAddedException {
+        for(EmployeeGroup group : this){
+            if(group.equals(employeeGroup))
+                throw new AlreadyAddedException("This group already exists.");
+        }
         if (groupsSize == groups.length) {
             EmployeeGroup[] newEmployees;
             newEmployees = new EmployeeGroup[this.groups.length * 2];
             System.arraycopy(this.groups, 0, newEmployees, 0, this.groups.length);
             this.groups = newEmployees;
-        }
-        for (int i = 0; i < size; i++) {
-            if(employeeGroup.equals(groups[i]))
-                throw new AlreadyAddedException("Already added");
         }
         this.groups[this.groupsSize] = employeeGroup;
         this.groupsSize++;
@@ -47,14 +48,6 @@ public class DepartamentsManager implements GroupsManager {
 
     public int groupsQuantity() {
         return groupsSize;
-    }
-
-    public EmployeeGroup getEmployeeGroup(String name){
-        for (int i = 0; i < groupsQuantity(); i++) {
-            if(groups[i].getName().equals(name))
-                return groups[i];
-        }
-        return null;
     }
 
     public EmployeeGroup[] getEmployeesGroups(){
@@ -79,12 +72,6 @@ public class DepartamentsManager implements GroupsManager {
         return false;
     }
 
-    public EmployeeGroup[] getEmployeeGroups() {
-        EmployeeGroup[] newGroups = new EmployeeGroup[this.groups.length];
-        System.arraycopy(groups, 0, newGroups, 0, groups.length);
-        return newGroups;
-    }
-
     public int size() {
         return size;
     }
@@ -95,15 +82,6 @@ public class DepartamentsManager implements GroupsManager {
             employeesQuantity += groups[i].employeeQuantity();
         }
         return employeesQuantity;
-    }
-
-    public EmployeeGroup getEmployeeGroup(String firstName, String secondName){
-        for (int i = 0; i < groupsQuantity(); i++) {
-            if(groups[i].getEmployee(firstName, secondName) != null){
-                return groups[i];
-            }
-        }
-        return null;
     }
 
     public Employee mostValuableEmployee() {
@@ -126,35 +104,17 @@ public class DepartamentsManager implements GroupsManager {
     }
 
     @Override
-    public int countPartTimeEmployee() {
-        int countPartTimeEmployee = 0;
-        for (int i = 0; i < size; i++) {
-            countPartTimeEmployee+=groups[i].countPartTimeEmployee();
-        }
-        return countPartTimeEmployee;
-    }
-
-    @Override
-    public int countFullTimeEmployee() {
-        int countFullTimeEmployee = 0;
-        for (int i = 0; i < size; i++) {
-            countFullTimeEmployee+=groups[i].countFullTimeEmployee();
-        }
-        return countFullTimeEmployee;
-    }
-
-    @Override
-    public int countEmployeeTraveller() {
-        int countEmployeeTraveller = 0;
-        for (int i = 0; i < size; i++) {
-            countEmployeeTraveller+=groups[i].countEmployeeTraveller();
-        }
-        return countEmployeeTraveller;
-    }
-
-    @Override
     public Employee[] getEmployeeTraveller() {
-        return new Employee[0];
+        Employee[] newEmployee = new Employee[size];
+        int countEmployeeTraveller = 0;
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < groups[i].getEmployeeTraveller().length; j++) {
+                if(groups[i].getEmployeeTraveller()[j].isTraveller())
+                    newEmployee[countEmployeeTraveller++] = newEmployee[i];
+            }
+        }
+        System.arraycopy(newEmployee, 0, newEmployee, 0, countEmployeeTraveller);
+        return newEmployee;
     }
 
 
@@ -164,7 +124,22 @@ public class DepartamentsManager implements GroupsManager {
 
     @Override
     public Iterator<EmployeeGroup> iterator() {
-        //todo реализацию итератора в студию
-        return null;
+        //todo реализацию итератора в студию(DONE)
+        return new Iterator<EmployeeGroup>() {
+            int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size;
+            }
+
+            @Override
+            public EmployeeGroup next() {
+                if(hasNext()) {
+                    return groups[currentIndex++];
+                }
+                throw new NoSuchElementException("No element");
+            }
+        };
     }
 }

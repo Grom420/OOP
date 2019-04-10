@@ -1,12 +1,14 @@
 package humanresources;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ProjectsManager implements GroupsManager {
 
     private Node<EmployeeGroup> head;
     private Node<EmployeeGroup> tail;
     private int size;
+    private int countRemove;
 
     public ProjectsManager(){}
 
@@ -32,46 +34,31 @@ public class ProjectsManager implements GroupsManager {
 
     @Override
     public void add(EmployeeGroup group) throws AlreadyAddedException {
-        //todo сделай
-    }
-
-    @Override
-    public EmployeeGroup getEmployeeGroup(String name) {
-        if (head == null) {
-            return null;
+        //todo сделай(DONE)
+        for(EmployeeGroup employeeGroup : this){
+            if(employeeGroup.equals(group))
+                throw new AlreadyAddedException("This group already exists.");
         }
-        if (head.value.getName().equals(name))  {
-            return head.value;
+        Node<EmployeeGroup> element = new Node<>();
+        element.value = group;
+        if (tail == null) {
+            head = element;
+            tail = element;
+        } else {
+            tail.next = element;
+            tail = element;
         }
-        for (EmployeeGroup employeeGroup : this) {
-            if (employeeGroup.getName().equals(name))
-                return employeeGroup;
-        }
-
-        return null;
+        this.size++;
     }
 
     @Override
     public EmployeeGroup[] getEmployeesGroups() {
-        return toArray();
-    }
-
-    @Override
-    public EmployeeGroup getEmployeeGroup(String firstName, String secondName) {
-        if (head == null) {
-            return null;
+        EmployeeGroup[] getEmployeesGroup = new EmployeeGroup[size];
+        int countEmployeeGroup = 0;
+        for(EmployeeGroup employeeGroup : this){
+            getEmployeesGroup[countEmployeeGroup++] = employeeGroup;
         }
-
-        if (head.value.getEmployee(firstName, secondName) != null)  {
-            return head.value;
-        }
-
-        for(EmployeeGroup employeeGroup : this) {
-            if(employeeGroup.getEmployee(firstName, secondName) != null)
-                return employeeGroup;
-        }
-
-        return null;
+        return getEmployeesGroup;
     }
 
     @Override
@@ -97,79 +84,59 @@ public class ProjectsManager implements GroupsManager {
             return true;
         }
 
-        Node<EmployeeGroup> currentT = head;
-        while (currentT.next != null) {
-            if (currentT.next.value.getName().equals(groupName)) {
-                if (currentT.next == tail) {
-                    tail = currentT;
-                    currentT.next = null;
+        Node<EmployeeGroup> currentNode = head;
+        while (currentNode.next != null) {
+            if (currentNode.next.value.getName().equals(groupName)) {
+                if (currentNode.next == tail) {
+                    tail = currentNode;
+                    currentNode.next = null;
                 } else
-                    currentT.next = currentT.next.next;
+                    currentNode.next = currentNode.next.next;
                 this.size--;
             }
-            currentT = currentT.next;
+            currentNode = currentNode.next;
+            this.countRemove++;
         }
         return false;
     }
 
     @Override
     public int remove(EmployeeGroup group) {
-        return 0;
-    }
-
-    @Override
-    public int countPartTimeEmployee() {
-        if (head == null) {
-            return 0;
-        }
-
-        int countPartTimeEmployee = 0;
-
-        for(EmployeeGroup employeeGroup : this) {
-                countPartTimeEmployee+=employeeGroup.countPartTimeEmployee();
-        }
-
-        return countPartTimeEmployee;
-    }
-
-    @Override
-    public int countFullTimeEmployee() {
-        if (head == null) {
-            return 0;
-        }
-
-        int countFullTimeEmployee = 0;
-
-        for(EmployeeGroup employeeGroup : this) {
-            countFullTimeEmployee+=employeeGroup.countFullTimeEmployee();
-        }
-
-        return countFullTimeEmployee;
-    }
-
-    @Override
-    public int countEmployeeTraveller() {
-        if (head == null) {
-            return 0;
-        }
-
-        int countEmployeeTraveller = 0;
-
-        for(EmployeeGroup employeeGroup : this) {
-            countEmployeeTraveller+=employeeGroup.countEmployeeTraveller();
-        }
-
-        return countEmployeeTraveller;
+        return this.countRemove;
     }
 
     @Override
     public Employee[] getEmployeeTraveller() {
-        return new Employee[0];
+        Employee[] getEmployeeTraveller = new Employee[size];
+        int countEmployeeTraveller = 0;
+        for(EmployeeGroup employeeGroup : this){
+            if(employeeGroup.getEmployeeTraveller()[countEmployeeTraveller].isTraveller()) {
+                getEmployeeTraveller[countEmployeeTraveller] = employeeGroup.getEmployeeTraveller()[countEmployeeTraveller];
+                countEmployeeTraveller++;
+            }
+        }
+        return getEmployeeTraveller;
     }
 
     @Override
     public Iterator<EmployeeGroup> iterator() {
-        return null;
-        //todo итератор в студию
+        return new Iterator<EmployeeGroup>() {
+            Node<EmployeeGroup> t = head;
+
+            @Override
+            public boolean hasNext() {
+                return t.next != null;
+            }
+
+            @Override
+            public EmployeeGroup next() {
+                if(hasNext()) {
+                    t = t.next;
+                    return head.value;
+                }
+                throw new NoSuchElementException("No element");
+            }
+        };
+        //todo итератор в студию(DONE)
     }
 }

@@ -1,5 +1,7 @@
 package humanresources;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class Project implements EmployeeGroup {
@@ -28,6 +30,11 @@ public class Project implements EmployeeGroup {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void add(Employee employee) throws AlreadyAddedException {
+
     }
 
     public Employee getEmployee(String firstName, String lastName){
@@ -117,8 +124,18 @@ public class Project implements EmployeeGroup {
         return this.size;
     }
 
+//    @Override
+//    public int employeesQuantity(JobTitilesEnum jobTitile) {
+//        int employeesQuantity = 0;
+//        for(Employee employee : this){
+//            if(employee.getJobTitle().equals(jobTitile))
+//                employeesQuantity++;
+//        }
+//        return employeesQuantity;
+//    }
+
     public Employee[] getEmployees(){
-        return toArray();
+        return new Employee[0];
     }
 
     public Employee[] employeesSortedBySalary() {
@@ -135,32 +152,32 @@ public class Project implements EmployeeGroup {
         return sortedEmployeesArray;
     }
 
-    public int countPartTimeEmployee(){
-        int countPartTimeEmployee = 0;
-        for(Employee employee : this){
-            if(employee.isPartTimer())
-                countPartTimeEmployee++;
-        }
-        return countPartTimeEmployee;
-    }
-
-    public int countFullTimeEmployee(){
-        int countFullTimeEmployee = 0;
-        for(Employee employee : this){
-            if(!employee.isPartTimer())
-                countFullTimeEmployee++;
-        }
-        return countFullTimeEmployee;
-    }
-
-    public int countEmployeeTraveller(){
-        int countEmployeeTraveller = 0;
-        for(Employee employee : this){
-            if(employee.isTraveller())
-                countEmployeeTraveller++;
-        }
-        return countEmployeeTraveller;
-    }
+//    public int countPartTimeEmployee(){
+//        int countPartTimeEmployee = 0;
+//        for(Employee employee : this){
+//            if(employee.isPartTimer())
+//                countPartTimeEmployee++;
+//        }
+//        return countPartTimeEmployee;
+//    }
+//
+//    public int countFullTimeEmployee(){
+//        int countFullTimeEmployee = 0;
+//        for(Employee employee : this){
+//            if(!employee.isPartTimer())
+//                countFullTimeEmployee++;
+//        }
+//        return countFullTimeEmployee;
+//    }
+//
+//    public int countEmployeeTraveller(){
+//        int countEmployeeTraveller = 0;
+//        for(Employee employee : this){
+//            if(employee.isTraveller())
+//                countEmployeeTraveller++;
+//        }
+//        return countEmployeeTraveller;
+//    }
 
     @Override
     public Employee[] getEmployeeTraveller() {
@@ -245,5 +262,26 @@ public class Project implements EmployeeGroup {
             hcPos ^= i;
         }
         return hcObj ^ hcPos;
+    }
+
+    @Override
+    public Iterator<Employee> iterator() {
+        return new Iterator<Employee>() {
+            Node<Employee> t = head;
+
+            @Override
+            public boolean hasNext() {
+                return t.next != null;
+            }
+
+            @Override
+            public Employee next() {
+                if(hasNext()) {
+                    t = t.next;
+                    return head.value;
+                }
+                throw new NoSuchElementException("No element");
+            }
+        };
     }
 }

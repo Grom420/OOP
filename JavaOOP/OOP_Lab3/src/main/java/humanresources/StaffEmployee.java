@@ -14,7 +14,7 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
     private int travelsQuantity;
 
     private static final int DEFAULT_BONUS = 0;
-=
+
     public StaffEmployee(String secondName, String firstName){
         super(firstName, secondName, 0);
         this.bonus = DEFAULT_BONUS;
@@ -70,8 +70,9 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
             head = a;
             tail = a;
         } else {
-            //todo travel.getStartBusinessTravel().isBefore(end) && travel.getStartBusinessTravel().isAfter(start)
-            if(tail.prev.value.getEndBusinessTravel().getDayOfYear() < a.value.getStartBusinessTravel().getDayOfYear())
+            //todo travel.getStartBusinessTravel().isBefore(tail.prev.value.getEndBusinessTravel()) && travel.getStartBusinessTravel().isAfter(a.value.getStartBusinessTravel())(DONE)
+            if(travel.getStartBusinessTravel().isBefore(tail.prev.value.getEndBusinessTravel())
+                    && travel.getStartBusinessTravel().isAfter(a.value.getStartBusinessTravel()))
                 throw new IllegalArgumentException("illegal date");
             tail.next = a;
             tail = a;

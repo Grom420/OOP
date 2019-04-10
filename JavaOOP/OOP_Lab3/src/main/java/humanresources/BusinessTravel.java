@@ -18,7 +18,7 @@ public final class BusinessTravel {
     private final static String DEFAULT_DESCRIPTION = "";
     private final static String DEFAULT_DESTINATION = "";
 
-    public BusinessTravel(){
+    public BusinessTravel() throws IllegalDatesException {
         this(DEFAULT_COMPENSATION, DEFAULT_DESCRIPTION, DEFAULT_DESTINATION, DEFAULT_START_BUSINESS_TRAVEL, DEFAULT_END_BUSINESS_TRAVEL);
     }
 
@@ -30,19 +30,19 @@ public final class BusinessTravel {
         return endBusinessTravel;
     }
 
-    public BusinessTravel(int compensation, String description, String destination, LocalDateTime startBusinessTravel, LocalDateTime endBusinessTravel) {
+    public BusinessTravel(int compensation, String description, String destination, LocalDateTime startBusinessTravel, LocalDateTime endBusinessTravel) throws IllegalDatesException {
         this.description = description;
         this.destination = destination;
-        if(startBusinessTravel.getDayOfYear() > endBusinessTravel.getDayOfYear() && compensation < 0){
-            throw new java.lang.IllegalArgumentException("Illegal argument");
-            //todo по каждому случаю свой эксепшен со своим сообщением
-        }
-        else {
-            this.compensation = compensation;
-            this.startBusinessTravel = startBusinessTravel;
-            this.daysCount = getDaysCount();
-            this.endBusinessTravel = endBusinessTravel;
-        }
+
+        if(startBusinessTravel.getDayOfYear() > endBusinessTravel.getDayOfYear())
+            throw new IllegalDatesException("Illegal date argument");
+        if(compensation < 0)
+            throw new java.lang.IllegalArgumentException("Illegal compensation argument");
+            //todo по каждому случаю свой эксепшен со своим сообщением(DONE)
+        this.startBusinessTravel = startBusinessTravel;
+        this.daysCount = getDaysCount();
+        this.endBusinessTravel = endBusinessTravel;
+        this.compensation = compensation;
     }
 
     public int getCompensation() {
