@@ -110,10 +110,8 @@ public class ProjectsManager implements GroupsManager {
         Employee[] getEmployeeTraveller = new Employee[size];
         int countEmployeeTraveller = 0;
         for(EmployeeGroup employeeGroup : this){
-            if(employeeGroup.getEmployeeTraveller()[countEmployeeTraveller].isTraveller()) {
                 getEmployeeTraveller[countEmployeeTraveller] = employeeGroup.getEmployeeTraveller()[countEmployeeTraveller];
                 countEmployeeTraveller++;
-            }
         }
         return getEmployeeTraveller;
     }

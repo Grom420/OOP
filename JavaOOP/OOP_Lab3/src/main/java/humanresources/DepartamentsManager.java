@@ -109,8 +109,7 @@ public class DepartamentsManager implements GroupsManager {
         int countEmployeeTraveller = 0;
         for (int i = 0; i < size(); i++) {
             for (int j = 0; j < groups[i].getEmployeeTraveller().length; j++) {
-                if(groups[i].getEmployeeTraveller()[j].isTraveller())
-                    newEmployee[countEmployeeTraveller++] = newEmployee[i];
+                newEmployee[countEmployeeTraveller++] = groups[i].getEmployeeTraveller()[j];
             }
         }
         System.arraycopy(newEmployee, 0, newEmployee, 0, countEmployeeTraveller);
