@@ -118,7 +118,6 @@ public class DepartamentsManager implements GroupsManager {
 
     @Override
     public Iterator<EmployeeGroup> iterator() {
-        //todo реализацию итератора в студию(DONE)
         return new Iterator<EmployeeGroup>() {
             int currentIndex = 0;
 

@@ -13,7 +13,6 @@ public interface GroupsManager extends Iterable<EmployeeGroup> {
         return null;
     }
     public EmployeeGroup[] getEmployeesGroups();
-    //todo сделай в классах итераторы и часть логики (одинаоковй) можно будет поместить в интерфейс. Как в этом методе(DONE)
     default int employeesQuantity(JobTitilesEnum jobTitle) {
             int employeesQuantity = 0;
             for (EmployeeGroup group : this) {
@@ -23,7 +22,7 @@ public interface GroupsManager extends Iterable<EmployeeGroup> {
     }
     default EmployeeGroup getEmployeeGroup(String firstName, String secondName){
         for(EmployeeGroup employeeGroup : this) {
-            if(employeeGroup.getEmployee(firstName, secondName) != null)
+            if(employeeGroup.hasEmployee(firstName, secondName))
                 return employeeGroup;
         }
         return null;

@@ -206,7 +206,6 @@ public class Project implements EmployeeGroup {
 
     @Override
     public String toString() {
-        //todo StringBuilder(DONE)
         Employee[] employees = getEmployees();
         final StringBuilder sb = new StringBuilder("Project ");
         sb.append(name).append(":").append(size).append("\n");

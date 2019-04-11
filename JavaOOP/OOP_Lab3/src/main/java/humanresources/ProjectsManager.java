@@ -34,7 +34,6 @@ public class ProjectsManager implements GroupsManager {
 
     @Override
     public void add(EmployeeGroup group) throws AlreadyAddedException {
-        //todo сделай(DONE)
         for(EmployeeGroup employeeGroup : this){
             if(employeeGroup.equals(group))
                 throw new AlreadyAddedException("This group already exists.");
@@ -130,11 +129,10 @@ public class ProjectsManager implements GroupsManager {
             public EmployeeGroup next() {
                 if(hasNext()) {
                     t = t.next;
-                    return head.value;
+                    return t.value;
                 }
                 throw new NoSuchElementException("No element");
             }
         };
-        //todo итератор в студию(DONE)
     }
 }

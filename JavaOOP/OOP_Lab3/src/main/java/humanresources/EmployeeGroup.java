@@ -10,6 +10,7 @@ public interface EmployeeGroup extends Iterable<Employee> {
     public boolean remove(Employee employee);
     public Employee bestEmployee();
     public int employeeQuantity();
+    public boolean hasEmployee(String firstName, String lastName);
     default int employeesQuantity(JobTitilesEnum jobTitile){
         int employeesQuantity = 0;
         for(Employee employee : this){

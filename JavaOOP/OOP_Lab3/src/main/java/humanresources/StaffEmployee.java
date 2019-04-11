@@ -70,7 +70,6 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
             head = a;
             tail = a;
         } else {
-            //todo travel.getStartBusinessTravel().isBefore(tail.prev.value.getEndBusinessTravel()) && travel.getStartBusinessTravel().isAfter(a.value.getStartBusinessTravel())(DONE)
             if(travel.getStartBusinessTravel().isBefore(tail.prev.value.getEndBusinessTravel())
                     && travel.getStartBusinessTravel().isAfter(a.value.getStartBusinessTravel()))
                 throw new IllegalArgumentException("illegal date");

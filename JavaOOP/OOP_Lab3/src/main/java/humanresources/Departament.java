@@ -21,7 +21,6 @@ public class Departament implements EmployeeGroup {
 
     public Departament(String name, int capacity) {
         this.name = name;
-        //todo сначала чек потом код, но уже без else(DONE)
         if (capacity <= 0)
             throw new NegativeSizeException("Negative capacity");
         employees = new Employee[capacity];
@@ -242,7 +241,6 @@ public class Departament implements EmployeeGroup {
     }
 
     public JobTitilesEnum[] jobTitles(){
-        //todo куча логических ошибок(DONE)
         JobTitilesEnum[] jobTitles = JobTitilesEnum.values();
         for (int i = 0; i < jobTitles.length; i++) {
             jobTitles[i] = null;
@@ -320,7 +318,6 @@ public class Departament implements EmployeeGroup {
 
     @Override
     public int hashCode() {
-        //todo WTF names(DONE)
         int objectHashCode = Objects.hashCode(employees[0]);
         int positionHashCode = Objects.hashCode(0);
         for (int i = 1; i < size; i++) {

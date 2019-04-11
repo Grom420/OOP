@@ -38,7 +38,6 @@ public final class BusinessTravel {
             throw new IllegalDatesException("Illegal date argument");
         if(compensation < 0)
             throw new java.lang.IllegalArgumentException("Illegal compensation argument");
-            //todo по каждому случаю свой эксепшен со своим сообщением(DONE)
         this.startBusinessTravel = startBusinessTravel;
         this.daysCount = getDaysCount();
         this.endBusinessTravel = endBusinessTravel;
