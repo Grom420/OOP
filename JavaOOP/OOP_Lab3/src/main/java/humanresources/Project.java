@@ -136,6 +136,15 @@ public class Project implements EmployeeGroup {
         return this.size;
     }
 
+    @Override
+    public boolean hasEmployee(String firstName, String lastName) {
+        for(Employee employee : this){
+            if(employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName))
+                return true;
+        }
+        return false;
+    }
+
     public Employee[] getEmployees(){
         return new Employee[0];
     }
