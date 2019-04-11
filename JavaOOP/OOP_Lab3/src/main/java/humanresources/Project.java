@@ -33,8 +33,21 @@ public class Project implements EmployeeGroup {
     }
 
     @Override
-    public void add(Employee employee) throws AlreadyAddedException {
-
+    public void add(Employee newEmployee) throws AlreadyAddedException {
+        for(Employee employee : this){
+            if(employee.equals(newEmployee))
+                throw new AlreadyAddedException("This group already exists.");
+        }
+        Node<Employee> element = new Node<>();
+        element.value = newEmployee;
+        if (tail == null) {
+            head = element;
+            tail = element;
+        } else {
+            tail.next = element;
+            tail = element;
+        }
+        this.size++;
     }
 
     public Employee getEmployee(String firstName, String lastName){

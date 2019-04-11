@@ -71,14 +71,18 @@ public class Departament implements EmployeeGroup {
         return -1;
     }
 
-    public void add(Employee employee) {
+    public void add(Employee newEmployee) throws AlreadyAddedException {
+        for(Employee employee : this){
+            if(employee.equals(newEmployee))
+                throw new AlreadyAddedException("This employee is already exists.");
+        }
         if (size == employees.length) {
             Employee[] newEmployees;
             newEmployees = new Employee[this.employees.length * 2];
             System.arraycopy(this.employees, 0, newEmployees, 0, this.employees.length);
             this.employees = newEmployees;
         }
-        this.employees[this.size] = employee;
+        this.employees[this.size] = newEmployee;
         this.size++;
     }
 
