@@ -54,8 +54,6 @@ public class DepartamentsManager implements GroupsManager {
         return newGroups;
     }
 
-
-
     public boolean remove(String groupName){
 
         for (int i = 0; i < groups.length; i++) {

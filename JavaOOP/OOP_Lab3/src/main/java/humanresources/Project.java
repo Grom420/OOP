@@ -23,7 +23,6 @@ public class Project implements EmployeeGroup {
         }
     }
 
-
     public String getName() {
         return name;
     }
@@ -38,14 +37,14 @@ public class Project implements EmployeeGroup {
             if(employee.equals(newEmployee))
                 throw new AlreadyAddedException("This group already exists.");
         }
-        Node<Employee> element = new Node<>();
-        element.value = newEmployee;
+        Node<Employee> employee = new Node<>();
+        employee.value = newEmployee;
         if (tail == null) {
-            head = element;
-            tail = element;
+            head = employee;
+            tail = employee;
         } else {
-            tail.next = element;
-            tail = element;
+            tail.next = employee;
+            tail = employee;
         }
         this.size++;
     }
@@ -137,16 +136,6 @@ public class Project implements EmployeeGroup {
         return this.size;
     }
 
-//    @Override
-//    public int employeesQuantity(JobTitilesEnum jobTitile) {
-//        int employeesQuantity = 0;
-//        for(Employee employee : this){
-//            if(employee.getJobTitle().equals(jobTitile))
-//                employeesQuantity++;
-//        }
-//        return employeesQuantity;
-//    }
-
     public Employee[] getEmployees(){
         return new Employee[0];
     }
@@ -164,33 +153,6 @@ public class Project implements EmployeeGroup {
         }
         return sortedEmployeesArray;
     }
-
-//    public int countPartTimeEmployee(){
-//        int countPartTimeEmployee = 0;
-//        for(Employee employee : this){
-//            if(employee.isPartTimer())
-//                countPartTimeEmployee++;
-//        }
-//        return countPartTimeEmployee;
-//    }
-//
-//    public int countFullTimeEmployee(){
-//        int countFullTimeEmployee = 0;
-//        for(Employee employee : this){
-//            if(!employee.isPartTimer())
-//                countFullTimeEmployee++;
-//        }
-//        return countFullTimeEmployee;
-//    }
-//
-//    public int countEmployeeTraveller(){
-//        int countEmployeeTraveller = 0;
-//        for(Employee employee : this){
-//            if(employee.isTraveller())
-//                countEmployeeTraveller++;
-//        }
-//        return countEmployeeTraveller;
-//    }
 
     @Override
     public Employee[] getEmployeeTraveller() {
