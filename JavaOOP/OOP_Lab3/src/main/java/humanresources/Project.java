@@ -1,8 +1,6 @@
 package humanresources;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public class Project implements EmployeeGroup {
 
@@ -32,21 +30,38 @@ public class Project implements EmployeeGroup {
     }
 
     @Override
-    public void add(Employee newEmployee) throws AlreadyAddedException {
-        for(Employee employee : this){
-            if(employee.equals(newEmployee))
-                throw new AlreadyAddedException("This group already exists.");
-        }
-        Node<Employee> employee = new Node<>();
-        employee.value = newEmployee;
-        if (tail == null) {
-            head = employee;
-            tail = employee;
-        } else {
-            tail.next = employee;
-            tail = employee;
-        }
-        this.size++;
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Employee> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends Employee> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+
     }
 
     public Employee getEmployee(String firstName, String lastName){
@@ -143,6 +158,11 @@ public class Project implements EmployeeGroup {
                 return true;
         }
         return false;
+    }
+
+    public static Employee[] sortBySalaryAndBonus(Employee[] arrEmp){
+        Arrays.sort(arrEmp);
+        return arrEmp;
     }
 
     public Employee[] getEmployees(){
@@ -248,6 +268,66 @@ public class Project implements EmployeeGroup {
     }
 
     @Override
+    public Employee get(int index) {
+        return null;
+    }
+
+    @Override
+    public Employee set(int index, Employee element) {
+        return null;
+    }
+
+    @Override
+    public void add(int index, Employee element) {
+
+    }
+
+    @Override
+    public Employee remove(int index) {
+        return null;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<Employee> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<Employee> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<Employee> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
+
+    @Override
     public Iterator<Employee> iterator() {
         return new Iterator<Employee>() {
             Node<Employee> t = head;
@@ -266,5 +346,20 @@ public class Project implements EmployeeGroup {
                 throw new NoSuchElementException("No element");
             }
         };
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
+    }
+
+    @Override
+    public boolean add(Employee employee) {
+        return false;
     }
 }

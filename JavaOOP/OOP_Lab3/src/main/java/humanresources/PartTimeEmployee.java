@@ -59,4 +59,9 @@ public class PartTimeEmployee extends Employee {
     public int hashCode() {
         return Objects.hash(getFirstName()) ^ Objects.hash(getSecondName()) ^ Objects.hash(getJobTitle()) ^ Objects.hash(getSalary());
     }
+
+    @Override
+    public int compareTo(Employee o) {
+        return (this.getBonus() + this.getSalary()) - (o.getBonus() - o.getSalary());
+    }
 }

@@ -1,10 +1,13 @@
 package humanresources;
 
-public interface EmployeeGroup extends Iterable<Employee> {
+import java.util.List;
+
+public interface EmployeeGroup extends Iterable<Employee>, List<Employee> {
 
     public String getName();
     public void setName(String name);
-    public void add(Employee employee) throws AlreadyAddedException;
+    public void add(int index, Employee employee);
+    public boolean add(Employee employee);
     public Employee getEmployee(String firstName, String lastName);
     public boolean remove(String firstName, String lastName);
     public boolean remove(Employee employee);

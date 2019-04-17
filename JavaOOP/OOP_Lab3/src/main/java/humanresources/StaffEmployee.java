@@ -2,9 +2,8 @@ package humanresources;
 
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.*;
 
 public class StaffEmployee extends Employee implements BusinessTraveller, Iterable<BusinessTravel> {
 
@@ -62,23 +61,6 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
     }
 
     @Override
-    public void addTravel(BusinessTravel travel) {
-        ListNode a = new ListNode();
-        a.value = travel;
-        if (tail == null)
-        {
-            head = a;
-            tail = a;
-        } else {
-            if(travel.getStartBusinessTravel().isBefore(tail.prev.value.getEndBusinessTravel())
-                    && travel.getStartBusinessTravel().isAfter(a.value.getStartBusinessTravel()))
-                throw new IllegalArgumentException("illegal date");
-            tail.next = a;
-            tail = a;
-        }
-    }
-
-    @Override
     public BusinessTravel[] getTravels() {
         BusinessTravel[] getTravels = new BusinessTravel[travelsQuantity];
         int countTravels = 0;
@@ -111,6 +93,25 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
     }
 
     @Override
+    public int size() {
+        return this.travelsQuantity;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return (travelsQuantity == 0);
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        for(BusinessTravel businessTravel : this){
+            if(businessTravel.equals(o))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
     public Iterator<BusinessTravel> iterator() {
         return new Iterator<BusinessTravel>() {
             ListNode currentT = head;
@@ -128,5 +129,135 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
                 throw new NoSuchElementException("No element");
             }
         };
+    }
+
+    @Override
+    public Object[] toArray() {
+        BusinessTravel[] businessTravels = new BusinessTravel[this.travelsQuantity];
+        int j = 0;
+        for (BusinessTravel businessTravel : this) {
+            if (businessTravel != null)
+                businessTravels[j++] = businessTravel;
+        }
+        return businessTravels;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T[] toArray(T[] a) {
+        if (a.length < travelsQuantity)
+            return (T[]) Arrays.copyOf(toArray(), travelsQuantity -1, a.getClass());
+        System.arraycopy(toArray(), 0, a, 0, travelsQuantity);
+        if (a.length > travelsQuantity)
+            a[travelsQuantity] = null;
+        return a;
+    }
+
+    @Override
+    public boolean add(BusinessTravel businessTravel) {
+        ListNode a = new ListNode();
+        a.value = businessTravel;
+        if (tail == null)
+        {
+            head = a;
+            tail = a;
+        } else {
+            if(businessTravel.getStartBusinessTravel().isBefore(tail.prev.value.getEndBusinessTravel())
+                    && businessTravel.getStartBusinessTravel().isAfter(a.value.getStartBusinessTravel()))
+                throw new IllegalArgumentException("illegal date");
+            tail.next = a;
+            tail = a;
+            travelsQuantity++;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (head == null) {
+            return false;
+        }
+
+        if (head.value.equals(o))  {
+            head = head.next;
+            this.travelsQuantity--;
+        }
+
+        ListNode currentT = head;
+        while (currentT.next != null) {
+            if (currentT.next.value.equals(o)) {
+                if (tail.value.equals(currentT.next.value)) {
+                    tail = currentT;
+                }
+                currentT.next = currentT.next.next;
+                this.travelsQuantity--;
+            }
+            currentT = currentT.next;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return c.stream().allMatch(this::contains);
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends BusinessTravel> c) {
+        if (c.size() > travelsQuantity) {
+            try {
+                throw new AlreadyAddedException("There are not enough of free travels");
+            } catch (AlreadyAddedException e) {
+                e.printStackTrace();
+            }
+        }
+        ListNode currentT = head;
+        for (BusinessTravel o : c) {
+            currentT.value = o;
+            currentT = currentT.next;
+        }
+        return true;
+    }
+
+    private <T> int removeAll(BiPredicate<T, BusinessTravel> biPredicate, T obj) {
+        int removedBusinessTravelCount = 0;
+        ListNode currentT = head;
+        while (currentT.next != null){
+            if(biPredicate.test(obj, currentT.value)) {
+                remove(currentT);
+                removedBusinessTravelCount++;
+            }
+            currentT = currentT.next;
+        }
+        return removedBusinessTravelCount;
+    }
+
+    private BiPredicate<Collection<?>, BusinessTravel> containsInCollection = Collection::contains;
+    private BiPredicate<Collection<?>, BusinessTravel> notContainsInCollection = (c, o) -> !c.contains(o);
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return removeAll(containsInCollection, c) > 0;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return removeAll(notContainsInCollection, c) > 0;
+    }
+
+
+    @Override
+    public void clear() {
+        ListNode currentNode = head;
+        while (currentNode.next != null){
+            currentNode.value = null;
+            currentNode = currentNode.next;
+        }
+    }
+
+    @Override
+    public int compareTo(Employee o) {
+        return (this.getBonus() + this.getSalary()) - (o.getBonus() - o.getSalary());
     }
 }

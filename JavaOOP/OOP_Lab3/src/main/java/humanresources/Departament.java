@@ -1,9 +1,6 @@
 package humanresources;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public class Departament implements EmployeeGroup {
 
@@ -70,19 +67,39 @@ public class Departament implements EmployeeGroup {
         return -1;
     }
 
-    public void add(Employee newEmployee) throws AlreadyAddedException {
-        for(Employee employee : this){
-            if(employee.equals(newEmployee))
-                throw new AlreadyAddedException("This employee is already exists.");
-        }
-        if (size == employees.length) {
-            Employee[] newEmployees;
-            newEmployees = new Employee[this.employees.length * 2];
-            System.arraycopy(this.employees, 0, newEmployees, 0, this.employees.length);
-            this.employees = newEmployees;
-        }
-        this.employees[this.size] = newEmployee;
-        this.size++;
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Employee> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends Employee> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+
     }
 
     public boolean remove(String firstName, String secondName) {
@@ -161,6 +178,11 @@ public class Departament implements EmployeeGroup {
 //        }
 //        return countEmployeeTraveller;
 //    }
+
+    public static Employee[] sortBySalaryAndBonus(Employee[] arrEmp){
+        Arrays.sort(arrEmp);
+        return arrEmp;
+    }
 
     @Override
     public Employee[] getEmployeeTraveller() {
@@ -328,6 +350,66 @@ public class Departament implements EmployeeGroup {
     }
 
     @Override
+    public Employee get(int index) {
+        return null;
+    }
+
+    @Override
+    public Employee set(int index, Employee element) {
+        return null;
+    }
+
+    @Override
+    public void add(int index, Employee element) {
+
+    }
+
+    @Override
+    public Employee remove(int index) {
+        return null;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
+    }
+
+    @Override
+    public ListIterator<Employee> listIterator() {
+        return null;
+    }
+
+    @Override
+    public ListIterator<Employee> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<Employee> subList(int fromIndex, int toIndex) {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
+
+    @Override
     public Iterator<Employee> iterator() {
         return new Iterator<Employee>() {
             int currentIndex = 0;
@@ -345,5 +427,20 @@ public class Departament implements EmployeeGroup {
                 throw new NoSuchElementException("No element");
             }
         };
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T> T[] toArray(T[] a) {
+        return null;
+    }
+
+    @Override
+    public boolean add(Employee employee) {
+        return false;
     }
 }

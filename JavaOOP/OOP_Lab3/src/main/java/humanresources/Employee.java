@@ -2,7 +2,7 @@ package humanresources;
 
 import java.util.Objects;
 
-abstract public class Employee {
+abstract public class Employee implements Comparable<Employee> {
 
     private String firstName;
     private String secondName;
