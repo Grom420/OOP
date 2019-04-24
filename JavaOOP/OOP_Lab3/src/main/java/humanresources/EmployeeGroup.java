@@ -10,7 +10,7 @@ public interface EmployeeGroup extends Iterable<Employee>, List<Employee> {
     public boolean add(Employee employee);
     public Employee getEmployee(String firstName, String lastName);
     public boolean remove(String firstName, String lastName);
-    public boolean remove(Employee employee);
+    public boolean remove(Object o);
     public Employee bestEmployee();
     public int employeeQuantity();
     public boolean hasEmployee(String firstName, String lastName);

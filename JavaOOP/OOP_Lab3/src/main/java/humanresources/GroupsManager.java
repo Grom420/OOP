@@ -1,10 +1,13 @@
 package humanresources;
 
-public interface GroupsManager extends Iterable<EmployeeGroup> {
+import java.util.List;
+
+public interface GroupsManager extends Iterable<EmployeeGroup>, List<EmployeeGroup> {
 
     public int employeesQuantity();
     public int groupsQuantity();
-    public void add(EmployeeGroup group) throws AlreadyAddedException;
+    public void add(int index, EmployeeGroup group);
+    public boolean add(EmployeeGroup group);
     default EmployeeGroup getEmployeeGroup(String name){
         for (EmployeeGroup employeeGroup : this) {
             if (employeeGroup.getName().equals(name))

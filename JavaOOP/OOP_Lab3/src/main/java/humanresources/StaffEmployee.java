@@ -104,11 +104,7 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
 
     @Override
     public boolean contains(Object o) {
-        for(BusinessTravel businessTravel : this){
-            if(businessTravel.equals(o))
-                return true;
-        }
-        return false;
+        return this.stream().anyMatch(businessTravel -> businessTravel.equals(o));
     }
 
     @Override
@@ -155,18 +151,18 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
 
     @Override
     public boolean add(BusinessTravel businessTravel) {
-        ListNode a = new ListNode();
-        a.value = businessTravel;
+        ListNode currentBusinessTravel = new ListNode();
+        currentBusinessTravel.value = businessTravel;
         if (tail == null)
         {
-            head = a;
-            tail = a;
+            head = currentBusinessTravel;
+            tail = currentBusinessTravel;
         } else {
             if(businessTravel.getStartBusinessTravel().isBefore(tail.prev.value.getEndBusinessTravel())
-                    && businessTravel.getStartBusinessTravel().isAfter(a.value.getStartBusinessTravel()))
+                    && businessTravel.getStartBusinessTravel().isAfter(currentBusinessTravel.value.getStartBusinessTravel()))
                 throw new IllegalArgumentException("illegal date");
-            tail.next = a;
-            tail = a;
+            tail.next = currentBusinessTravel;
+            tail = currentBusinessTravel;
             travelsQuantity++;
             return true;
         }
@@ -184,16 +180,16 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
             this.travelsQuantity--;
         }
 
-        ListNode currentT = head;
-        while (currentT.next != null) {
-            if (currentT.next.value.equals(o)) {
-                if (tail.value.equals(currentT.next.value)) {
-                    tail = currentT;
+        ListNode currentNode = head;
+        while (currentNode.next != null) {
+            if (currentNode.next.value.equals(o)) {
+                if (tail.value.equals(currentNode.next.value)) {
+                    tail = currentNode;
                 }
-                currentT.next = currentT.next.next;
+                currentNode.next = currentNode.next.next;
                 this.travelsQuantity--;
             }
-            currentT = currentT.next;
+            currentNode = currentNode.next;
         }
         return false;
     }
@@ -212,23 +208,23 @@ public class StaffEmployee extends Employee implements BusinessTraveller, Iterab
                 e.printStackTrace();
             }
         }
-        ListNode currentT = head;
+        ListNode currentNode = head;
         for (BusinessTravel o : c) {
-            currentT.value = o;
-            currentT = currentT.next;
+            currentNode.value = o;
+            currentNode = currentNode.next;
         }
         return true;
     }
 
     private <T> int removeAll(BiPredicate<T, BusinessTravel> biPredicate, T obj) {
         int removedBusinessTravelCount = 0;
-        ListNode currentT = head;
-        while (currentT.next != null){
-            if(biPredicate.test(obj, currentT.value)) {
-                remove(currentT);
+        ListNode currentNode = head;
+        while (currentNode.next != null){
+            if(biPredicate.test(obj, currentNode.value)) {
+                remove(currentNode);
                 removedBusinessTravelCount++;
             }
-            currentT = currentT.next;
+            currentNode = currentNode.next;
         }
         return removedBusinessTravelCount;
     }

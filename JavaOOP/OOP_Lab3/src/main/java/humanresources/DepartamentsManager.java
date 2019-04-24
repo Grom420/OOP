@@ -1,9 +1,8 @@
 package humanresources;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
-public class DepartamentsManager implements GroupsManager {
+public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implements GroupsManager, List<EmployeeGroup> {
     private String name;
     private EmployeeGroup[] groups;
     private static final int DEFAULT_CAPACITY = 16;
@@ -28,10 +27,14 @@ public class DepartamentsManager implements GroupsManager {
         this.name = name;
     }
 
-    public void add(EmployeeGroup employeeGroup) throws AlreadyAddedException {
-        for(EmployeeGroup group : this){
-            if(group.equals(employeeGroup))
-                throw new AlreadyAddedException("This group already exists.");
+    public boolean add(EmployeeGroup employeeGroup) {
+        for (EmployeeGroup group : this) {
+            if (group.equals(employeeGroup))
+                try {
+                    throw new AlreadyAddedException("This group already exists.");
+                } catch (AlreadyAddedException e) {
+                    e.printStackTrace();
+                }
         }
         if (groupsSize == groups.length) {
             EmployeeGroup[] newEmployees;
@@ -41,20 +44,21 @@ public class DepartamentsManager implements GroupsManager {
         }
         this.groups[this.groupsSize] = employeeGroup;
         this.groupsSize++;
+        return true;
     }
 
     public int groupsQuantity() {
         return groupsSize;
     }
 
-    public EmployeeGroup[] getEmployeesGroups(){
+    public EmployeeGroup[] getEmployeesGroups() {
 
         EmployeeGroup[] newGroups = new EmployeeGroup[this.groups.length];
         System.arraycopy(groups, 0, newGroups, 0, groups.length);
         return newGroups;
     }
 
-    public boolean remove(String groupName){
+    public boolean remove(String groupName) {
 
         for (int i = 0; i < groups.length; i++) {
             if (groups[i].getName().equals(groupName)) {
@@ -65,10 +69,6 @@ public class DepartamentsManager implements GroupsManager {
             }
         }
         return false;
-    }
-
-    public int size() {
-        return size;
     }
 
     public int employeesQuantity() {
@@ -82,15 +82,15 @@ public class DepartamentsManager implements GroupsManager {
     public Employee mostValuableEmployee() {
         Employee bestEmployee = groups[0].bestEmployee();
         for (int i = 1; i < size; i++) {
-            if(bestEmployee.getSalary() < groups[i].bestEmployee().getSalary())
+            if (bestEmployee.getSalary() < groups[i].bestEmployee().getSalary())
                 bestEmployee = groups[i].bestEmployee();
         }
         return bestEmployee;
     }
 
-    public int remove(EmployeeGroup employeeGroup){
+    public int remove(EmployeeGroup employeeGroup) {
         for (int i = 0; i < groupsQuantity(); i++) {
-            if(groups[i].equals(employeeGroup)) {
+            if (groups[i].equals(employeeGroup)) {
                 shiftGroups(i);
                 countDeletedGroup++;
             }
@@ -112,7 +112,7 @@ public class DepartamentsManager implements GroupsManager {
     }
 
 
-    private void shiftGroups(int i){
+    private void shiftGroups(int i) {
         System.arraycopy(this.groups, i + 1, this.groups, i, groupsSize - i);
     }
 
@@ -128,7 +128,7 @@ public class DepartamentsManager implements GroupsManager {
 
             @Override
             public EmployeeGroup next() {
-                if(hasNext()) {
+                if (hasNext()) {
                     return groups[currentIndex++];
                 }
                 throw new NoSuchElementException("No element");

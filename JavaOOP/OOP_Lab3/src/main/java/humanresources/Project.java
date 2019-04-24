@@ -2,12 +2,14 @@ package humanresources;
 
 import java.util.*;
 
-public class Project implements EmployeeGroup {
+public class Project extends AbstractListNode<Employee> implements EmployeeGroup, List<Employee> {
 
     private String name;
     private int size;
     private Node<Employee> head;
     private Node<Employee> tail;
+
+    public Project(){}
 
     public Project(String name) {
         this.name = name;
@@ -27,41 +29,6 @@ public class Project implements EmployeeGroup {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends Employee> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends Employee> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public void clear() {
-
     }
 
     public Employee getEmployee(String firstName, String lastName){
@@ -106,32 +73,6 @@ public class Project implements EmployeeGroup {
         }
         return false;
 
-    }
-
-    public boolean remove(Employee employee){
-
-        if (head == null) {
-            return false;
-        }
-
-
-        if (head.value.equals(employee))  {
-            head = head.next;
-            this.size--;
-        }
-
-        Node<Employee> currentT = head;
-        while (currentT.next != null) {
-            if (currentT.next.value.equals(employee)) {
-                if (tail.value.equals(currentT.next.value)) {
-                    tail = currentT;
-                }
-                currentT.next = currentT.next.next;
-                this.size--;
-            }
-            currentT = currentT.next;
-        }
-        return false;
     }
 
     public Employee bestEmployee(){
@@ -265,101 +206,5 @@ public class Project implements EmployeeGroup {
             hcPos ^= i;
         }
         return hcObj ^ hcPos;
-    }
-
-    @Override
-    public Employee get(int index) {
-        return null;
-    }
-
-    @Override
-    public Employee set(int index, Employee element) {
-        return null;
-    }
-
-    @Override
-    public void add(int index, Employee element) {
-
-    }
-
-    @Override
-    public Employee remove(int index) {
-        return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public ListIterator<Employee> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<Employee> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<Employee> subList(int fromIndex, int toIndex) {
-        return null;
-    }
-
-    @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        return false;
-    }
-
-    @Override
-    public Iterator<Employee> iterator() {
-        return new Iterator<Employee>() {
-            Node<Employee> t = head;
-
-            @Override
-            public boolean hasNext() {
-                return t.next != null;
-            }
-
-            @Override
-            public Employee next() {
-                if(hasNext()) {
-                    t = t.next;
-                    return head.value;
-                }
-                throw new NoSuchElementException("No element");
-            }
-        };
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-    @Override
-    public boolean add(Employee employee) {
-        return false;
     }
 }

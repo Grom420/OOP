@@ -2,7 +2,7 @@ package humanresources;
 
 import java.util.*;
 
-public class Departament implements EmployeeGroup {
+public class Departament extends AbstractListArray<Employee> implements EmployeeGroup, List<Employee> {
 
     private static final int DEFAULT_CAPACITY = 8;
     private String name;
@@ -12,15 +12,20 @@ public class Departament implements EmployeeGroup {
     public Departament(){
         this("");
     }
+
+    public Departament(int capacity){
+        if (capacity <= 0)
+            throw new NegativeSizeException("Negative capacity");
+        employees = new Employee[capacity];
+    }
+
     public Departament(String name) {
         this(name, DEFAULT_CAPACITY);
     }
 
     public Departament(String name, int capacity) {
+        this(capacity);
         this.name = name;
-        if (capacity <= 0)
-            throw new NegativeSizeException("Negative capacity");
-        employees = new Employee[capacity];
     }
 
     public Departament(String name, Employee[] employees) {
@@ -42,17 +47,6 @@ public class Departament implements EmployeeGroup {
         this.name = name;
     }
 
-//    public int employeesQuantity(JobTitilesEnum jobTitle){
-//        int employeeQuantity = 0;
-//        for (int i = 0; i < size; i++) {
-//            assert false;
-//            if (employees[i].getJobTitle().equals(jobTitle))
-//                employeeQuantity++;
-//        }
-//        return employeeQuantity;
-//    }
-//
-
     public boolean hasEmployee(String firstName, String lastName){
         return indexOf(firstName, lastName) != -1;
     }
@@ -65,41 +59,6 @@ public class Departament implements EmployeeGroup {
             }
         }
         return -1;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends Employee> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends Employee> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public void clear() {
-
     }
 
     public boolean remove(String firstName, String secondName) {
@@ -148,36 +107,6 @@ public class Departament implements EmployeeGroup {
 
         return sortMerge(this.employees);
     }
-
-//    @Override
-//    public int countPartTimeEmployee() {
-//        int countPartTimeEmployee = 0;
-//        for (int i = 0; i < size; i++) {
-//            if (employees[i].isPartTimer())
-//                countPartTimeEmployee++;
-//        }
-//        return countPartTimeEmployee;
-//    }
-//
-//    @Override
-//    public int countFullTimeEmployee() {
-//        int countFullTimeEmployee = 0;
-//        for (int i = 0; i < size; i++) {
-//            if (!employees[i].isPartTimer())
-//                countFullTimeEmployee++;
-//        }
-//        return countFullTimeEmployee;
-//    }
-//
-//    @Override
-//    public int countEmployeeTraveller() {
-//        int countEmployeeTraveller = 0;
-//        for (int i = 0; i < size; i++) {
-//            if (employees[i].isTraveller())
-//                countEmployeeTraveller++;
-//        }
-//        return countEmployeeTraveller;
-//    }
 
     public static Employee[] sortBySalaryAndBonus(Employee[] arrEmp){
         Arrays.sort(arrEmp);
@@ -349,98 +278,15 @@ public class Departament implements EmployeeGroup {
         return objectHashCode ^ positionHashCode;
     }
 
-    @Override
-    public Employee get(int index) {
-        return null;
-    }
 
-    @Override
-    public Employee set(int index, Employee element) {
-        return null;
-    }
-
-    @Override
-    public void add(int index, Employee element) {
-
-    }
-
-    @Override
-    public Employee remove(int index) {
-        return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public ListIterator<Employee> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<Employee> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<Employee> subList(int fromIndex, int toIndex) {
-        return null;
-    }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean contains(Object o) {
-        return false;
-    }
-
-    @Override
-    public Iterator<Employee> iterator() {
-        return new Iterator<Employee>() {
-            int currentIndex = 0;
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex < size;
-            }
-
-            @Override
-            public Employee next() {
-                if(hasNext()) {
-                    return employees[currentIndex++];
-                }
-                throw new NoSuchElementException("No element");
-            }
-        };
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
-    }
-
-    @Override
-    public boolean add(Employee employee) {
-        return false;
+        return (size == 0);
     }
 }

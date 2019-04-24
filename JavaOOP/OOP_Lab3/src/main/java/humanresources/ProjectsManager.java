@@ -1,9 +1,8 @@
 package humanresources;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
-public class ProjectsManager implements GroupsManager {
+public class ProjectsManager extends AbstractListNode<EmployeeGroup> implements GroupsManager, List<EmployeeGroup> {
 
     private Node<EmployeeGroup> head;
     private Node<EmployeeGroup> tail;
@@ -33,10 +32,14 @@ public class ProjectsManager implements GroupsManager {
     }
 
     @Override
-    public void add(EmployeeGroup group) throws AlreadyAddedException {
+    public boolean add(EmployeeGroup group)  {
         for(EmployeeGroup employeeGroup : this){
             if(employeeGroup.equals(group))
-                throw new AlreadyAddedException("This group already exists.");
+                try {
+                    throw new AlreadyAddedException("This group already exists.");
+                } catch (AlreadyAddedException e) {
+                    e.printStackTrace();
+                }
         }
         Node<EmployeeGroup> element = new Node<>();
         element.value = group;
@@ -48,6 +51,7 @@ public class ProjectsManager implements GroupsManager {
             tail = element;
         }
         this.size++;
+        return true;
     }
 
     @Override
