@@ -95,9 +95,9 @@ public class AbstractListArray<T> implements List<T> {
     @SuppressWarnings("unchecked")
     private void expendSize(Collection<? extends T> c){
         if(c.size() + this.size > abstractArray.length){
-            T[] newEmployees = (T[]) new Object[abstractArray.length];
-            System.arraycopy(abstractArray, 0, newEmployees, 0, size);
-            this.abstractArray = newEmployees;
+            T[] newArrays = (T[]) new Object[abstractArray.length];
+            System.arraycopy(abstractArray, 0, newArrays, 0, size);
+            this.abstractArray = newArrays;
         }
     }
 
