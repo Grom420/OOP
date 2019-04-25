@@ -5,9 +5,6 @@ import java.util.*;
 public class Project extends AbstractListNode<Employee> implements EmployeeGroup, List<Employee> {
 
     private String name;
-    private int size;
-    private Node<Employee> head;
-    private Node<Employee> tail;
 
     public Project(){}
 
@@ -32,19 +29,11 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
     }
 
     public Employee getEmployee(String firstName, String lastName){
-
-        if (head == null) {
-            return null;
-        }
-        if (head.value.getFirstName().equals(firstName) && head.value.getSecondName().equals(lastName))  {
-            return head.value;
-        }
         for(Employee employee : this) {
             if(employee.getFirstName().equals(firstName) && employee.getSecondName().equals(lastName))
                 return employee;
         }
-
-        return null;
+        throw new NoSuchElementException();
     }
 
     public boolean remove(String firstName, String lastName){
@@ -76,10 +65,9 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
     }
 
     public Employee bestEmployee(){
-
         Node<Employee> t = head;
         Employee bestEmployee = t.value;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) { //todo фор ич
             if(t.next.value.getSalary() > bestEmployee.getSalary()){
                 bestEmployee = t.next.value;
             }
@@ -113,14 +101,7 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
     public Employee[] employeesSortedBySalary() {
         Employee temp;
         Employee[] sortedEmployeesArray = getEmployees();
-
-        mergeSortSalaryEmployee(sortedEmployeesArray);
-
-        for (int i = 0; i < this.size; i++) {
-            temp = sortedEmployeesArray[i];
-            sortedEmployeesArray[i] = sortedEmployeesArray[sortedEmployeesArray.length - i - 1];
-            sortedEmployeesArray[sortedEmployeesArray.length - i - 1] = temp;
-        }
+        Arrays.sort(sortedEmployeesArray /* todo,  comparator*/);
         return sortedEmployeesArray;
     }
 
@@ -176,6 +157,7 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
 
     @Override
     public String toString() {
+        //todo no array and use foreach
         Employee[] employees = getEmployees();
         final StringBuilder sb = new StringBuilder("Project ");
         sb.append(name).append(":").append(size).append("\n");
@@ -198,6 +180,7 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
 
     @Override
     public int hashCode() {
+        //todo no array and use foreach
         Employee[] employees = getEmployees();
         int hcObj = Objects.hashCode(employees[0]);
         int hcPos = Objects.hashCode(0);

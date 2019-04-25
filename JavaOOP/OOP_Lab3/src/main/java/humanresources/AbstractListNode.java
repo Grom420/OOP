@@ -2,7 +2,7 @@ package humanresources;
 
 import java.util.*;
 
-public class AbstractListNode<T> extends Node<T> implements List<T> {
+public class AbstractListNode<T> implements List<T> {
 
     protected int size;
     protected Node<T> head;
@@ -285,6 +285,7 @@ public class AbstractListNode<T> extends Node<T> implements List<T> {
             @Override
             public T next() {
                 if(hasNext()) {
+                    //todo lastreturned
                     currentNode = currentNode.next;
                     return currentNode.value;
                 }

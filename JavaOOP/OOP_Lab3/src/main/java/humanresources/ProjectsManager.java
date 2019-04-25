@@ -32,16 +32,6 @@ public class ProjectsManager extends AbstractListNode<EmployeeGroup> implements 
     }
 
     @Override
-    public EmployeeGroup[] getEmployeesGroups() {
-        EmployeeGroup[] getEmployeesGroup = new EmployeeGroup[size];
-        int countEmployeeGroup = 0;
-        for(EmployeeGroup employeeGroup : this){
-            getEmployeesGroup[countEmployeeGroup++] = employeeGroup;
-        }
-        return getEmployeesGroup;
-    }
-
-    @Override
     public Employee mostValuableEmployee() {
         Employee mostValuableEmployee = head.value.bestEmployee();
         for(EmployeeGroup employeeGroup : this) {
