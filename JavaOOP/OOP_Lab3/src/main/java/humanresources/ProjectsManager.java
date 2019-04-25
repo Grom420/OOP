@@ -32,29 +32,6 @@ public class ProjectsManager extends AbstractListNode<EmployeeGroup> implements 
     }
 
     @Override
-    public boolean add(EmployeeGroup group)  {
-        for(EmployeeGroup employeeGroup : this){
-            if(employeeGroup.equals(group))
-                try {
-                    throw new AlreadyAddedException("This group already exists.");
-                } catch (AlreadyAddedException e) {
-                    e.printStackTrace();
-                }
-        }
-        Node<EmployeeGroup> element = new Node<>();
-        element.value = group;
-        if (tail == null) {
-            head = element;
-            tail = element;
-        } else {
-            tail.next = element;
-            tail = element;
-        }
-        this.size++;
-        return true;
-    }
-
-    @Override
     public EmployeeGroup[] getEmployeesGroups() {
         EmployeeGroup[] getEmployeesGroup = new EmployeeGroup[size];
         int countEmployeeGroup = 0;
@@ -117,26 +94,5 @@ public class ProjectsManager extends AbstractListNode<EmployeeGroup> implements 
                 countEmployeeTraveller++;
         }
         return getEmployeeTraveller;
-    }
-
-    @Override
-    public Iterator<EmployeeGroup> iterator() {
-        return new Iterator<EmployeeGroup>() {
-            Node<EmployeeGroup> t = head;
-
-            @Override
-            public boolean hasNext() {
-                return t.next != null;
-            }
-
-            @Override
-            public EmployeeGroup next() {
-                if(hasNext()) {
-                    t = t.next;
-                    return t.value;
-                }
-                throw new NoSuchElementException("No element");
-            }
-        };
     }
 }
