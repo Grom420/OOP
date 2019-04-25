@@ -6,8 +6,8 @@ import java.util.stream.IntStream;
 
 public class AbstractListArray<T> implements List<T> {
 
-    private T[] abstractArray;
-    private int size;
+    protected T[] items;
+    protected int size;
 
     @Override
     public int size() {
@@ -21,7 +21,7 @@ public class AbstractListArray<T> implements List<T> {
 
     @Override
     public boolean contains(Object o) {
-        return Arrays.stream(abstractArray).filter(Objects::nonNull).anyMatch(order -> order.equals(o));
+        return Arrays.stream(items).filter(Objects::nonNull).anyMatch(order -> order.equals(o));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class AbstractListArray<T> implements List<T> {
             @Override
             public T next() {
                 if(hasNext()) {
-                    return abstractArray[currentIndex++];
+                    return items[currentIndex++];
                 }
                 throw new NoSuchElementException("No element");
             }
@@ -49,7 +49,7 @@ public class AbstractListArray<T> implements List<T> {
     public Object[] toArray() {
         T[] newArray = (T[]) new Object[size];
         int j = 0;
-        for (T element : this.abstractArray) {
+        for (T element : this.items) {
             if (element != null)
                 newArray[j++] = element;
         }
@@ -59,11 +59,11 @@ public class AbstractListArray<T> implements List<T> {
     @Override
     @SuppressWarnings("unchecked")
     public <t> t[] toArray(t[] a) {
-        if (a.length < abstractArray.length)
-            return (t[]) Arrays.copyOf(abstractArray, abstractArray.length - 1, a.getClass());
-        System.arraycopy(abstractArray, 0, a, 0, abstractArray.length);
-        if (a.length > abstractArray.length)
-            a[abstractArray.length - 1] = null;
+        if (a.length < items.length)
+            return (t[]) Arrays.copyOf(items, items.length - 1, a.getClass());
+        System.arraycopy(items, 0, a, 0, items.length);
+        if (a.length > items.length)
+            a[items.length - 1] = null;
         return a;
     }
 
@@ -71,16 +71,16 @@ public class AbstractListArray<T> implements List<T> {
     @SuppressWarnings("unchecked")
     public boolean add(T t) {
         checkArray(t);
-        this.abstractArray[this.size] = t;
+        this.items[this.size] = t;
         this.size++;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        for (int i = 0; i < abstractArray.length; i++) {
-            if (Objects.nonNull(abstractArray[i]) && abstractArray[i].equals(o)) {
-                abstractArray[i] = null;
+        for (int i = 0; i < items.length; i++) {
+            if (Objects.nonNull(items[i]) && items[i].equals(o)) {
+                items[i] = null;
                 return true;
             }
         }
@@ -94,10 +94,10 @@ public class AbstractListArray<T> implements List<T> {
 
     @SuppressWarnings("unchecked")
     private void expendSize(Collection<? extends T> c){
-        if(c.size() + this.size > abstractArray.length){
-            T[] newArrays = (T[]) new Object[abstractArray.length];
-            System.arraycopy(abstractArray, 0, newArrays, 0, size);
-            this.abstractArray = newArrays;
+        if(c.size() + this.size > items.length){
+            T[] newArrays = (T[]) new Object[items.length];
+            System.arraycopy(items, 0, newArrays, 0, size);
+            this.items = newArrays;
         }
     }
 
@@ -117,15 +117,15 @@ public class AbstractListArray<T> implements List<T> {
                 } catch (AlreadyAddedException e1) {
                     e1.printStackTrace();
                 }
-            abstractArray[index++] = element;
+            items[index++] = element;
         }
         return true;
     }
 
     private <t> int removeAll(BiPredicate<t, T> biPredicate, t obj) {
         int removedElementCount = 0;
-        for (int i = 0; i < abstractArray.length; i++) {
-            if (biPredicate.test(obj, abstractArray[i])) {
+        for (int i = 0; i < items.length; i++) {
+            if (biPredicate.test(obj, items[i])) {
                 remove(i);
                 removedElementCount++;
             }
@@ -162,8 +162,8 @@ public class AbstractListArray<T> implements List<T> {
     public T set(int index, T element) {
         for (int i = 0; i < size; i++) {
             if(i == index) {
-                abstractArray[i] = element;
-                return abstractArray[i];
+                items[i] = element;
+                return items[i];
             }
         }
         return null;
@@ -179,11 +179,11 @@ public class AbstractListArray<T> implements List<T> {
                     e.printStackTrace();
                 }
         }
-        if (size == abstractArray.length) {
+        if (size == items.length) {
             T[] newArray;
-            newArray = (T[]) new Object[this.abstractArray.length * 2];
-            System.arraycopy(this.abstractArray, 0, newArray, 0, this.abstractArray.length);
-            this.abstractArray = newArray;
+            newArray = (T[]) new Object[this.items.length * 2];
+            System.arraycopy(this.items, 0, newArray, 0, this.items.length);
+            this.items = newArray;
         }
     }
 
@@ -191,7 +191,7 @@ public class AbstractListArray<T> implements List<T> {
     public void add(int index, T element) {
         checkArray(element);
         shift(index);
-        this.abstractArray[index] = element;
+        this.items[index] = element;
         this.size++;
     }
 
@@ -199,8 +199,8 @@ public class AbstractListArray<T> implements List<T> {
     public T remove(int index) {
         for (int i = 0; i < size; i++) {
             if(i == index) {
-                T removedEmployee = abstractArray[i];
-                abstractArray[i] = null;
+                T removedEmployee = items[i];
+                items[i] = null;
                 this.size--;
                 return removedEmployee;
             }
@@ -210,23 +210,23 @@ public class AbstractListArray<T> implements List<T> {
 
     private void shift(int i) {
 
-        System.arraycopy(this.abstractArray, i + 1, this.abstractArray, i, size - i);
+        System.arraycopy(this.items, i + 1, this.items, i, size - i);
     }
 
     @Override
     public int indexOf(Object o) {
-        return IntStream.range(0, abstractArray.length)
-                .filter(i -> Objects.nonNull(abstractArray[i]))
-                .filter(i -> abstractArray[i].equals(o))
+        return IntStream.range(0, items.length)
+                .filter(i -> Objects.nonNull(items[i]))
+                .filter(i -> items[i].equals(o))
                 .findFirst()
                 .orElse(-1);
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        for (int i = abstractArray.length; i >= 0; i--) {
-            if (Objects.nonNull(abstractArray[i]))
-                if (abstractArray[i].equals(o))
+        for (int i = items.length; i >= 0; i--) {
+            if (Objects.nonNull(items[i]))
+                if (items[i].equals(o))
                     return i;
         }
         return -1;
@@ -245,13 +245,13 @@ public class AbstractListArray<T> implements List<T> {
 
             @Override
             public boolean hasNext() {
-                return currentIndex < abstractArray.length;
+                return currentIndex < items.length;
             }
 
             @Override
             public T next() {
                 if (hasNext()) {
-                    lastReturned = abstractArray[currentIndex++];
+                    lastReturned = items[currentIndex++];
                     return lastReturned;
                 }
                 throw new NoSuchElementException("There's no such element");
@@ -265,7 +265,7 @@ public class AbstractListArray<T> implements List<T> {
             @Override
             public T previous() {
                 if (hasPrevious()) {
-                    lastReturned = abstractArray[currentIndex--];
+                    lastReturned = items[currentIndex--];
                     return lastReturned;
                 }
                 throw new NoSuchElementException("There's no such element");
@@ -312,8 +312,8 @@ public class AbstractListArray<T> implements List<T> {
     public List<T> subList(int fromIndex, int toIndex) {
         List<T> subList = new AbstractListArray<>();
         for (int i = fromIndex; i < toIndex; i++) {
-            if (Objects.nonNull(abstractArray[i]))
-                subList.add(abstractArray[i]);
+            if (Objects.nonNull(items[i]))
+                subList.add(items[i]);
         }
         return subList;
     }

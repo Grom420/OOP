@@ -4,9 +4,9 @@ import java.util.*;
 
 public class AbstractListNode<T> extends Node<T> implements List<T> {
 
-    private int size;
-    private Node<T> head;
-    private Node<T> tail;
+    protected int size;
+    protected Node<T> head;
+    protected Node<T> tail;
 
     @Override
     public int size() {

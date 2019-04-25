@@ -27,26 +27,6 @@ public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implem
         this.name = name;
     }
 
-    public boolean add(EmployeeGroup employeeGroup) {
-        for (EmployeeGroup group : this) {
-            if (group.equals(employeeGroup))
-                try {
-                    throw new AlreadyAddedException("This group already exists.");
-                } catch (AlreadyAddedException e) {
-                    e.printStackTrace();
-                }
-        }
-        if (groupsSize == groups.length) {
-            EmployeeGroup[] newEmployees;
-            newEmployees = new EmployeeGroup[this.groups.length * 2];
-            System.arraycopy(this.groups, 0, newEmployees, 0, this.groups.length);
-            this.groups = newEmployees;
-        }
-        this.groups[this.groupsSize] = employeeGroup;
-        this.groupsSize++;
-        return true;
-    }
-
     public int groupsQuantity() {
         return groupsSize;
     }
@@ -114,25 +94,5 @@ public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implem
 
     private void shiftGroups(int i) {
         System.arraycopy(this.groups, i + 1, this.groups, i, groupsSize - i);
-    }
-
-    @Override
-    public Iterator<EmployeeGroup> iterator() {
-        return new Iterator<EmployeeGroup>() {
-            int currentIndex = 0;
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex < size;
-            }
-
-            @Override
-            public EmployeeGroup next() {
-                if (hasNext()) {
-                    return groups[currentIndex++];
-                }
-                throw new NoSuchElementException("No element");
-            }
-        };
     }
 }

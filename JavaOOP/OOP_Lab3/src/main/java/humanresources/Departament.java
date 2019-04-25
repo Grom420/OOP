@@ -277,16 +277,4 @@ public class Departament extends AbstractListArray<Employee> implements Employee
         }
         return objectHashCode ^ positionHashCode;
     }
-
-
-
-    @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return (size == 0);
-    }
 }
