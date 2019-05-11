@@ -285,8 +285,9 @@ public class AbstractListNode<T> implements List<T> {
             @Override
             public T next() {
                 if(hasNext()) {
-                    //todo lastreturned
+                    //todo lastreturned(DONE)
                     currentNode = currentNode.next;
+                    lastReturned = currentNode.value;
                     return currentNode.value;
                 }
                 throw new NoSuchElementException("No element");

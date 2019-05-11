@@ -2,7 +2,7 @@ package humanresources;
 
 import java.util.*;
 
-public class Departament extends AbstractListArray<Employee> implements EmployeeGroup, List<Employee> {
+public class Departament extends AbstractListArray<Employee> implements EmployeeGroup, List<Employee>, Comparator<Employee> {
 
     private static final int DEFAULT_CAPACITY = 8;
     private String name;
@@ -126,35 +126,9 @@ public class Departament extends AbstractListArray<Employee> implements Employee
         return getEmployeeTraveller;
     }
 
-    private static Employee[] sortMerge(Employee[] arrEmployees) {
-        if (arrEmployees.length < 2) return arrEmployees;
-        int middle = arrEmployees.length / 2;
-        return merge(sortMerge(Arrays.copyOfRange(arrEmployees, 0, middle)),
-                sortMerge(Arrays.copyOfRange(arrEmployees, middle, arrEmployees.length)));
-    }
-
-    private static Employee[] merge(Employee[] arrEmployeesOne, Employee[] arrEmployeesTwo) {
-        int lenArrOne = arrEmployeesOne.length, lenArrTwo = arrEmployeesTwo.length;
-        int countArrOne = 0, countArrTwo = 0, lenAll = lenArrOne + lenArrTwo;
-        Employee[] result = new Employee[lenAll];
-        for (int i = 0; i < lenAll; i++) {
-            if (countArrTwo < lenArrTwo && countArrOne < lenArrOne) {
-                if (arrEmployeesOne[countArrOne].getSalary() > arrEmployeesTwo[countArrTwo].getSalary()) {
-                    countArrTwo++;
-                    result[i] = arrEmployeesTwo[countArrTwo];
-                } else {
-                    countArrOne++;
-                    result[i] = arrEmployeesOne[countArrOne];
-                }
-            } else if (countArrTwo < lenArrTwo) {
-                countArrTwo++;
-                result[i] = arrEmployeesTwo[countArrTwo];
-            } else {
-                countArrOne++;
-                result[i] = arrEmployeesOne[countArrOne];
-            }
-        }
-        return result;
+    private Employee[] sortMerge(Employee[] arrEmployees) {
+        Arrays.sort(arrEmployees, this::compare);
+        return arrEmployees;
     }
 
     public boolean remove(Employee employee){
@@ -255,6 +229,11 @@ public class Departament extends AbstractListArray<Employee> implements Employee
         }
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int compare(Employee o1, Employee o2) {
+        return o1.getSalary() - o2.getSalary();
     }
 
     @Override

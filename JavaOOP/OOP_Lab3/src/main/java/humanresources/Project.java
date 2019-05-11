@@ -2,7 +2,7 @@ package humanresources;
 
 import java.util.*;
 
-public class Project extends AbstractListNode<Employee> implements EmployeeGroup, List<Employee> {
+public class Project extends AbstractListNode<Employee> implements EmployeeGroup, List<Employee>, Comparator<Employee> {
 
     private String name;
 
@@ -67,7 +67,7 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
     public Employee bestEmployee(){
         Node<Employee> t = head;
         Employee bestEmployee = t.value;
-        for (int i = 0; i < size; i++) { //todo фор ич
+        for (int i = 0; i < size; i++) {
             if(t.next.value.getSalary() > bestEmployee.getSalary()){
                 bestEmployee = t.next.value;
             }
@@ -99,9 +99,8 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
     }
 
     public Employee[] employeesSortedBySalary() {
-        Employee temp;
         Employee[] sortedEmployeesArray = getEmployees();
-        Arrays.sort(sortedEmployeesArray /* todo,  comparator*/);
+        Arrays.sort(sortedEmployeesArray, this::compare);
         return sortedEmployeesArray;
     }
 
@@ -118,55 +117,21 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
         return getEmployeeTraveller;
     }
 
-    private static void mergeSortSalaryEmployee(Employee[] employees) {
-        if (employees.length > 1) {
-            int leftPartLength = employees.length / 2;
-            int rightPartLength = employees.length - leftPartLength;
-
-            Employee[] leftArray = new Employee[leftPartLength];
-            Employee[] rightArray = new Employee[rightPartLength];
-
-            System.arraycopy(employees, 0, leftArray, 0, leftPartLength);
-            System.arraycopy(employees, leftPartLength, rightArray, 0, rightPartLength);
-
-            mergeSortSalaryEmployee(leftArray);
-            mergeSortSalaryEmployee(rightArray);
-
-            int leftArrayIndex = 0;
-            int rightArrayIndex = 0;
-            int targetIndex = 0;
-
-            while (targetIndex < employees.length) {
-                if (leftArrayIndex >= leftArray.length) {
-                    employees[targetIndex] = rightArray[rightArrayIndex];
-                    rightArrayIndex++;
-                } else if (rightArrayIndex >= rightArray.length) {
-                    employees[targetIndex] = leftArray[leftArrayIndex];
-                    leftArrayIndex++;
-                } else if (leftArray[leftArrayIndex].getSalary() >= rightArray[rightArrayIndex].getSalary()) {
-                    employees[targetIndex] = leftArray[leftArrayIndex];
-                    leftArrayIndex++;
-                } else {
-                    employees[targetIndex] = rightArray[rightArrayIndex];
-                    rightArrayIndex++;
-                }
-                targetIndex++;
-            }
-        }
-    }
-
     @Override
     public String toString() {
-        //todo no array and use foreach
-        Employee[] employees = getEmployees();
+        //todo no array and use foreach(DONE)
         final StringBuilder sb = new StringBuilder("Project ");
         sb.append(name).append(":").append(size).append("\n");
-        if (employees != null)
-            for (int i = 0; i < size; i++) {
-                sb.append('<').append(employees[i]).append(">\n");
+        for (Employee employee : this) {
+            sb.append('<').append(employee).append(">\n");
         }
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int compare(Employee o1, Employee o2) {
+        return o1.getSalary() - o2.getSalary();
     }
 
     @Override
@@ -180,14 +145,14 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
 
     @Override
     public int hashCode() {
-        //todo no array and use foreach
-        Employee[] employees = getEmployees();
-        int hcObj = Objects.hashCode(employees[0]);
-        int hcPos = Objects.hashCode(0);
-        for (int i = 1; i < employees.length; i++) {
-            hcObj ^= Objects.hashCode(employees[i]);
-            hcPos ^= i;
+        //todo no array and use foreach(DONE)
+        int hashObject = 0;
+        int hashPosition = 0;
+        int i = 0;
+        for (Employee employee : this) {
+            hashObject ^= Objects.hashCode(employee);
+            hashPosition ^= i++;
         }
-        return hcObj ^ hcPos;
+        return hashObject ^ hashPosition;
     }
 }
