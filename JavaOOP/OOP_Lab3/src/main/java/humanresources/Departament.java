@@ -108,7 +108,7 @@ public class Departament extends AbstractListArray<Employee> implements Employee
         return sortMerge(this.employees);
     }
 
-    public static Employee[] sortBySalaryAndBonus(Employee[] arrEmp){
+    public Employee[] sortBySalaryAndBonus(Employee[] arrEmp){
         Arrays.sort(arrEmp);
         return arrEmp;
     }
@@ -239,7 +239,7 @@ public class Departament extends AbstractListArray<Employee> implements Employee
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || o instanceof Class) return false;
         Departament that = (Departament) o;
         return size == that.size &&
                 getName().equals(that.getName()) &&
