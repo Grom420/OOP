@@ -61,6 +61,42 @@ public class Departament extends AbstractListArray<Employee> implements Employee
         return -1;
     }
 
+    public boolean add(Employee employee) {
+        return super.add(employee);
+    }
+
+    public boolean remove(Object o){
+        return super.remove(o);
+    }
+
+    public boolean addAll(Collection<? extends Employee> c){
+        return super.addAll(c);
+    }
+
+    public boolean addAll(int index, Collection<? extends Employee> c){
+        return super.addAll(index, c);
+    }
+
+    public boolean removeAll(Collection<?> c){
+        return super.removeAll(c);
+    }
+
+    public boolean retainAll(Collection<?> c){
+        return super.retainAll(c);
+    }
+
+    public Employee set(int index, Employee element){
+        return super.set(index, element);
+    }
+
+    public void add(int index, Employee element){
+        super.add(index, element);
+    }
+
+    public Employee remove(int index){
+        return super.remove(index);
+    }
+
     public boolean remove(String firstName, String secondName) {
         if(indexOf(firstName, secondName) != -1){
             shift(indexOf(firstName, secondName));
@@ -130,18 +166,6 @@ public class Departament extends AbstractListArray<Employee> implements Employee
         Arrays.sort(arrEmployees, this::compare);
         return arrEmployees;
     }
-
-    public boolean remove(Employee employee){
-
-        for (int i = 0; i < employeeQuantity(); i++) {
-            if(employees[i].equals(employee)){
-                shift(i);
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     public int removeAll(JobTitilesEnum jobTitle){
 

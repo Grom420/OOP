@@ -33,7 +33,6 @@ public interface GroupsManager extends Iterable<EmployeeGroup>, List<EmployeeGro
     public Employee mostValuableEmployee();
     public boolean remove(String groupName);
     public int remove(EmployeeGroup group);
-    //public int countPartTimeEmployee();
     default int countPartTimeEmployee() {
         int countPartTimeEmployee = 0;
         for(EmployeeGroup employeeGroup : this) {

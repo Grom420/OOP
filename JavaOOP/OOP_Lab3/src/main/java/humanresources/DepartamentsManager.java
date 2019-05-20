@@ -1,8 +1,9 @@
 package humanresources;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implements GroupsManager, List<EmployeeGroup> {
+public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implements GroupsManager, List<EmployeeGroup>, Serializable {
     private String name;
     private EmployeeGroup[] groups;
     private static final int DEFAULT_CAPACITY = 16;
@@ -27,6 +28,42 @@ public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implem
         this.name = name;
     }
 
+    public boolean add(EmployeeGroup employeeGroup) {
+        return super.add(employeeGroup);
+    }
+
+    public boolean remove(Object o){
+        return super.remove(o);
+    }
+
+    public boolean addAll(Collection<? extends EmployeeGroup> c){
+        return super.addAll(c);
+    }
+
+    public boolean addAll(int index, Collection<? extends EmployeeGroup> c){
+        return super.addAll(index, c);
+    }
+
+    public boolean removeAll(Collection<?> c){
+        return super.removeAll(c);
+    }
+
+    public boolean retainAll(Collection<?> c){
+        return super.retainAll(c);
+    }
+
+    public void clear(){
+        super.clear();
+    }
+
+    public void add(int index, EmployeeGroup element){
+        super.add(index, element);
+    }
+
+    public EmployeeGroup remove(int index){
+        return super.remove(index);
+    }
+
     public int groupsQuantity() {
         return groupsSize;
     }
@@ -38,10 +75,18 @@ public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implem
         return newGroups;
     }
 
+    public int employeesQuantity() {
+        int employeesQuantity = 0;
+        for (int i = 0; i < size; i++) {
+            employeesQuantity += groups[i].employeeQuantity();
+        }
+        return employeesQuantity;
+    }
+
     public boolean remove(String groupName) {
 
-        for (int i = 0; i < groups.length; i++) {
-            if (groups[i].getName().equals(groupName)) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i].getName().equals(groupName)) {
                 shiftGroups(i);
                 this.groups[groupsQuantity()] = null;
                 this.size--;
@@ -49,14 +94,6 @@ public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implem
             }
         }
         return false;
-    }
-
-    public int employeesQuantity() {
-        int employeesQuantity = 0;
-        for (int i = 0; i < size; i++) {
-            employeesQuantity += groups[i].employeeQuantity();
-        }
-        return employeesQuantity;
     }
 
     public Employee mostValuableEmployee() {

@@ -80,7 +80,9 @@ public class AbstractListArray<T> implements List<T> {
     public boolean remove(Object o) {
         for (int i = 0; i < items.length; i++) {
             if (Objects.nonNull(items[i]) && items[i].equals(o)) {
-                items[i] = null;
+                shift(i);
+                this.items[size] = null;
+                this.size--;
                 return true;
             }
         }

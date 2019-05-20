@@ -1,7 +1,7 @@
 package io;
-import humanresources.Employee;
+import humanresources.EmployeeGroup;
 
-public interface FileSource extends Source<Employee> {
+public interface FileSource extends Source<EmployeeGroup> {
     public void setPath(String path);
     public String getPath();
 }

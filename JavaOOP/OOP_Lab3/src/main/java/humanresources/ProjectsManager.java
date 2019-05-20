@@ -1,8 +1,9 @@
 package humanresources;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ProjectsManager extends AbstractListNode<EmployeeGroup> implements GroupsManager, List<EmployeeGroup> {
+public class ProjectsManager extends AbstractListNode<EmployeeGroup> implements GroupsManager, List<EmployeeGroup>, Serializable {
 
     private Node<EmployeeGroup> head;
     private Node<EmployeeGroup> tail;
@@ -15,6 +16,42 @@ public class ProjectsManager extends AbstractListNode<EmployeeGroup> implements 
         for (int i = 0; i < employeeGroups.length; i++) {
             add(employeeGroups[i]);
         }
+    }
+
+    public boolean add(EmployeeGroup employeeGroup) {
+        return super.add(employeeGroup);
+    }
+
+    public boolean remove(Object o){
+        return super.remove(o);
+    }
+
+    public boolean addAll(Collection<? extends EmployeeGroup> c){
+        return super.addAll(c);
+    }
+
+    public boolean addAll(int index, Collection<? extends EmployeeGroup> c){
+        return super.addAll(index, c);
+    }
+
+    public boolean removeAll(Collection<?> c){
+        return super.removeAll(c);
+    }
+
+    public boolean retainAll(Collection<?> c){
+        return super.retainAll(c);
+    }
+
+    public EmployeeGroup set(int index, EmployeeGroup element){
+        return super.set(index, element);
+    }
+
+    public void add(int index, EmployeeGroup element){
+        super.add(index, element);
+    }
+
+    public EmployeeGroup remove(int index){
+        return super.remove(index);
     }
 
     @Override

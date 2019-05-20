@@ -36,6 +36,46 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
         throw new NoSuchElementException();
     }
 
+    public boolean add(Employee employee) {
+        return super.add(employee);
+    }
+
+    public boolean remove(Object o){
+        return super.remove(o);
+    }
+
+    public boolean addAll(Collection<? extends Employee> c){
+        return super.addAll(c);
+    }
+
+    public boolean addAll(int index, Collection<? extends Employee> c){
+        return super.addAll(index, c);
+    }
+
+    public boolean removeAll(Collection<?> c){
+        return super.removeAll(c);
+    }
+
+    public boolean retainAll(Collection<?> c){
+        return super.retainAll(c);
+    }
+
+    public void clear(){
+        super.clear();
+    }
+
+    public Employee set(int index, Employee element){
+        return super.set(index, element);
+    }
+
+    public void add(int index, Employee element){
+        super.add(index, element);
+    }
+
+    public Employee remove(int index){
+        return super.remove(index);
+    }
+
     public boolean remove(String firstName, String lastName){
         if (head == null) {
             return false;
@@ -89,7 +129,7 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
         return false;
     }
 
-    public static Employee[] sortBySalaryAndBonus(Employee[] arrEmp){
+    public Employee[] sortBySalaryAndBonus(Employee[] arrEmp){
         Arrays.sort(arrEmp);
         return arrEmp;
     }
