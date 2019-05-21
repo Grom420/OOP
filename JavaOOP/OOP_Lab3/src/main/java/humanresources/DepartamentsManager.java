@@ -4,28 +4,23 @@ import java.io.Serializable;
 import java.util.*;
 
 public class DepartamentsManager extends AbstractListArray<EmployeeGroup> implements GroupsManager, List<EmployeeGroup>, Serializable {
-    private String name;
     private EmployeeGroup[] groups;
     private static final int DEFAULT_CAPACITY = 16;
     private int size;
     private int groupsSize;
     private int countDeletedGroup;
 
-    public DepartamentsManager(String name, String groupsName) {
-        this(name, groupsName, new Employee[DEFAULT_CAPACITY]);
+    public DepartamentsManager(String groupsName) {
+        this(groupsName, new EmployeeGroup[DEFAULT_CAPACITY]);
     }
 
-    public DepartamentsManager(String name, String groupsName, Employee[] groups) {
+    public DepartamentsManager(String groupsName, EmployeeGroup[] groups) {
 
         if (groups.length == 0)
             throw new NegativeSizeException("Negative capacity");
         EmployeeGroup[] newEmployees = new EmployeeGroup[groups.length];
         System.arraycopy(groups, 0, newEmployees, 0, groups.length);
         this.groups = newEmployees;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public boolean add(EmployeeGroup employeeGroup) {
