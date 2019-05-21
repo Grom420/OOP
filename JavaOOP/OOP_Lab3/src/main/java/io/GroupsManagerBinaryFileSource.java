@@ -15,7 +15,7 @@ public class GroupsManagerBinaryFileSource extends GroupsManagerFileSource {
     @Override
     public void load(EmployeeGroup employeeGroup) {
         try (DataInputStream inputStream = new DataInputStream(new FileInputStream(path(employeeGroup)))) {
-            String stringOrder = inputStream.readUTF();
+            String stringEmployee = inputStream.readUTF();
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
