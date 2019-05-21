@@ -18,7 +18,7 @@ public abstract class EmployeeFactory {
    public abstract GroupsManager createProjectManager();
    public abstract GroupsManager createProjectManager(EmployeeGroup[] employeeGroups);
 
-   static public EmployeeFactory getOrderFactory(EmployeesFactoryTypesEnumeration type, String path) {
+   static public EmployeeFactory getEmployeeFactory(EmployeesFactoryTypesEnumeration type, String path) {
       switch (type){
          case ORDINARY_GROUPS_FACTORY:
             return new OrdinaryEmployeeFactory();
