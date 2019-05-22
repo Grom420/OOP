@@ -16,11 +16,6 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
     }
 
     @Override
-    public void load(EmployeeGroup employeeGroup) {
-
-    }
-
-    @Override
     public void store(EmployeeGroup employeeGroup) {
         try {
             PrintWriter writer = new PrintWriter(path(employeeGroup), "UTF-8");
@@ -57,6 +52,11 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void load(EmployeeGroup employeeGroup) {
+
     }
 
     private String path(EmployeeGroup employeeGroup) {

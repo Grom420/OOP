@@ -1,67 +1,70 @@
 package factory;
 
-import humanresources.Employee;
-import humanresources.EmployeeGroup;
-import humanresources.GroupsManager;
+import humanresources.*;
 
 public class OrdinaryEmployeeFactory extends EmployeeFactory {
     @Override
     public EmployeeGroup createDepartment() {
-        return null;
+        return new Departament();
     }
 
     @Override
     public EmployeeGroup createDepartment(int capacity) {
-        return null;
+        return new Departament(capacity);
     }
 
     @Override
     public EmployeeGroup createDepartment(String name) {
-        return null;
+        return new Departament(name);
     }
 
     @Override
     public EmployeeGroup createDepartment(String name, int capacity) {
-        return null;
+        return new Departament(name, capacity);
     }
 
     @Override
     public EmployeeGroup createDepartment(String name, Employee[] employees) {
-        return null;
+        return new Departament(name, employees);
+    }
+
+    @Override
+    public EmployeeGroup createDepartment(EmployeeGroup employeeGroup) {
+        return new Departament(employeeGroup.getName(), (Employee[]) employeeGroup.toArray());
     }
 
     @Override
     public EmployeeGroup createProject() {
-        return null;
+        return new Project();
     }
 
     @Override
     public EmployeeGroup createProject(String name) {
-        return null;
+        return new Project(name);
     }
 
     @Override
-    public EmployeeGroup createProject(String name, Employee[] employees) {
-        return null;
+    public EmployeeGroup createProject(String name, Employee[] employees) throws AlreadyAddedException {
+        return new Project(name, employees);
     }
 
     @Override
     public GroupsManager createDepartmentManager(String groupsName) {
-        return null;
+        return new DepartamentsManager(groupsName);
     }
 
     @Override
     public GroupsManager createDepartmentManager(String groupsName, EmployeeGroup[] employees) {
-        return null;
+        return new DepartamentsManager(groupsName, employees);
     }
 
     @Override
     public GroupsManager createProjectManager() {
-        return null;
+        return new ProjectsManager();
     }
 
     @Override
-    public GroupsManager createProjectManager(EmployeeGroup[] employeeGroups) {
-        return null;
+    public GroupsManager createProjectManager(EmployeeGroup[] employeeGroups) throws AlreadyAddedException {
+        return new ProjectsManager(employeeGroups);
     }
 }

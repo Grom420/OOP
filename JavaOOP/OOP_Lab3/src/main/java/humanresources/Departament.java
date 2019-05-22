@@ -1,8 +1,9 @@
 package humanresources;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Departament extends AbstractListArray<Employee> implements EmployeeGroup, List<Employee>, Comparator<Employee> {
+public class Departament extends AbstractListArray<Employee> implements EmployeeGroup, List<Employee>, Comparator<Employee>, Serializable {
 
     private static final int DEFAULT_CAPACITY = 8;
     private String name;

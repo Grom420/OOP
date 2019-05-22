@@ -1,8 +1,9 @@
 package humanresources;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Project extends AbstractListNode<Employee> implements EmployeeGroup, List<Employee>, Comparator<Employee> {
+public class Project extends AbstractListNode<Employee> implements EmployeeGroup, List<Employee>, Comparator<Employee>, Serializable {
 
     private String name;
 

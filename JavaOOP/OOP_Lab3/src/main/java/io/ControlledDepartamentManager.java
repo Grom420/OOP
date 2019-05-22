@@ -17,12 +17,12 @@ public class ControlledDepartamentManager extends DepartamentsManager {
         this.source = source;
     }
 
-    public ControlledDepartamentManager(String name, String groupsName) {
-        super(name, groupsName);
+    public ControlledDepartamentManager(String name, EmployeeGroup[] employeeGroups) {
+        super(name, employeeGroups);
     }
 
-    public ControlledDepartamentManager(String name, String groupsName, Employee[] groups) {
-        super(name, groupsName, groups);
+    public ControlledDepartamentManager(String groupsName) {
+        super(groupsName);
     }
 
     private void createControlledEmployeeGroup(EmployeeGroup employeeGroup) {
