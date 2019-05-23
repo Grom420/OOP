@@ -19,8 +19,10 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
     public void store(EmployeeGroup employeeGroup) {
         try {
             PrintWriter writer = new PrintWriter(path(employeeGroup), "UTF-8");
-            writer.print(employeeGroup.toString());
-            writer.close();
+            //todo ДОлго и муторно считываешь данные из файла и на основе этих данных создаешь новых эмплоев и заменяешь ими имеющийеся
+            employeeGroup.clear();
+            //todo затем набиваешь новых эмплоев, инфу о которых считал из файла
+
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -42,6 +44,8 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
         }
     }
 
+    //todo с удалением и созданием та же фигня, что и BinaryFileSource
+
     @Override
     public void create(EmployeeGroup employeeGroup) {
         setPath(path(employeeGroup));
@@ -56,6 +60,7 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
 
     @Override
     public void load(EmployeeGroup employeeGroup) {
+        //todo ДОлго и муторно записываешь все поля всех эмплоев в файл writeUtf, writeInt, writeDouble
 
     }
 

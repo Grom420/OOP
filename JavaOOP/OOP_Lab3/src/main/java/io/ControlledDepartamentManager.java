@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Objects;
 
+//todo надо проверять результат выполнения операции и если ок - используем операцию с ФС - нет, не используем. + Контролируем исключения, ФС не должны выполняться, если выброшено исключение
 public class ControlledDepartamentManager extends DepartamentsManager {
     protected Source<EmployeeGroup> source;
 

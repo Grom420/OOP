@@ -7,6 +7,7 @@ import humanresources.ProjectsManager;
 import java.util.Collection;
 import java.util.Objects;
 
+//todo надо проверять результат выполнения операции и если ок - используем операцию с ФС - нет, не используем. + Контролируем исключения, ФС не должны выполняться, если выброшено исключение
 public class ControlledProjectManager extends ProjectsManager {
     protected Source<EmployeeGroup> source;
 

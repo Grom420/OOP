@@ -15,8 +15,9 @@ public class GroupsManagerBinaryFileSource extends GroupsManagerFileSource {
     @Override
     public void load(EmployeeGroup employeeGroup) {
         try (DataInputStream inputStream = new DataInputStream(new FileInputStream(path(employeeGroup)))) {
-            String stringEmployee = inputStream.readUTF();
-
+            //todo ДОлго и муторно считываешь данные из файла и на основе этих данных создаешь новых эмплоев и заменяешь ими имеющийеся
+            employeeGroup.clear();
+            //todo затем набиваешь новых эмплоев, инфу о которых считал из файла
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -26,6 +27,7 @@ public class GroupsManagerBinaryFileSource extends GroupsManagerFileSource {
     public void store(EmployeeGroup employeeGroup) {
         try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(getPath()))) {
             dataOutputStream.writeUTF(employeeGroup.toString());
+            //todo ДОлго и муторно записываешь все поля всех эмплоев в файл writeUtf, writeInt, writeDouble
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -33,12 +35,6 @@ public class GroupsManagerBinaryFileSource extends GroupsManagerFileSource {
 
     @Override
     public void delete(EmployeeGroup employeeGroup) {
-        setPath(path(employeeGroup));
-        try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(getPath()))) {
-            dataOutputStream.writeUTF("");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         try {
             Files.delete(Paths.get(getPath()));
         } catch (IOException e) {
@@ -48,12 +44,6 @@ public class GroupsManagerBinaryFileSource extends GroupsManagerFileSource {
 
     @Override
     public void create(EmployeeGroup employeeGroup) {
-        setPath(path(employeeGroup));
-        try {
-            Files.createFile(Paths.get(getPath()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         store(employeeGroup);
     }
 

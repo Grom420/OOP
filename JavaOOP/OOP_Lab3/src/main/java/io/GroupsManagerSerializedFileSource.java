@@ -15,6 +15,7 @@ public class GroupsManagerSerializedFileSource extends GroupsManagerFileSource {
     @Override
     public void load(EmployeeGroup employeeGroup) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path(employeeGroup)))) {
+            //todo заменяешь состояние объекта - параметра, состоянием считанного объекта
             employeeGroup = (EmployeeGroup) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -29,6 +30,8 @@ public class GroupsManagerSerializedFileSource extends GroupsManagerFileSource {
             e.printStackTrace();
         }
     }
+
+    //todo с удалением и созданием та же фигня, что и BinaryFileSource
 
     @Override
     public void delete(EmployeeGroup employeeGroup) {
