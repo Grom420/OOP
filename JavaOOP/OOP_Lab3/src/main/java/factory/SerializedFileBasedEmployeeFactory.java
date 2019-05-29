@@ -3,17 +3,10 @@ package factory;
 import humanresources.*;
 import io.*;
 
-//TODO эталонная фабрика - все остальные делай как она
+//TODO эталонная фабрика - все остальные делай как она(DONE)
 public class SerializedFileBasedEmployeeFactory extends EmployeeFactory {
     private String path;
-    //todo сурс нужно создавать локально и только для менеджеров
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
+    //todo сурс нужно создавать локально и только для менеджеров(DONE)
 
     public SerializedFileBasedEmployeeFactory(String path){
         this.path = path;
@@ -66,7 +59,7 @@ public class SerializedFileBasedEmployeeFactory extends EmployeeFactory {
 
     @Override
     public GroupsManager createDepartmentManager(String groupsName) {
-        //todo логика создания менеджеров ВО ВСЕХ ФАБРИКАХ ТАКАЯ!
+        //todo логика создания менеджеров ВО ВСЕХ ФАБРИКАХ ТАКАЯ!(DONE)
         GroupsManagerSerializedFileSource fs = new GroupsManagerSerializedFileSource(path);
         ControlledDepartamentManager manager = new ControlledDepartamentManager(groupsName);
         manager.setSource(fs);
@@ -75,19 +68,25 @@ public class SerializedFileBasedEmployeeFactory extends EmployeeFactory {
 
     @Override
     public GroupsManager createDepartmentManager(String groupsName, EmployeeGroup[] employees) {
-        setPath(groupsManagerSerializedFileSource.getPath());
-        return new ControlledDepartamentManager(groupsName, employees);
+        GroupsManagerSerializedFileSource fs = new GroupsManagerSerializedFileSource(path);
+        ControlledDepartamentManager manager = new ControlledDepartamentManager(groupsName, employees);
+        manager.setSource(fs);
+        return manager;
     }
 
     @Override
     public GroupsManager createProjectManager() {
-        setPath(groupsManagerSerializedFileSource.getPath());
-        return new ControlledProjectManager();
+        GroupsManagerSerializedFileSource fs = new GroupsManagerSerializedFileSource(path);
+        ControlledProjectManager manager = new ControlledProjectManager();
+        manager.setSource(fs);
+        return manager;
     }
 
     @Override
     public GroupsManager createProjectManager(EmployeeGroup[] employeeGroups) throws AlreadyAddedException {
-        setPath(groupsManagerSerializedFileSource.getPath());
-        return new ControlledProjectManager(employeeGroups);
+        GroupsManagerSerializedFileSource fs = new GroupsManagerSerializedFileSource(path);
+        ControlledProjectManager manager = new ControlledProjectManager(employeeGroups);
+        manager.setSource(fs);
+        return manager;
     }
 }

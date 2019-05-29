@@ -285,7 +285,6 @@ public class AbstractListNode<T> implements List<T> {
             @Override
             public T next() {
                 if(hasNext()) {
-                    //todo lastreturned(DONE)
                     currentNode = currentNode.next;
                     lastReturned = currentNode.value;
                     return currentNode.value;

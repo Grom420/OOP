@@ -31,6 +31,7 @@ public final class BusinessTravel {
     }
 
     public BusinessTravel(int compensation, String description, String destination, LocalDateTime startBusinessTravel, LocalDateTime endBusinessTravel) throws IllegalDatesException {
+        super();
         this.description = description;
         this.destination = destination;
 

@@ -160,7 +160,6 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
 
     @Override
     public String toString() {
-        //todo no array and use foreach(DONE)
         final StringBuilder sb = new StringBuilder("Project ");
         sb.append(name).append(":").append(size).append("\n");
         for (Employee employee : this) {
@@ -186,7 +185,6 @@ public class Project extends AbstractListNode<Employee> implements EmployeeGroup
 
     @Override
     public int hashCode() {
-        //todo no array and use foreach(DONE)
         int hashObject = 0;
         int hashPosition = 0;
         int i = 0;

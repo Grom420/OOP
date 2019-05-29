@@ -15,8 +15,10 @@ public class GroupsManagerSerializedFileSource extends GroupsManagerFileSource {
     @Override
     public void load(EmployeeGroup employeeGroup) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path(employeeGroup)))) {
-            //todo заменяешь состояние объекта - параметра, состоянием считанного объекта
-            employeeGroup = (EmployeeGroup) in.readObject();
+            //todo заменяешь состояние объекта - параметра, состоянием считанного объекта(DONE)
+            EmployeeGroup readedGroup = (EmployeeGroup) in.readObject();
+            employeeGroup.clear();
+            employeeGroup.addAll(readedGroup);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -31,15 +33,10 @@ public class GroupsManagerSerializedFileSource extends GroupsManagerFileSource {
         }
     }
 
-    //todo с удалением и созданием та же фигня, что и BinaryFileSource
+    //todo с удалением и созданием та же фигня, что и BinaryFileSource(DONE)
 
     @Override
     public void delete(EmployeeGroup employeeGroup) {
-        try (PrintWriter writer = new PrintWriter(path(employeeGroup))) {
-            writer.print("");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
         try {
             Files.delete(Paths.get(getPath()));
         } catch (IOException e) {
@@ -49,12 +46,7 @@ public class GroupsManagerSerializedFileSource extends GroupsManagerFileSource {
 
     @Override
     public void create(EmployeeGroup employeeGroup) {
-        setPath(path(employeeGroup));
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(getPath()))) {
-            out.writeObject(employeeGroup);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        store(employeeGroup);
     }
 
     private String path(EmployeeGroup employeeGroup) {

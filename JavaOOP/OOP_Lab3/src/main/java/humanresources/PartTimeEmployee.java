@@ -13,14 +13,14 @@ public class PartTimeEmployee extends Employee {
         super(firstName, secondName);
     }
 
-    PartTimeEmployee(String firstName, String secondName, int salary){
+    public PartTimeEmployee(String firstName, String secondName, int salary){
 
         super(firstName, secondName, salary);
     }
 
     @Override
     int getBonus() {
-        return this.bonus;
+        return 0;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class PartTimeEmployee extends Employee {
 
     @Override
     public boolean isPartTimer(){
-        return bonus != 0;
+        return bonus == 0;
     }
 
     @Override

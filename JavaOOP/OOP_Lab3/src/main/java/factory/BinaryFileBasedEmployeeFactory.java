@@ -8,23 +8,6 @@ import io.*;
 
 public class BinaryFileBasedEmployeeFactory extends EmployeeFactory {
     private String path;
-    private GroupsManagerBinaryFileSource groupsManagerBinaryFileSource;
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public GroupsManagerBinaryFileSource getGroupsManagerBinaryFileSource() {
-        return groupsManagerBinaryFileSource;
-    }
-
-    public void setGroupsManagerBinaryFileSource(GroupsManagerBinaryFileSource groupsManagerBinaryFileSource) {
-        this.groupsManagerBinaryFileSource = groupsManagerBinaryFileSource;
-    }
 
     public BinaryFileBasedEmployeeFactory(String path){
         this.path = path;
@@ -32,79 +15,78 @@ public class BinaryFileBasedEmployeeFactory extends EmployeeFactory {
 
     @Override
     public EmployeeGroup createDepartment() {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledDepartament();
     }
 
     @Override
     public EmployeeGroup createDepartment(int capacity) {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledDepartament(capacity);
     }
 
     @Override
     public EmployeeGroup createDepartment(String name) {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledDepartament(name);
     }
 
     @Override
     public EmployeeGroup createDepartment(String name, int capacity) {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledDepartament(name, capacity);
     }
 
     @Override
     public EmployeeGroup createDepartment(String name, Employee[] employees) {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledDepartament(name, employees);
     }
 
     @Override
     public EmployeeGroup createDepartment(EmployeeGroup employeeGroup) {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledDepartament(employeeGroup.getName(), (Employee[]) employeeGroup.toArray());
     }
 
     @Override
     public EmployeeGroup createProject() {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledProject();
     }
 
     @Override
     public EmployeeGroup createProject(String name) {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledProject(name);
     }
 
     @Override
     public EmployeeGroup createProject(String name, Employee[] employees) throws AlreadyAddedException {
-        setPath(groupsManagerBinaryFileSource.getPath());
         return new ControlledProject(name, employees);
     }
 
     @Override
     public GroupsManager createDepartmentManager(String groupsName) {
-        setPath(groupsManagerBinaryFileSource.getPath());
-        return new ControlledDepartamentManager(groupsName);
+        GroupsManagerBinaryFileSource fs = new GroupsManagerBinaryFileSource(path);
+        ControlledDepartamentManager manager = new ControlledDepartamentManager(groupsName);
+        manager.setSource(fs);
+        return manager;
     }
 
     @Override
     public GroupsManager createDepartmentManager(String groupsName, EmployeeGroup[] employees) {
-        setPath(groupsManagerBinaryFileSource.getPath());
-        return new ControlledDepartamentManager(groupsName, employees);
+        GroupsManagerBinaryFileSource fs = new GroupsManagerBinaryFileSource(path);
+        ControlledDepartamentManager manager = new ControlledDepartamentManager(groupsName, employees);
+        manager.setSource(fs);
+        return manager;
     }
 
     @Override
     public GroupsManager createProjectManager() {
-        setPath(groupsManagerBinaryFileSource.getPath());
-        return new ControlledProjectManager();
+        GroupsManagerBinaryFileSource fs = new GroupsManagerBinaryFileSource(path);
+        ControlledProjectManager manager = new ControlledProjectManager();
+        manager.setSource(fs);
+        return manager;
     }
 
     @Override
     public GroupsManager createProjectManager(EmployeeGroup[] employeeGroups) throws AlreadyAddedException {
-        setPath(groupsManagerBinaryFileSource.getPath());
-        return new ControlledProjectManager(employeeGroups);
+        GroupsManagerBinaryFileSource fs = new GroupsManagerBinaryFileSource(path);
+        ControlledProjectManager manager = new ControlledProjectManager(employeeGroups);
+        manager.setSource(fs);
+        return manager;
     }
 }

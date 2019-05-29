@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Objects;
 
-//todo надо проверять результат выполнения операции и если ок - используем операцию с ФС - нет, не используем. + Контролируем исключения, ФС не должны выполняться, если выброшено исключение
+//todo надо проверять результат выполнения операции и если ок - используем операцию с ФС - нет, не используем. + Контролируем исключения, ФС не должны выполняться, если выброшено исключение(DONE)
 public class ControlledDepartamentManager extends DepartamentsManager {
     protected Source<EmployeeGroup> source;
 
@@ -37,20 +37,28 @@ public class ControlledDepartamentManager extends DepartamentsManager {
 
     @Override
     public boolean add(EmployeeGroup employeeGroup) {
-        createControlledEmployeeGroup(employeeGroup);
-        return super.add(employeeGroup);
+        if(super.add(employeeGroup)){
+            createControlledEmployeeGroup(employeeGroup);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean remove(Object o){
-        delete((EmployeeGroup) o);
-        return super.remove(o);
+        if (super.remove(o)) {
+            delete((EmployeeGroup) o);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean addAll(Collection<? extends EmployeeGroup> c){
         c.forEach(this::createControlledEmployeeGroup);
-        return super.removeAll(c);
+        boolean areAdded = super.addAll(c);
+        super.removeAll(c);
+        return areAdded;
     }
 
     @Override
@@ -63,26 +71,28 @@ public class ControlledDepartamentManager extends DepartamentsManager {
 
     @Override
     public boolean removeAll(Collection<?> c){
+        boolean areRemoved = super.removeAll(c);
         c.forEach(object -> delete((EmployeeGroup) object));
-        return super.removeAll(c);
+        return areRemoved;
     }
 
     @Override
     public boolean retainAll(Collection<?> c){
+        boolean areRetained = super.retainAll(c);
         this.stream().filter(order -> !c.contains(order)).forEach(this::delete);
-        return super.retainAll(c);
+        return areRetained;
     }
 
     @Override
     public void clear(){
-        this.forEach(this::delete);
         super.clear();
+        this.forEach(this::delete);
     }
 
     @Override
     public void add(int index, EmployeeGroup element){
-        createControlledEmployeeGroup(element);
         super.add(index, element);
+        createControlledEmployeeGroup(element);
     }
 
     @Override
