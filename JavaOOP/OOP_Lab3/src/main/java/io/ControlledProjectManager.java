@@ -51,7 +51,6 @@ public class ControlledProjectManager extends ProjectsManager {
         return false;
     }
 
-    //todo следующие 4 метода аналогично ControlledDepartamentManager
     @Override
     public boolean addAll(Collection<? extends EmployeeGroup> c){
         boolean isChanged = false;
@@ -77,7 +76,7 @@ public class ControlledProjectManager extends ProjectsManager {
     public boolean removeAll(Collection<?> c){
         boolean areRemoved = false;
         for(Object o : c){
-            remove(o);
+            if (remove(o))
             areRemoved = true;
         }
         return areRemoved;
@@ -88,7 +87,7 @@ public class ControlledProjectManager extends ProjectsManager {
         boolean areRetained = false;
         for(Object o : c){
             if(!c.contains(o)) {
-                remove(o);
+                if (remove(o))
                 areRetained = true;
             }
         }
