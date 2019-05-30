@@ -65,26 +65,36 @@ public class ControlledDepartamentManager extends DepartamentsManager {
 
     @Override
     public boolean addAll(int index, Collection<? extends EmployeeGroup> c){
-        //todo смотри предыдущй addAll
-        c.forEach(this::createControlledEmployeeGroup);
-        boolean areAdded = super.addAll(index, c);
-        super.removeAll(c);
-        return areAdded;
+        //todo смотри предыдущй addAll(DONE)
+        boolean isChanged = false;
+        for(EmployeeGroup group : c){
+            add(index, new ControlledDepartament(group));
+            isChanged = true;
+        }
+        return isChanged;
     }
 
     @Override
     public boolean removeAll(Collection<?> c){
-        boolean areRemoved = super.removeAll(c);
-        //todo циклом remove и если ок - delete
-        c.forEach(object -> delete((EmployeeGroup) object));
+        boolean areRemoved = false;
+        //todo циклом remove и если ок - delete(DONE)
+        for(Object o : c){
+            remove(o);
+            areRemoved = true;
+        }
         return areRemoved;
     }
 
     @Override
     public boolean retainAll(Collection<?> c){
-        //todo циклом если !contains, то remove и если ок - delete
-        boolean areRetained = super.retainAll(c);
-        this.stream().filter(order -> !c.contains(order)).forEach(this::delete);
+        //todo циклом если !contains, то remove и если ок - delete(DONE)
+        boolean areRetained = false;
+        for(Object o : c){
+            if(!c.contains(o)) {
+                remove(o);
+                areRetained = true;
+            }
+        }
         return areRetained;
     }
 
