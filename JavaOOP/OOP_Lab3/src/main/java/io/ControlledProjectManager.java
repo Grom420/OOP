@@ -7,7 +7,6 @@ import humanresources.ProjectsManager;
 import java.util.Collection;
 import java.util.Objects;
 
-//todo надо проверять результат выполнения операции и если ок - используем операцию с ФС - нет, не используем. + Контролируем исключения, ФС не должны выполняться, если выброшено исключение(DONE)
 public class ControlledProjectManager extends ProjectsManager {
     protected Source<EmployeeGroup> source;
 
@@ -52,6 +51,7 @@ public class ControlledProjectManager extends ProjectsManager {
         return false;
     }
 
+    //todo следующие 4 метода аналогично ControlledDepartamentManager
     @Override
     public boolean addAll(Collection<? extends EmployeeGroup> c){
         c.forEach(this::createControlledEmployeeGroup);

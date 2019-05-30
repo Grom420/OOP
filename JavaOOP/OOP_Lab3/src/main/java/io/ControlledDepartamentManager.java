@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Objects;
 
-//todo надо проверять результат выполнения операции и если ок - используем операцию с ФС - нет, не используем. + Контролируем исключения, ФС не должны выполняться, если выброшено исключение(DONE)
 public class ControlledDepartamentManager extends DepartamentsManager {
     protected Source<EmployeeGroup> source;
 
@@ -55,14 +54,18 @@ public class ControlledDepartamentManager extends DepartamentsManager {
 
     @Override
     public boolean addAll(Collection<? extends EmployeeGroup> c){
+        boolean isChanged = false;
         c.forEach(this::createControlledEmployeeGroup);
-        boolean areAdded = super.addAll(c);
-        super.removeAll(c);
-        return areAdded;
+        for (EmployeeGroup group : c) {
+            if (add(new ControlledDepartament(group)))
+                isChanged = true;
+        }
+        return isChanged;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends EmployeeGroup> c){
+        //todo смотри предыдущй addAll
         c.forEach(this::createControlledEmployeeGroup);
         boolean areAdded = super.addAll(index, c);
         super.removeAll(c);
@@ -72,12 +75,14 @@ public class ControlledDepartamentManager extends DepartamentsManager {
     @Override
     public boolean removeAll(Collection<?> c){
         boolean areRemoved = super.removeAll(c);
+        //todo циклом remove и если ок - delete
         c.forEach(object -> delete((EmployeeGroup) object));
         return areRemoved;
     }
 
     @Override
     public boolean retainAll(Collection<?> c){
+        //todo циклом если !contains, то remove и если ок - delete
         boolean areRetained = super.retainAll(c);
         this.stream().filter(order -> !c.contains(order)).forEach(this::delete);
         return areRetained;

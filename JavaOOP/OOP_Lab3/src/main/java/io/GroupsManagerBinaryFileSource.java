@@ -17,12 +17,10 @@ public class GroupsManagerBinaryFileSource extends GroupsManagerFileSource {
     @Override
     public void load(EmployeeGroup employeeGroup) {
         try (DataInputStream inputStream = new DataInputStream(new FileInputStream(path(employeeGroup)))) {
-            //todo ДОлго и муторно считываешь данные из файла и на основе этих данных создаешь новых эмплоев и заменяешь ими имеющийеся(DONE)
             employeeGroup.setName(inputStream.readUTF());
             List<Employee> employees = loadEmployee(inputStream);
             inputStream.close();
             employeeGroup.clear();
-            //todo затем набиваешь новых эмплоев, инфу о которых считал из файла(DONE)
             employeeGroup.addAll(employees);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -99,7 +97,6 @@ public class GroupsManagerBinaryFileSource extends GroupsManagerFileSource {
     public void store(EmployeeGroup employeeGroup) {
         try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream(getPath()))) {
             dataOutputStream.writeUTF(employeeGroup.toString());
-            //todo ДОлго и муторно записываешь все поля всех эмплоев в файл writeUtf, writeInt, writeDouble(DONE)
             writeEmployee(dataOutputStream, employeeGroup);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -121,6 +118,6 @@ public class GroupsManagerBinaryFileSource extends GroupsManagerFileSource {
     }
 
     private String path(EmployeeGroup employeeGroup) {
-        return employeeGroup.getName() + ".bin";
+        return getPath() + employeeGroup.getName() + ".bin";
     }
 }

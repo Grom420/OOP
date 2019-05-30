@@ -20,8 +20,6 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
 
     @Override
     public void load(EmployeeGroup employeeGroup) {
-        //todo ДОлго и муторно считываешь данные из файла и на основе этих данных создаешь новых эмплоев и заменяешь ими имеющийеся(DONE)
-        //todo затем набиваешь новых эмплоев, инфу о которых считал из файла(DONE)
         try {
             Scanner scanner = new Scanner(path(employeeGroup));
             employeeGroup.setName(scanner.next());
@@ -72,30 +70,30 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
 
     private void writeEmployee(PrintWriter outputStream, EmployeeGroup employeeGroup) throws IOException {
         BusinessTravel[] businessTravels;
-        outputStream.write(employeeGroup.getName());
-        outputStream.write(employeeGroup.size());
+        outputStream.println(employeeGroup.getName());
+        outputStream.println(employeeGroup.size());
         for(Employee employee : employeeGroup){
-            outputStream.write(employee.getFirstName());
-            outputStream.write(employee.getSecondName());
-            outputStream.write(employee.getJobTitle().toString());
-            outputStream.write(employee.getSalary());
+            outputStream.println(employee.getFirstName());
+            outputStream.println(employee.getSecondName());
+            outputStream.println(employee.getJobTitle().toString());
+            outputStream.println(employee.getSalary());
             if(employee.isTraveller()){
-                outputStream.write(((StaffEmployee) employee).getBonus());
+                outputStream.println(((StaffEmployee) employee).getBonus());
                 businessTravels = ((StaffEmployee) employee).getTravels();
                 for(BusinessTravel businessTravel : businessTravels){
-                    outputStream.write(businessTravel.getCompensation());
-                    outputStream.write(businessTravel.getDescription());
-                    outputStream.write(businessTravel.getDestination());
-                    outputStream.write(businessTravel.getStartBusinessTravel().getYear());
-                    outputStream.write(businessTravel.getStartBusinessTravel().getMonthValue());
-                    outputStream.write(businessTravel.getStartBusinessTravel().getDayOfMonth());
-                    outputStream.write(businessTravel.getEndBusinessTravel().getYear());
-                    outputStream.write(businessTravel.getEndBusinessTravel().getMonthValue());
-                    outputStream.write(businessTravel.getEndBusinessTravel().getDayOfMonth());
+                    outputStream.println(businessTravel.getCompensation());
+                    outputStream.println(businessTravel.getDescription());
+                    outputStream.println(businessTravel.getDestination());
+                    outputStream.println(businessTravel.getStartBusinessTravel().getYear());
+                    outputStream.println(businessTravel.getStartBusinessTravel().getMonthValue());
+                    outputStream.println(businessTravel.getStartBusinessTravel().getDayOfMonth());
+                    outputStream.println(businessTravel.getEndBusinessTravel().getYear());
+                    outputStream.println(businessTravel.getEndBusinessTravel().getMonthValue());
+                    outputStream.println(businessTravel.getEndBusinessTravel().getDayOfMonth());
                 }
             }
             else
-                outputStream.write(0);
+                outputStream.println(0);
         }
         outputStream.close();
     }
@@ -113,7 +111,6 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
     public void store(EmployeeGroup employeeGroup) {
         try {
             PrintWriter writer = new PrintWriter(path(employeeGroup), "UTF-8");
-            //todo ДОлго и муторно записываешь все поля всех эмплоев в файл writeUtf, writeInt, writeDouble(DONE)
             writeEmployee(writer, employeeGroup);
 
         } catch (IOException e) {
@@ -121,7 +118,6 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
         }
     }
 
-    //todo с удалением и созданием та же фигня, что и BinaryFileSource(DONE)
 
     @Override
     public void create(EmployeeGroup employeeGroup) {
@@ -129,6 +125,6 @@ public class GroupsManagerTextFileSource extends GroupsManagerFileSource {
     }
 
     private String path(EmployeeGroup employeeGroup) {
-        return employeeGroup.getName() + ".txt";
+        return getPath() + employeeGroup.getName() + ".txt";
     }
 }
