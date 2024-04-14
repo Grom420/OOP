@@ -111,12 +111,11 @@ public class MainController implements Initializable {
     }
 
     public void clearClick(){
-
-        String oldValue = input.getText();
-        if (oldValue.length()-1 >= 0){
-            input.setText(oldValue.substring(0, oldValue.length()-1));
-            inSb.delete(inSb.length()-1, inSb.length());
-        }
+        input.setText("");
+        inSb.delete(0, inSb.length());
+        outSb.delete(0, outSb.length());
+        output.setText("");
+        polishLabel.setText("");
     }
 
     public void bracketInClick(){

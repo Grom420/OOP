@@ -12,9 +12,7 @@
 
     <modules>
         <module>OOP_Lab1</module>
-        <module>OOP_Lab2</module>
         <module>OOP_Lab3</module>
-        <module>ExamTest</module>
     </modules>
 
     <artifactId>JavaOOP</artifactId>

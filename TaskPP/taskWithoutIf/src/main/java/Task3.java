@@ -7,7 +7,7 @@ public class Task3 {
         try {
             int number = Integer.parseInt(input); //если число
             System.out.println(ParseInt(number));
-        } catch (Exception e){
+        } catch (NumberFormatException e){
             System.out.println(ParseString(input)); //если строка
         }
     }
